@@ -26,7 +26,7 @@ public class UserController {
 
     @PostMapping("login")
     public Response login(@RequestBody @Valid LoginReqBean loginReqBean,
-                         HttpSession httpSession) {
+                          HttpSession httpSession) {
 
         String credential = loginReqBean.getCredential();
         String password = loginReqBean.getPassword();
@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping("enroll")
     public Response enroll(@RequestBody @Valid EnrollReqBean enrollReqBean,
-                          HttpSession httpSession) {
+                           HttpSession httpSession) {
 
         String account = enrollReqBean.getAccount();
         String password = enrollReqBean.getPassword();
@@ -51,7 +51,7 @@ public class UserController {
         Timestamp birthday = enrollReqBean.getBirthday();
         Integer gender = enrollReqBean.getGender();
 
-        userService.enroll(account,password,email,nickname,avatar,birthday,gender);
+        userService.enroll(account, password, email, nickname, avatar, birthday, gender);
         return ResultUtil.success();
     }
 }

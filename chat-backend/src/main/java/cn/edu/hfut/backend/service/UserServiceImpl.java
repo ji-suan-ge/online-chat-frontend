@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     public User login(String credential, String password, Integer type) {
 
         User user = null;
-        if(LoginTypeConstant.EMAIL.equals(type)) {
+        if (LoginTypeConstant.EMAIL.equals(type)) {
             user = userMapper.getUserByEmail(credential);
         } else if (LoginTypeConstant.ACCOUNT.equals(type)) {
             user = userMapper.getUserByAccount(credential);
@@ -43,6 +43,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void enroll(String account, String password, String email, String nickname, String avatar, Timestamp birthday, Integer gender) {
-        userMapper.enroll(account,password,email,nickname,avatar,birthday,gender);
+        userMapper.enroll(account, password, email, nickname, avatar, birthday, gender);
     }
 }

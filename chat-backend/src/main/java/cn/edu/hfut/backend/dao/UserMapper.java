@@ -1,7 +1,6 @@
 package cn.edu.hfut.backend.dao;
 
 import cn.edu.hfut.backend.entity.User;
-
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

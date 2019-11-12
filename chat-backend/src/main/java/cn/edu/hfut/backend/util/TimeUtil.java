@@ -11,13 +11,14 @@ import java.util.Date;
 
 public class TimeUtil {
 
-    private TimeUtil() {}
+    private TimeUtil() {
+    }
 
     /**
      * @author 葛学文
      * @date 2019/7/14 11:26
      */
-    public static String getFormatTime(){
+    public static String getFormatTime() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 
