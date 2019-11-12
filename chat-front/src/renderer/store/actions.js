@@ -1,7 +1,7 @@
 import {CHAT_SOCKET_MUTATION} from './mutations-type'
 
 export default {
-  async loginAction ({ state, commit }) {
+  async loginAction ({state, commit}) {
     if (state.chatSocket == null) {
       const ws = new WebSocket('ws://192.168.1.195:8002/chatSocket?token=123456')
       commit(CHAT_SOCKET_MUTATION, ws)
