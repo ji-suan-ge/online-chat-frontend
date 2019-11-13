@@ -1,6 +1,7 @@
 package cn.edu.hfut.backend.service;
 
 import cn.edu.hfut.backend.dao.FriendMapper;
+import cn.edu.hfut.backend.entity.Message;
 import cn.edu.hfut.backend.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<User> getAllFriendById(Integer userId) {
         return friendMapper.getAllFriendById(userId);
+    }
 
+    @Override
+    public List<Message> getRecord(Integer userId, Integer friendId) {
+        return friendMapper.getRecord(userId,friendId);
     }
 }
