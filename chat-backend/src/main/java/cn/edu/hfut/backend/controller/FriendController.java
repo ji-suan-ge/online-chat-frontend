@@ -1,6 +1,7 @@
 package cn.edu.hfut.backend.controller;
 
 import cn.edu.hfut.backend.dto.friend.GetAllFriendRespBean;
+import cn.edu.hfut.backend.dto.friend.GetInformationReqBean;
 import cn.edu.hfut.backend.dto.friend.GetRecordReqBean;
 import cn.edu.hfut.backend.dto.friend.GetRecordRespBean;
 import cn.edu.hfut.backend.entity.Message;
@@ -49,5 +50,14 @@ public class FriendController {
 
         GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
         return ResultUtil.success(getRecordRespBean);
+    }
+
+    @PostMapping("getInformation")
+    public Response getInformationByFriendId(@RequestBody @Valid GetInformationReqBean getInformationReqBean,
+                                             HttpSession httpSession) {
+        Integer id = getInformationReqBean.getId();
+        User user = friendService.getInformationById(id);
+        user.setPassword(null);
+        return ResultUtil.success(user);
     }
 }

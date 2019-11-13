@@ -23,4 +23,9 @@ public class FriendServiceImpl implements FriendService {
     public List<Message> getRecord(Integer userId, Integer friendId) {
         return friendMapper.getRecord(userId,friendId);
     }
+
+    @Override
+    public User getInformationById(Integer id) {
+        return friendMapper.getInformationById(id);
+    }
 }

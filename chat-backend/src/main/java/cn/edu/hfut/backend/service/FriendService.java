@@ -10,4 +10,6 @@ public interface FriendService {
     List<User> getAllFriendById(Integer id);
 
     List<Message> getRecord(Integer userId,Integer friendId);
+
+    User getInformationById(Integer id);
 }

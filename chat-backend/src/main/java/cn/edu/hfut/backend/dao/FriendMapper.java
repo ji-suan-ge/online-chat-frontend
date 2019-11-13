@@ -17,4 +17,7 @@ public interface FriendMapper {
     @Select("SELECT * from message WHERE (userId = #{userId} and friendId = #{friendId}) " +
             "or (userId = #{friendId} and friendId = #{userId})")
     List<Message> getRecord(Integer userId, Integer friendId);
+
+    @Select("SELECT * from user where ID = #{id}")
+    User getInformationById(Integer id);
 }
