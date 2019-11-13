@@ -41,18 +41,6 @@ public class UserController {
         return ResultUtil.success(user);
     }
 
-    @PostMapping("getAllFriend")
-    public Response getAllFriendById(HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        Integer userId = user.getId();
-
-        List<User> friendList = userService.getAllFriendById(userId);
-        friendList.forEach(friend -> friend.setPassword(null));
-
-        GetAllFriendRespBean getAllFriendRespBean = new GetAllFriendRespBean(friendList);
-        return ResultUtil.success(getAllFriendRespBean);
-    }
-
     @PostMapping("enroll")
     public Response enroll(@RequestBody @Valid EnrollReqBean enrollReqBean,
                            HttpSession httpSession) {

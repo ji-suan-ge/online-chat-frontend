@@ -34,8 +34,4 @@ public interface UserMapper {
             "user " +
             "WHERE user.account= #{account}")
     Integer getIdByAccount(String account);
-
-    @Select("SELECT * from user WHERE ID in ( " +
-            "SELECT friendId FROM friend WHERE friend.userId= #{userId})")
-    List<User> getAllFriendById(Integer userId);
 }

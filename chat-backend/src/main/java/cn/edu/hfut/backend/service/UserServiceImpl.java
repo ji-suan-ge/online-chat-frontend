@@ -60,11 +60,4 @@ public class UserServiceImpl implements UserService {
         }
         return Id;
     }
-
-    @Override
-    public List<User> getAllFriendById(Integer userId) {
-        return userMapper.getAllFriendById(userId);
-
-    }
-
 }
