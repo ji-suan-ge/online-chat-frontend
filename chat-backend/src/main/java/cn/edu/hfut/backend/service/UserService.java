@@ -4,7 +4,6 @@ import cn.edu.hfut.backend.entity.User;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
 

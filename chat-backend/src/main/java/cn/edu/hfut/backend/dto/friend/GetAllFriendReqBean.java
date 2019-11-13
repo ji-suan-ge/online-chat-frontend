@@ -1,4 +1,4 @@
-package cn.edu.hfut.backend.dto.user;
+package cn.edu.hfut.backend.dto.friend;
 
 import lombok.Data;
 

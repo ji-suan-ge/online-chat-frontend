@@ -10,12 +10,13 @@ import cn.edu.hfut.backend.entity.Response;
  */
 public class ResultUtil {
 
-    private ResultUtil() {}
+    private ResultUtil() {
+    }
 
     /**
      * 接口请求成功返回
      */
-    public static Response success(Object object){
+    public static Response success(Object object) {
         Response response = new Response();
         response.setCode(GlobalResponseCode.SUCCESS);
         response.setMsg("请求成功");
@@ -26,7 +27,7 @@ public class ResultUtil {
     /**
      * 接口请求成功返回
      */
-    public static Response success(){
+    public static Response success() {
         Response response = new Response();
         response.setCode(GlobalResponseCode.SUCCESS);
         response.setMsg("请求成功");
@@ -36,7 +37,7 @@ public class ResultUtil {
     /**
      * 接口请求失败返回
      */
-    public static Response error(Integer code, String resultMessage){
+    public static Response error(Integer code, String resultMessage) {
         Response response = new Response();
         response.setCode(code.toString());
         response.setMsg(resultMessage);
