@@ -1,38 +1,47 @@
 package cn.edu.hfut.backend.socket;
 
+import cn.edu.hfut.backend.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 
 @ServerEndpoint("/chatSocket")
 @Component
 public class ChatSocketServer {
+
+    static UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        ChatSocketServer.userService = userService;
+    }
+
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<ChatSocketServer> webSocketSet = new CopyOnWriteArraySet<ChatSocketServer>();
+    private static CopyOnWriteArraySet<ChatSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
+    private Integer userId;
 
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
     public void onOpen(Session session) {
-        System.out.println(session.getRequestParameterMap());
         this.session = session;
         webSocketSet.add(this);
-
-        try {
-            String random = RandomStringUtils.randomAlphabetic(10);
-            sendMessage(random);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Map<String, List<String>> paras = session.getRequestParameterMap();
+        this.userId = Integer.parseInt(paras.get("token").get(0));
+        System.out.println(userId);
     }
 
     /**
@@ -51,8 +60,7 @@ public class ChatSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("message in" + session.getId());
-        System.out.println(message);
+        System.out.println("message:" + message);
 //        //群发消息
 //        for (ChatSocketServer item : webSocketSet) {
 //            try {

@@ -3,6 +3,7 @@ package cn.edu.hfut.backend.controller;
 
 import cn.edu.hfut.backend.dto.user.EnrollReqBean;
 import cn.edu.hfut.backend.dto.user.LoginReqBean;
+import cn.edu.hfut.backend.dto.user.GetAllFriendReqBean;
 import cn.edu.hfut.backend.entity.Response;
 import cn.edu.hfut.backend.entity.User;
 import cn.edu.hfut.backend.service.UserService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -26,7 +29,7 @@ public class UserController {
 
     @PostMapping("login")
     public Response login(@RequestBody @Valid LoginReqBean loginReqBean,
-                          HttpSession httpSession) {
+                         HttpSession httpSession) {
 
         String credential = loginReqBean.getCredential();
         String password = loginReqBean.getPassword();
@@ -39,9 +42,22 @@ public class UserController {
         return ResultUtil.success(user);
     }
 
+    @PostMapping("getAllFriend")
+    public Response getAllFriendById(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        Integer userId = user.getId();
+
+        List<User> users= userService.getAllFriendById(userId);
+
+        for (int i=0;i < users.size();i++)
+            users.get(i).setPassword(null);
+        httpSession.setAttribute("users", users);
+        return ResultUtil.success(users);
+    }
+
     @PostMapping("enroll")
     public Response enroll(@RequestBody @Valid EnrollReqBean enrollReqBean,
-                           HttpSession httpSession) {
+                          HttpSession httpSession) {
 
         String account = enrollReqBean.getAccount();
         String password = enrollReqBean.getPassword();
@@ -51,7 +67,7 @@ public class UserController {
         Timestamp birthday = enrollReqBean.getBirthday();
         Integer gender = enrollReqBean.getGender();
 
-        userService.enroll(account, password, email, nickname, avatar, birthday, gender);
+        userService.enroll(account,password,email,nickname,avatar,birthday,gender);
         return ResultUtil.success();
     }
 }

@@ -19,7 +19,6 @@ public class RedisConfig {
 
     /**
      * retemplate相关配置
-     *
      * @param factory
      * @return
      */

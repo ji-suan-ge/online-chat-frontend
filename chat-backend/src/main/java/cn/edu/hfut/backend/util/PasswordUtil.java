@@ -6,8 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordUtil {
 
-    private PasswordUtil() {
-    }
+    private PasswordUtil(){}
 
 
     public static String encode(String plainPassword) {
@@ -15,17 +14,16 @@ public class PasswordUtil {
         return encodeSha_256(plainPassword);
     }
 
-    public static boolean checkPassword(String plainPassword, String encodePassword) {
+     public static boolean checkPassword(String plainPassword, String encodePassword) {
 
         return encodeSha_256(plainPassword).equals(encodePassword);
     }
 
     /**
      * 利用java原生的摘要实现SHA256加密
-     *
      * @return str 加密后的报文
      */
-    public static String encodeSha_256(String str) {
+    public static String encodeSha_256(String str){
 
         MessageDigest messageDigest;
         String encodeStr = "";
@@ -44,14 +42,14 @@ public class PasswordUtil {
     /**
      * 将byte转为16进制
      */
-    private static String byte2Hex(byte[] bytes) {
+    private static String byte2Hex(byte[] bytes){
 
         StringBuilder stringBuilder = new StringBuilder();
         String temp;
 
-        for (int i = 0; i < bytes.length; i++) {
+        for (int i=0;i<bytes.length;i++){
             temp = Integer.toHexString(bytes[i] & 0xFF);
-            if (temp.length() == 1) {
+            if (temp.length()==1){
                 // 1得到一位的进行补0操作
                 stringBuilder.append("0");
             }
