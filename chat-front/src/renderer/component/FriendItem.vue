@@ -2,7 +2,7 @@
   <el-row type="flex" justify="space-between"
           :class="active ? 'activeChat' : ''"
           @click.native="changeChat">
-      <el-image :src="user.avatar" class="avatar"></el-image>
+      <el-avatar :size="size" :src="user.avatar" class="avatar"></el-avatar>
       <p v-text="user.nickname" class="nickname"></p>
   </el-row>
 </template>

@@ -43,10 +43,13 @@
           if (res.data.code === globalRespCode.SUCCESS) {
             this.$message({
               type: 'success',
-              message: '登陆成功！'
+              message: '登录成功！'
             })
             this.user.token = res.data.data.id
-            this.$store.dispatch('loginAction', this.user.token)
+            this.$store.dispatch('loginAction', {
+              token: this.user.token,
+              user: res.data.data
+            })
             this.$router.push({
               name: 'main-page'
             })

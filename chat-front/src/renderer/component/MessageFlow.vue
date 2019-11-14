@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main>
-      <el-row v-for="message in messageList" :key="message.id" v-text="message.content"></el-row>
+      <MessageItem v-for="message in messageList" :key="message.id" :message="message"></MessageItem>
     </el-main>
   </el-container>
 </template>
@@ -9,9 +9,11 @@
 <script>
     import messageUrl from '../constant/url/messageUrl'
     import globalRespCode from '../constant/code/globalRespCode'
+    import MessageItem from './MessageItem'
 
 export default {
       name: 'MessageFlow',
+      components: {MessageItem},
       data () {
         return {
           messageList: []
@@ -22,7 +24,6 @@ export default {
           this.axios.post(messageUrl.getList, {
             friendId: this.getCurrentChat
           }).then(res => {
-            console.log(res)
             let resp = res.data
             if (resp.code === globalRespCode.SUCCESS) {
               this.messageList = resp.data.messageList
