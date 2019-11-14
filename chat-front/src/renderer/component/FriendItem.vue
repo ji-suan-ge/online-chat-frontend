@@ -11,9 +11,14 @@
     export default {
       name: 'FriendItem',
       props: ['user', 'active'],
+      computed: {
+        currentChat () {
+          return this.$store.getters.currentChat
+        }
+      },
       methods: {
         changeChat () {
-          if (this.$store.getters.currentChat !== this.user.id) {
+          if (this.currentChat !== this.user.id) {
             this.$store.dispatch('changeCurrentChatAction', this.user.id)
           }
         }

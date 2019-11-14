@@ -3,9 +3,10 @@
         <el-header>Header</el-header>
         <el-container>
             <el-aside width="260px">
-                <FriendItem v-for="friend in friendList" :key="friend.id"
+                <FriendItem v-for="friend in friendList"
+                            :key="friend.id"
                             :user="friend"
-                            :active="$store.getters.currentChat === friend.id"></FriendItem>
+                            :active="currentChat === friend.id"></FriendItem>
             </el-aside>
             <el-main>
                 <MessageFlow></MessageFlow>
@@ -35,6 +36,9 @@ export default {
         },
         online () {
           return this.$store.getters.online
+        },
+        currentChat () {
+          return this.$store.getters.currentChat
         }
       },
       methods: {
@@ -43,7 +47,6 @@ export default {
             const data = res.data
             if (data.code === globalRespCode.SUCCESS) {
               this.$store.dispatch('changeFriendListAction', data.data.friendList)
-              // this.friendList = data.data.friendList
               if (this.friendList.length > 0) {
                 this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
               }

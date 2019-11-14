@@ -8,7 +8,7 @@
             <span>{{ message.date | time }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
-            <el-avatar size="large" :src="myMessage ? this.$store.getters.user.avatar : friend.avatar" class="avatar"></el-avatar>
+            <el-avatar size="large" :src="myMessage ? this.user.avatar : friend.avatar" class="avatar"></el-avatar>
             <div class="text">{{ message.content }}</div>
           </div>
     </div>
@@ -21,16 +21,21 @@
       props: ['message'],
       computed: {
         myMessage () {
-          return this.message.userId === this.$store.getters.user.id
+          return this.message.userId === this.user.id
         },
         friend () {
-          const list = this.$store.getters.friendList
-          for (const friend of list) {
+          for (const friend of this.friendList) {
             console.log(friend)
             if (friend.id === this.message.friendId || friend.id === this.message.userId) {
               return friend
             }
           }
+        },
+        user () {
+          return this.$store.getters.user
+        },
+        friendList () {
+          return this.$store.getters.friendList
         }
       },
       directives: {
@@ -41,7 +46,6 @@
         }
       },
       filters: {
-        // 将日期过滤为 hour:minutes
         time (date) {
           date = '2019-09-10'
           if (typeof date === 'string') {
