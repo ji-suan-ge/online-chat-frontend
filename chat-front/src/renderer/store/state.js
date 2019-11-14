@@ -1,7 +1,10 @@
-const local = sessionStorage.getItem('state')
+const local = localStorage.getItem('state')
+console.log('localStorage')
+console.log(local)
 const state = local ? JSON.parse(local) : {
   chatSocket: {},
   currentChat: -1,
-  user: {}
+  user: {},
+  friendList: []
 }
 export default state

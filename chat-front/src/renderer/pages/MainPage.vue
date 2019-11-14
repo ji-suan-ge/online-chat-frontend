@@ -25,7 +25,11 @@ export default {
       components: {MessageFlow, FriendItem},
       data () {
         return {
-          friendList: []
+        }
+      },
+      computed: {
+        friendList () {
+          return this.$store.getters.friendList
         }
       },
       methods: {
@@ -33,7 +37,8 @@ export default {
           this.axios.post(friendUrl.getList).then(res => {
             const data = res.data
             if (data.code === globalRespCode.SUCCESS) {
-              this.friendList = data.data.friendList
+              this.$store.dispatch('changeFriendListAction', data.data.friendList)
+              // this.friendList = data.data.friendList
               if (this.friendList.length > 0) {
                 this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
               }

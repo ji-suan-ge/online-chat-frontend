@@ -42,6 +42,7 @@ export default {
         }
       },
       created () {
+        this.getMessageList()
       },
       watch: {
         getCurrentChat (val) {
@@ -57,5 +58,9 @@ export default {
 </script>
 
 <style scoped>
+  .el-main {
+    margin: 0;
+    padding: 0;
+  }
 
 </style>

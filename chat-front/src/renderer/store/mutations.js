@@ -1,4 +1,4 @@
-import {CHAT_SOCKET_MUTATION, CURRENT_CHAT_MUTATION, USER_MUTATION} from './mutations-type'
+import {CHAT_SOCKET_MUTATION, CURRENT_CHAT_MUTATION, FRIEND_LIST_MUTATION, USER_MUTATION} from './mutations-type'
 
 export default {
   [CHAT_SOCKET_MUTATION] (state, socket) {
@@ -9,5 +9,8 @@ export default {
   },
   [USER_MUTATION] (state, user) {
     state.user = user
+  },
+  [FRIEND_LIST_MUTATION] (state, friendList) {
+    state.friendList = friendList
   }
 }
