@@ -3,11 +3,11 @@
         <el-header id="editBar" height="5vh"></el-header>
         <el-main id="inputArea">
             <el-input type="textarea"
-                    :rows="2"
-                    placeholder="请输入内容"
-                    v-model="textarea"
-            id="inputK"
-            resize="none">
+                      :rows="2"
+                      placeholder="请输入内容"
+                      v-model="textarea"
+                      id="inputK"
+                      resize="none">
             </el-input>
         </el-main>
     </el-container>
@@ -16,14 +16,14 @@
 <script>
     export default {
       name: 'MessageEdit',
-      computed: {
-        chatSocket () {
-          return this.$store.getters.chatSocket
-        }
-      },
       data () {
         return {
           textarea: ''
+        }
+      },
+      computed: {
+        chatSocket () {
+          return this.$store.getters.chatSocket
         }
       },
       methods: {

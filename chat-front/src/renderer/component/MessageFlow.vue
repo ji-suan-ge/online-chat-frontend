@@ -20,6 +20,11 @@ export default {
           messageList: []
         }
       },
+      computed: {
+        getCurrentChat () {
+          return this.$store.getters.currentChat
+        }
+      },
       methods: {
         getMessageList () {
           this.axios.post(messageUrl.getList, {
@@ -48,11 +53,6 @@ export default {
       watch: {
         getCurrentChat (val) {
           this.getMessageList()
-        }
-      },
-      computed: {
-        getCurrentChat () {
-          return this.$store.getters.currentChat
         }
       }
 }

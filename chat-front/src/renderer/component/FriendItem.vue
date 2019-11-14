@@ -1,5 +1,6 @@
 <template>
-  <el-row type="flex" justify="space-between"
+  <el-row type="flex"
+          justify="space-between"
           :class="{activeChat: active}"
           @click.native="changeChat">
       <el-avatar size="medium" :src="user.avatar" class="avatar"></el-avatar>
