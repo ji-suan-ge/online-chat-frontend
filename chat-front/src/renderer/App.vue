@@ -16,4 +16,10 @@
         margin: 0;
         padding: 0;
     }
+    #app {
+        height: 100vh;
+    }
+    .el-header {
+        -webkit-app-region: drag;
+    }
 </style>

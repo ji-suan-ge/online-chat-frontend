@@ -31,12 +31,13 @@
         user: {
           credential: '',
           password: '',
-          type: loginTypeConstant.ACCOUNT
+          type: loginTypeConstant.ACCOUNT,
+          token: '1'
         }
       }
     },
     methods: {
-      onSubmit () {
+      onSubmit: function () {
         this.axios.post(userUrl.login, this.user).then(res => {
           console.log(res.data)
           if (res.data.code === globalRespCode.SUCCESS) {
@@ -44,7 +45,11 @@
               type: 'success',
               message: '登陆成功！'
             })
-            this.$store.dispatch('loginAction')
+            this.user.token = res.data.data.id
+            this.$store.dispatch('loginAction', this.user.token)
+            this.$router.push({
+              name: 'main-page'
+            })
           }
         })
       }
@@ -54,9 +59,8 @@
 
 <style scoped>
     .el-header {
-        -webkit-app-region: drag;
+        background-color: aliceblue;
     }
-
     .loginForm {
         width: 60vw;
         text-align: center;
