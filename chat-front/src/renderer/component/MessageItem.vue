@@ -25,7 +25,6 @@
         },
         friend () {
           for (const friend of this.friendList) {
-            console.log(friend)
             if (friend.id === this.message.friendId || friend.id === this.message.userId) {
               return friend
             }

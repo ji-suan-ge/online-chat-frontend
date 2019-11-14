@@ -1,6 +1,4 @@
 const local = localStorage.getItem('state')
-console.log('localStorage')
-console.log(local)
 const state = local ? JSON.parse(local) : {
   chatSocket: null,
   currentChat: -1,

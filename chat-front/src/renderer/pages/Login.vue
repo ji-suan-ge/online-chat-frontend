@@ -39,7 +39,6 @@
     methods: {
       onSubmit: function () {
         this.axios.post(userUrl.login, this.user).then(res => {
-          console.log(res.data)
           if (res.data.code === globalRespCode.SUCCESS) {
             this.$message({
               type: 'success',
