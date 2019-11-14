@@ -7,9 +7,7 @@
                             :user="friend"
                             :active="$store.getters.currentChat === friend.id"></FriendItem>
             </el-aside>
-            <el-main>
-                <MessageFlow></MessageFlow>
-            </el-main>
+            <ChatWindow></ChatWindow>
         </el-container>
     </el-container>
 </template>
@@ -19,10 +17,12 @@
     import globalRespCode from '../constant/code/globalRespCode'
     import FriendItem from '../component/FriendItem'
     import MessageFlow from '../component/MessageFlow'
+    import MessageEdit from '../component/MessageEdit'
+    import ChatWindow from '../component/ChatWindow'
 
 export default {
       name: 'MainPage',
-      components: {MessageFlow, FriendItem},
+      components: {ChatWindow, MessageEdit, MessageFlow, FriendItem},
       data () {
         return {
         }
@@ -30,6 +30,9 @@ export default {
       computed: {
         friendList () {
           return this.$store.getters.friendList
+        },
+        online () {
+          return this.$store.getters.online
         }
       },
       methods: {
@@ -61,6 +64,16 @@ export default {
         if (this.friendList.length > 0) {
           this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
         }
+      },
+      watch: {
+        online (val) {
+          if (!val) {
+            this.$message({
+              type: 'error',
+              message: 'offline!'
+            })
+          }
+        }
       }
     }
 </script>
@@ -70,7 +83,7 @@ export default {
         background-color: aliceblue;
     }
     .el-aside {
-        height: 89vh;
+        height: 91.39vh;
         background-color: azure;
     }
 </style>

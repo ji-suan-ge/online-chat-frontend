@@ -8,7 +8,7 @@
                         <el-input v-model="user.credential"></el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-input v-model="user.password"></el-input>
+                        <el-input v-model="user.password" type="password"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">登录</el-button>
@@ -29,8 +29,8 @@
     data () {
       return {
         user: {
-          credential: '',
-          password: '',
+          credential: '123',
+          password: '666',
           type: loginTypeConstant.ACCOUNT,
           token: '1'
         }

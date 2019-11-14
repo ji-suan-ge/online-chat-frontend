@@ -8,7 +8,6 @@
             <span>{{ message.date | time }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
-            <img />
             <el-avatar size="large" :src="myMessage ? this.$store.getters.user.avatar : friend.avatar" class="avatar"></el-avatar>
             <div class="text">{{ message.content }}</div>
           </div>

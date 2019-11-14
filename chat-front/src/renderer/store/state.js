@@ -2,9 +2,10 @@ const local = localStorage.getItem('state')
 console.log('localStorage')
 console.log(local)
 const state = local ? JSON.parse(local) : {
-  chatSocket: {},
+  chatSocket: null,
   currentChat: -1,
   user: {},
-  friendList: []
+  friendList: [],
+  online: false
 }
 export default state

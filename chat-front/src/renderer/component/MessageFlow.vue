@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-main>
+    <el-main id="messageFlow">
       <MessageItem v-for="message in messageList" :key="message.id" :message="message"></MessageItem>
     </el-main>
   </el-container>
@@ -10,10 +10,11 @@
     import messageUrl from '../constant/url/messageUrl'
     import globalRespCode from '../constant/code/globalRespCode'
     import MessageItem from './MessageItem'
+    import MessageEdit from './MessageEdit'
 
 export default {
       name: 'MessageFlow',
-      components: {MessageItem},
+      components: {MessageEdit, MessageItem},
       data () {
         return {
           messageList: []
@@ -61,6 +62,9 @@ export default {
   .el-main {
     margin: 0;
     padding: 0;
+  }
+  #messageFlow {
+    height: 60vh;
   }
 
 </style>

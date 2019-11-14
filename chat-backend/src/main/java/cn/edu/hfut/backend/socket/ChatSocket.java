@@ -1,6 +1,9 @@
 package cn.edu.hfut.backend.socket;
 
+import cn.edu.hfut.backend.dto.socket.SocketMessage;
 import cn.edu.hfut.backend.service.UserService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +17,17 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint("/chatSocket")
 @Component
-public class ChatSocketServer {
+public class ChatSocket {
 
     static UserService userService;
 
     @Autowired
     public void setUserService(UserService userService) {
-        ChatSocketServer.userService = userService;
+        ChatSocket.userService = userService;
     }
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<ChatSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
+    private static CopyOnWriteArraySet<ChatSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
@@ -59,6 +62,11 @@ public class ChatSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("message:" + message);
+        System.out.println("userId: " + this.userId);
+        SocketMessage socketMessage = JSON.parseObject(message, SocketMessage.class);
+        System.out.println("friendId: " + socketMessage.getFriendId());
+        System.out.println("content: " + socketMessage.getContent());
+
 //        //群发消息
 //        for (ChatSocketServer item : webSocketSet) {
 //            try {

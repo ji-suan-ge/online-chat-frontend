@@ -1,4 +1,10 @@
-import {CHAT_SOCKET_MUTATION, CURRENT_CHAT_MUTATION, FRIEND_LIST_MUTATION, USER_MUTATION} from './mutations-type'
+import {
+  CHAT_SOCKET_MUTATION,
+  CURRENT_CHAT_MUTATION,
+  FRIEND_LIST_MUTATION,
+  ONLINE_MUTATION,
+  USER_MUTATION
+} from './mutations-type'
 
 export default {
   [CHAT_SOCKET_MUTATION] (state, socket) {
@@ -12,5 +18,8 @@ export default {
   },
   [FRIEND_LIST_MUTATION] (state, friendList) {
     state.friendList = friendList
+  },
+  [ONLINE_MUTATION] (state, online) {
+    state.online = online
   }
 }
