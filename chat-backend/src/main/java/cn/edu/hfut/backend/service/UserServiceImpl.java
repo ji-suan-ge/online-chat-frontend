@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -44,5 +45,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void enroll(String account, String password, String email, String nickname, String avatar, Timestamp birthday, Integer gender) {
         userMapper.enroll(account, password, email, nickname, avatar, birthday, gender);
+    }
+
+    public Integer getIdByCredential(String credential, Integer type) {
+
+        Integer Id = null;
+        if (LoginTypeConstant.EMAIL.equals(type)) {
+            Id = userMapper.getIdByEmail(credential);
+        } else if (LoginTypeConstant.ACCOUNT.equals(type)) {
+            Id = userMapper.getIdByEmail(credential);
+        } else {
+            throw new InvalidLoginTypeException(type);
+        }
+        return Id;
     }
 }

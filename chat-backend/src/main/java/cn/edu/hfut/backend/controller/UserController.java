@@ -1,6 +1,7 @@
 package cn.edu.hfut.backend.controller;
 
 
+import cn.edu.hfut.backend.dto.friend.GetAllFriendRespBean;
 import cn.edu.hfut.backend.dto.user.EnrollReqBean;
 import cn.edu.hfut.backend.dto.user.LoginReqBean;
 import cn.edu.hfut.backend.entity.Response;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
