@@ -83,7 +83,7 @@
       font-size: 16px;
       text-align: left;
       word-break: break-all;
-      background-color: #fafafa;
+      background-color: #f8f8f8;
       border-radius: 4px;
       &:before {
         content: " ";
@@ -101,12 +101,12 @@
         margin: 0 0 0 10px;
       }
       .text {
-        background-color: #b2e281;
+        background-color: #e3f9ff;
         &:before {
           right: inherit;
           left: 100%;
           border-right-color: transparent;
-          border-left-color: #b2e281;
+          border-left-color: #e3f9ff;
         }
       }
     }

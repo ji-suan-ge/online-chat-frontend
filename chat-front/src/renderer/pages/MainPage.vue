@@ -7,7 +7,10 @@
                             :user="friend"
                             :active="$store.getters.currentChat === friend.id"></FriendItem>
             </el-aside>
-            <ChatWindow></ChatWindow>
+            <el-main>
+                <MessageFlow></MessageFlow>
+                <MessageEdit></MessageEdit>
+            </el-main>
         </el-container>
     </el-container>
 </template>
@@ -18,11 +21,10 @@
     import FriendItem from '../component/FriendItem'
     import MessageFlow from '../component/MessageFlow'
     import MessageEdit from '../component/MessageEdit'
-    import ChatWindow from '../component/ChatWindow'
 
 export default {
       name: 'MainPage',
-      components: {ChatWindow, MessageEdit, MessageFlow, FriendItem},
+      components: {MessageEdit, MessageFlow, FriendItem},
       data () {
         return {
         }
@@ -80,10 +82,10 @@ export default {
 
 <style scoped>
     .el-header {
-        background-color: aliceblue;
+        background-color: #f0f5fb;
     }
-    .el-aside {
-        height: 91.39vh;
-        background-color: azure;
+    .el-main {
+        margin: 0;
+        padding: 0;
     }
 </style>
