@@ -7,7 +7,8 @@
                       placeholder="请输入内容"
                       v-model="textarea"
                       id="inputK"
-                      resize="none">
+                      resize="none"
+                      @keydown.enter.native.prevent="sendMessage">
             </el-input>
         </el-main>
     </el-container>
@@ -24,14 +25,28 @@
       computed: {
         chatSocket () {
           return this.$store.getters.chatSocket
+        },
+        currentChat () {
+          return this.$store.getters.currentChat
         }
       },
       methods: {
         sendMessage () {
           this.chatSocket.send(JSON.stringify({
-            friendId: 123,
-            content: 'Hello'
+            friendId: this.currentChat,
+            content: this.textarea
           }))
+          let message = {
+            'id': 222,
+            'userId': 1,
+            'friendId': this.currentChat,
+            'groupId': null,
+            'type': 1,
+            'content': this.textarea,
+            'time': '2019-11-14T11:13:51.000+0000'
+          }
+          this.$emit('newmessageevent', message)
+          this.textarea = ''
         }
       }
     }

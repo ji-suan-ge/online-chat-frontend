@@ -17,12 +17,14 @@ export default {
       components: {MessageEdit, MessageItem},
       data () {
         return {
-          messageList: []
         }
       },
       computed: {
         getCurrentChat () {
           return this.$store.getters.currentChat
+        },
+        messageList () {
+          return this.$store.getters.messageList
         }
       },
       methods: {
@@ -32,7 +34,7 @@ export default {
           }).then(res => {
             let resp = res.data
             if (resp.code === globalRespCode.SUCCESS) {
-              this.messageList = resp.data.messageList
+              this.$store.dispatch('changeMessageListAction', resp.data.messageList)
             } else {
               this.$message({
                 type: 'error',
@@ -49,6 +51,9 @@ export default {
       },
       created () {
         this.getMessageList()
+      },
+      updated () {
+        document.getElementById('messageFlow').scrollTop = 9999999999999999999
       },
       watch: {
         getCurrentChat (val) {

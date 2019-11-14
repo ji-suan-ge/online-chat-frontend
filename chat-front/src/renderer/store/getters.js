@@ -3,5 +3,6 @@ export default {
   currentChat: state => state.currentChat,
   user: state => state.user,
   friendList: state => state.friendList,
-  online: state => state.online
+  online: state => state.online,
+  messageList: state => state.messageList
 }

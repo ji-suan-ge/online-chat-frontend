@@ -10,7 +10,7 @@
             </el-aside>
             <el-main>
                 <MessageFlow></MessageFlow>
-                <MessageEdit></MessageEdit>
+                <MessageEdit @newmessageevent="getNewMessage"></MessageEdit>
             </el-main>
         </el-container>
     </el-container>
@@ -62,6 +62,9 @@ export default {
               message: 'get friend list failed!'
             })
           })
+        },
+        getNewMessage (event) {
+          this.$store.dispatch('addMessageAction', event)
         }
       },
       created () {

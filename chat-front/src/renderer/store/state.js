@@ -4,6 +4,7 @@ const state = local ? JSON.parse(local) : {
   currentChat: -1,
   user: {},
   friendList: [],
-  online: false
+  online: false,
+  messageList: []
 }
 export default state

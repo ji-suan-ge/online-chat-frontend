@@ -1,7 +1,8 @@
 import {
+  ADD_MESSAGE_MUTATION,
   CHAT_SOCKET_MUTATION,
   CURRENT_CHAT_MUTATION,
-  FRIEND_LIST_MUTATION,
+  FRIEND_LIST_MUTATION, MESSAGE_LIST_MUTATION,
   ONLINE_MUTATION,
   USER_MUTATION
 } from './mutations-type'
@@ -27,6 +28,14 @@ export default {
   },
   async changeFriendListAction ({state, commit}, friendList) {
     commit(FRIEND_LIST_MUTATION, friendList)
+    localStorage.setItem('state', JSON.stringify(state))
+  },
+  async addMessageAction ({state, commit}, message) {
+    commit(ADD_MESSAGE_MUTATION, message)
+    localStorage.setItem('state', JSON.stringify(state))
+  },
+  async changeMessageListAction ({state, commit}, messageList) {
+    commit(MESSAGE_LIST_MUTATION, messageList)
     localStorage.setItem('state', JSON.stringify(state))
   }
 }
