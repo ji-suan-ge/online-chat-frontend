@@ -1,6 +1,10 @@
 package cn.edu.hfut.backend.socket;
 
+import cn.edu.hfut.backend.constant.socket.MessageTypeConstant;
+import cn.edu.hfut.backend.dto.socket.PrivateMessage;
 import cn.edu.hfut.backend.dto.socket.SocketMessage;
+import cn.edu.hfut.backend.entity.User;
+import cn.edu.hfut.backend.exception.UserNotFoundException;
 import cn.edu.hfut.backend.service.UserService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +29,8 @@ public class ChatSocket {
         ChatSocket.userService = userService;
     }
 
-    //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
     private static CopyOnWriteArraySet<ChatSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
-    //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
     private Integer userId;
 
@@ -52,28 +54,35 @@ public class ChatSocket {
         System.out.println("message:" + message);
         System.out.println("userId: " + this.userId);
         SocketMessage socketMessage = JSON.parseObject(message, SocketMessage.class);
-//        System.out.println("friendId: " + socketMessage.getFriendId());
-//        System.out.println("content: " + socketMessage.getContent());
+        System.out.println(socketMessage);
+        String messageType = socketMessage.getMessageType();
+        String data = socketMessage.getData();
 
-//        //群发消息
-//        for (ChatSocketServer item : webSocketSet) {
-//            try {
-//                item.sendMessage(message);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (MessageTypeConstant.PRIVATE_MESSAGE.equals(messageType)) {
+            handlePrivateMessage(data);
+        }
     }
 
-    @OnError
-    public void onError(Session session, Throwable error) {
-        error.printStackTrace();
+    private void handlePrivateMessage(String data) {
+        PrivateMessage privateMessage = JSON.parseObject(data, PrivateMessage.class);
+        Integer friendId = privateMessage.getFriendId();
+        String content = privateMessage.getContent();
+//        User friend = userService.getById(friendId);
+        User user = new User();
+        if (user == null) {
+            throw new UserNotFoundException(String.valueOf(friendId));
+        }
+
     }
 
     public void sendMessage(String message) throws IOException {
         this.session.getAsyncRemote().sendText(message);
     }
 
+    @OnError
+    public void onError(Session session, Throwable error) {
+        error.printStackTrace();
+    }
 
 //    /**
 //     * 群发自定义消息

@@ -32,19 +32,15 @@
       },
       methods: {
         sendMessage () {
-          this.chatSocket.send(JSON.stringify({
-            friendId: this.currentChat,
-            content: this.textarea
-          }))
           let message = {
-            'id': 222,
-            'userId': 1,
             'friendId': this.currentChat,
-            'groupId': null,
-            'type': 1,
-            'content': this.textarea,
-            'time': '2019-11-14T11:13:51.000+0000'
+            'content': this.textarea
           }
+          let socketMessage = {
+            messageType: '1001',
+            data: message
+          }
+          this.chatSocket.send(JSON.stringify(socketMessage))
           this.$emit('newmessageevent', message)
           this.textarea = ''
         }
