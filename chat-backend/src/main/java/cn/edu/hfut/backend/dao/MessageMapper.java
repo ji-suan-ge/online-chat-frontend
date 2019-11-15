@@ -27,14 +27,18 @@ public interface MessageMapper {
             "or ( userId = #{userId} and friendId = #{friendId} and type = 1 and state = 2)")
     List<Message> selectIsPullMessage(Integer userId, Integer friendId);
 
+    @Select("SELECT * from message WHERE  " +
+            " userId != #{userId} and groupId = #{groupId} and type = 2 and state = 2")
+    List<Message> selectIsPullGroupMessage(Integer userId, Integer groupId);
+
     @Update("UPDATE message SET state = 2 WHERE (userId = #{userId} and friendId = #{friendId} and type = 1 and state = 1)"+
             " or (userId = #{friendId} and friendId = #{userId} and type = 1 and state = 1)")
     void updateMessage(Integer userId, Integer friendId);
 
-    @Update("UPDATE message SET state = 2 WHERE (userId = #{userId} and groupId = #{groupId} and type = 1 and state = 1)")
+    @Update("UPDATE message SET state = 2 WHERE userId = #{userId} and groupId = #{groupId} and type = 2 and state = 1")
     void updateGroupMessage(Integer userId, Integer groupId);
 
     @Select("SELECT * from message WHERE  " +
-            " userId = #{userId} and groupId = #{groupId} and type = 2 and state = 1")
+            " userId != #{userId} and groupId = #{groupId} and type = 2 and state = 1")
     List<Message> selectNotPullGroupMessage(Integer userId, Integer groupId);
 }
