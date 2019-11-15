@@ -6,7 +6,9 @@ import cn.edu.hfut.backend.entity.User;
 import cn.edu.hfut.backend.exception.InvalidLoginTypeException;
 import cn.edu.hfut.backend.exception.InvalidPasswordException;
 import cn.edu.hfut.backend.exception.UserNotFoundException;
+import cn.edu.hfut.backend.util.EmailUtil;
 import cn.edu.hfut.backend.util.PasswordUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,16 +49,39 @@ public class UserServiceImpl implements UserService {
         userMapper.enroll(account, password, email, nickname, avatar, birthday, gender);
     }
 
-    public Integer getIdByCredential(String credential, Integer type) {
+    @Override
+    public String sendEmailCode(String email) {
+        String emailCode = RandomStringUtils.randomAlphanumeric(4);
+        String content = "您的邮箱验证码为：" + emailCode;
+        String subject = "邮箱验证码";
+        EmailUtil.send(email, subject, content);
+        return emailCode;
+    }
 
-        Integer Id = null;
-        if (LoginTypeConstant.EMAIL.equals(type)) {
-            Id = userMapper.getIdByEmail(credential);
-        } else if (LoginTypeConstant.ACCOUNT.equals(type)) {
-            Id = userMapper.getIdByEmail(credential);
-        } else {
-            throw new InvalidLoginTypeException(type);
+    @Override
+    public User getByAccount(String account) {
+        User user = userMapper.getByAccount(account);
+        if (user == null) {
+            throw new UserNotFoundException(account);
         }
-        return Id;
+        return user;
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        User user = userMapper.getByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException(email);
+        }
+        return user;
+    }
+
+    @Override
+    public User getById(Integer id) {
+        User user = userMapper.getUserById(id);
+        if (user == null) {
+            throw new UserNotFoundException(String.valueOf(id));
+        }
+        return user;
     }
 }
