@@ -13,6 +13,14 @@ export default new Router({
       path: '/main',
       name: 'main-page',
       component: require('@/pages/MainPage').default
+    }, {
+      path: '/register',
+      name: 'register-page',
+      component: require('@/pages/Register').default
+    }, {
+      path: '/registerSuccess',
+      name: 'registerSuccess-page',
+      component: require('@/pages/RegisterSuccess').default
     }
   ]
 })

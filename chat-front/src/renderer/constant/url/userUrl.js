@@ -1,3 +1,5 @@
 export default {
-  login: '/user/login'
+  login: '/user/login',
+  captcha: '/user/registerCode',
+  register: '/user/enroll'
 }
