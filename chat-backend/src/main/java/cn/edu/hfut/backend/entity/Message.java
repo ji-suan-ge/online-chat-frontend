@@ -17,4 +17,5 @@ public class Message {
     private Integer type;
     private String content;
     private Timestamp time;
+    private Integer state;
 }

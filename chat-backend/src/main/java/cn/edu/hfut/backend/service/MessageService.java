@@ -10,5 +10,6 @@ public interface MessageService {
 
     List<Message> getMessage(Integer userId, Integer friendId);
 
-    void sendMessage(Integer userId, Integer friendId, Integer groupId, Integer type, String content, Timestamp timestamp);
+    Message addMessage(Integer userId, Integer friendId, Integer groupId,
+                    Integer type, String content, Timestamp timestamp, Integer messageState);
 }

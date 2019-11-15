@@ -16,11 +16,14 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getMessage(Integer userId, Integer friendId) {
-        return messageMapper.getMessage(userId, friendId);
+        return messageMapper.selectMessage(userId, friendId);
     }
 
     @Override
-    public void sendMessage(Integer userId, Integer friendId, Integer groupId, Integer type, String content, Timestamp timestamp) {
-        messageMapper.sendMessage(userId, friendId, groupId, type, content, timestamp);
+    public Message addMessage(Integer userId, Integer friendId, Integer groupId,
+                           Integer type, String content, Timestamp timestamp, Integer messageState) {
+        Message message = new Message(null, userId, friendId, groupId, type, content, timestamp, messageState);
+        messageMapper.insertMessage(message);
+        return message;
     }
 }

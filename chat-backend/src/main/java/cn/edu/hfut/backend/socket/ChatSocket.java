@@ -1,10 +1,12 @@
 package cn.edu.hfut.backend.socket;
 
-import cn.edu.hfut.backend.constant.socket.MessageTypeConstant;
+import cn.edu.hfut.backend.constant.message.MessageState;
+import cn.edu.hfut.backend.constant.message.MessageType;
+import cn.edu.hfut.backend.constant.socket.SocketMessageType;
 import cn.edu.hfut.backend.dto.socket.PrivateMessage;
 import cn.edu.hfut.backend.dto.socket.SocketMessage;
-import cn.edu.hfut.backend.entity.User;
-import cn.edu.hfut.backend.exception.UserNotFoundException;
+import cn.edu.hfut.backend.entity.Message;
+import cn.edu.hfut.backend.service.MessageService;
 import cn.edu.hfut.backend.service.UserService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -24,9 +27,16 @@ public class ChatSocket {
 
     static UserService userService;
 
+    static MessageService messageService;
+
     @Autowired
     public void setUserService(UserService userService) {
         ChatSocket.userService = userService;
+    }
+
+    @Autowired
+    public void setMessageService(MessageService messageService) {
+        ChatSocket.messageService = messageService;
     }
 
     private static CopyOnWriteArraySet<ChatSocket> webSocketSet = new CopyOnWriteArraySet<>();
@@ -58,7 +68,7 @@ public class ChatSocket {
         String messageType = socketMessage.getMessageType();
         String data = socketMessage.getData();
 
-        if (MessageTypeConstant.PRIVATE_MESSAGE.equals(messageType)) {
+        if (SocketMessageType.PRIVATE_MESSAGE.equals(messageType)) {
             handlePrivateMessage(data);
         }
     }
@@ -67,12 +77,32 @@ public class ChatSocket {
         PrivateMessage privateMessage = JSON.parseObject(data, PrivateMessage.class);
         Integer friendId = privateMessage.getFriendId();
         String content = privateMessage.getContent();
-//        User friend = userService.getById(friendId);
-        User user = new User();
-        if (user == null) {
-            throw new UserNotFoundException(String.valueOf(friendId));
+        Integer messageState = MessageState.NEW_MESSAGE;
+        Integer messageType = MessageType.PRIVATE_MESSAGE;
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        ChatSocket friendSocket = null;
+        for (ChatSocket chatSocket : webSocketSet) {
+            if (chatSocket.userId.equals(friendId)) {
+                friendSocket = chatSocket;
+            }
         }
 
+        if (friendSocket != null) {
+            messageState = MessageState.PUSHED_MESSAGE;
+        }
+
+        Message message = messageService.addMessage(this.userId, friendId, null, messageType,
+                content, timestamp, messageState);
+        SocketMessage socketMessage = new SocketMessage();
+        socketMessage.setData(JSON.toJSONString(message));
+        socketMessage.setMessageType(SocketMessageType.PRIVATE_MESSAGE);
+        String socketMessageString = JSON.toJSONString(socketMessage);
+
+        if (friendSocket != null) {
+            friendSocket.session.getAsyncRemote().sendText(socketMessageString);
+        }
+        session.getAsyncRemote().sendText(JSON.toJSONString(socketMessageString));
     }
 
     public void sendMessage(String message) throws IOException {
