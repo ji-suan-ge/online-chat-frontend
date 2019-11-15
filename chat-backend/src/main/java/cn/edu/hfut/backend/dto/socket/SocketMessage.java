@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SocketMessage {
-    private String messageType;
+    private Integer socketMessageType;
     private String data;
 }

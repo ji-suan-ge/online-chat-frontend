@@ -15,7 +15,9 @@
 </template>
 
 <script>
-    export default {
+    import SocketMessageType from '../constant/SocketMessageType'
+
+export default {
       name: 'MessageEdit',
       data () {
         return {
@@ -37,11 +39,10 @@
             'content': this.textarea
           }
           let socketMessage = {
-            messageType: '1001',
+            socketMessageType: SocketMessageType.PRIVATE_MESSAGE,
             data: message
           }
           this.chatSocket.send(JSON.stringify(socketMessage))
-          this.$emit('newmessageevent', message)
           this.textarea = ''
         }
       }

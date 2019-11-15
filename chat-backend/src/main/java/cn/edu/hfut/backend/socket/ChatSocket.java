@@ -65,7 +65,7 @@ public class ChatSocket {
         System.out.println("userId: " + this.userId);
         SocketMessage socketMessage = JSON.parseObject(message, SocketMessage.class);
         System.out.println(socketMessage);
-        String messageType = socketMessage.getMessageType();
+        Integer messageType = socketMessage.getSocketMessageType();
         String data = socketMessage.getData();
 
         if (SocketMessageType.PRIVATE_MESSAGE.equals(messageType)) {
@@ -96,7 +96,7 @@ public class ChatSocket {
                 content, timestamp, messageState);
         SocketMessage socketMessage = new SocketMessage();
         socketMessage.setData(JSON.toJSONString(message));
-        socketMessage.setMessageType(SocketMessageType.PRIVATE_MESSAGE);
+        socketMessage.setSocketMessageType(SocketMessageType.PRIVATE_MESSAGE);
         String socketMessageString = JSON.toJSONString(socketMessage);
 
         if (friendSocket != null) {
