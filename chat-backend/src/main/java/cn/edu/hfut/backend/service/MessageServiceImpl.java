@@ -1,8 +1,10 @@
 package cn.edu.hfut.backend.service;
 
 import cn.edu.hfut.backend.dao.FriendMapper;
+import cn.edu.hfut.backend.dao.GroupMapper;
 import cn.edu.hfut.backend.dao.MessageMapper;
 import cn.edu.hfut.backend.dto.friend.GetPulledMessageRespBean;
+import cn.edu.hfut.backend.dto.group.GetPulledGroupMessageRespBean;
 import cn.edu.hfut.backend.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     FriendMapper friendMapper;
+
+    @Autowired
+    GroupMapper groupMapper;
 
     @Override
     public List<Message> getMessage(Integer userId, Integer friendId) {
@@ -54,6 +59,29 @@ public class MessageServiceImpl implements MessageService {
             friendMessageList.add(friendMessage);
         });
         return friendMessageList;
+    }
+
+    @Override
+    public List<Message> getNotPullGroupMessage(Integer userId,Integer groupId) {
+        List<Message> messageList = messageMapper.selectNotPullGroupMessage(userId,groupId);
+        messageMapper.updateGroupMessage(userId,groupId);
+        return messageList;
+    }
+
+    @Override
+    public List<GetPulledGroupMessageRespBean.GroupMessage> getIsPullGroupMessage(Integer userId) {
+        List<GetPulledGroupMessageRespBean.GroupMessage> groupMessageList =
+                new ArrayList<>();
+        List<Integer> groupIdList = groupMapper.getAllGroupId(userId);
+        groupIdList.forEach(groupId -> {
+            GetPulledGroupMessageRespBean.GroupMessage groupMessage =
+                    new GetPulledGroupMessageRespBean.GroupMessage();
+            groupMessage.setGroupId(groupId);
+            List<Message> messageList = messageMapper.selectIsPullGroupMessage(userId, groupId);
+            groupMessage.setMessageList(messageList);
+            groupMessageList.add(groupMessage);
+        });
+        return groupMessageList;
     }
 
 }
