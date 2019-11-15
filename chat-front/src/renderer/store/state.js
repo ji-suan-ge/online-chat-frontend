@@ -1,4 +1,5 @@
-const local = localStorage.getItem('state')
+let local = localStorage.getItem('state')
+local = null
 const state = local ? JSON.parse(local) : {
   chatSocket: null,
   currentChat: -1,

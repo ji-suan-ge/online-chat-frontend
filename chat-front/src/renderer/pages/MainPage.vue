@@ -22,6 +22,7 @@
     import FriendItem from '../component/FriendItem'
     import MessageFlow from '../component/MessageFlow'
     import MessageEdit from '../component/MessageEdit'
+    import messageUrl from '../constant/url/messageUrl'
 
 export default {
       name: 'MainPage',
@@ -42,8 +43,8 @@ export default {
         }
       },
       methods: {
-        getFriendList () {
-          this.axios.post(friendUrl.getList).then(res => {
+        async getFriendList () {
+          await this.axios.post(friendUrl.getList).then(res => {
             const data = res.data
             if (data.code === globalRespCode.SUCCESS) {
               this.$store.dispatch('changeFriendListAction', data.data.friendList)
@@ -62,10 +63,21 @@ export default {
               message: 'get friend list failed!'
             })
           })
+        },
+        initFriendMessageList () {
+          this.axios.post(messageUrl.getOldList, {}).then(res => {
+            console.log(res)
+            const friendMessageList = res.data.data.friendMessageList
+            this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
+            // const friendMessageList = []
+            // messageList = res.data.data.
+          })
         }
       },
       created () {
-        this.getFriendList()
+        this.getFriendList().then(() => {
+          this.initFriendMessageList()
+        })
         if (this.friendList.length > 0) {
           this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
         }

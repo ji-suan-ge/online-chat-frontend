@@ -5,7 +5,7 @@
   <el-row>
     <div class="message">
           <p class="time">
-            <span>{{ message.date | time }}</span>
+            <span>{{ message.time | time }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
             <el-avatar size="large" :src="myMessage ? this.user.avatar : friend.avatar" class="avatar"></el-avatar>
@@ -45,12 +45,9 @@
         }
       },
       filters: {
-        time (date) {
-          date = '2019-09-10'
-          if (typeof date === 'string') {
-            date = new Date(date)
-          }
-          return date.getHours() + ':' + date.getMinutes()
+        time (time) {
+          time = new Date(time)
+          return time.getHours() + ':' + time.getMinutes()
         }
       }
     }
