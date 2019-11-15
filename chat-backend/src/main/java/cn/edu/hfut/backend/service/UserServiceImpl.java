@@ -62,32 +62,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByAccount(String account) {
         User user = userMapper.getByAccount(account);
-        if (user == null) {
-            throw new UserNotFoundException(account);
-        }
         return user;
     }
 
     @Override
     public User getByEmail(String email) {
         User user = userMapper.getByEmail(email);
-        if (user == null) {
-            throw new UserNotFoundException(email);
-        }
         return user;
     }
 
     @Override
     public User getById(Integer id) {
         User user = userMapper.getUserById(id);
-        if (user == null) {
-            throw new UserNotFoundException(String.valueOf(id));
-        }
         return user;
     }
 
     @Override
     public void editProfile(Integer id, String nickname, Integer gender, Timestamp birthday) {
         userMapper.updateById(id, nickname, gender, birthday);
+    }
+
+    @Override
+    public void editPassword(Integer userId, String plainPassword) {
+        String encodedPassword = PasswordUtil.encode(plainPassword);
+        userMapper.updatePasswordById(userId, encodedPassword);
     }
 }

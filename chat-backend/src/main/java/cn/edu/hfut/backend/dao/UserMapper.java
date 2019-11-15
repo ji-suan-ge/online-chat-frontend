@@ -2,10 +2,7 @@ package cn.edu.hfut.backend.dao;
 
 import cn.edu.hfut.backend.dao.provider.UserProvider;
 import cn.edu.hfut.backend.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
 
@@ -56,5 +53,7 @@ public interface UserMapper {
     @UpdateProvider(type = UserProvider.class, method = "updateById")
     void updateById(Integer id, String nickname, Integer gender, Timestamp birthday);
 
+    @Update("update user set password = #{password} where id = #{userId}")
+    void updatePasswordById(Integer userId, String password);
 }
 

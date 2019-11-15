@@ -9,12 +9,16 @@ import cn.edu.hfut.backend.service.UserService;
 import cn.edu.hfut.backend.util.PasswordUtil;
 import cn.edu.hfut.backend.util.ResultUtil;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sun.nio.cs.US_ASCII;
 
+import javax.lang.model.element.NestingKind;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
@@ -45,6 +49,11 @@ public class UserController {
     public Response sendCaptcha(@RequestBody @Valid SendCaptchaReqBean sendCaptchaReqBean,
                                 HttpSession httpSession) {
         String email = sendCaptchaReqBean.getEmail();
+
+        User user = userService.getByEmail(email);
+        if (user != null) {
+            return ResultUtil.error(UserResponseCode.EMAIL_REPETITION, "邮箱已存在");
+        }
 
         String code = userService.sendEmailCode(email);
         httpSession.setAttribute("emailCode", code);
@@ -111,6 +120,26 @@ public class UserController {
         Integer id = user.getId();
 
         userService.editProfile(id, nickname, gender, birthday);
+        return ResultUtil.success();
+    }
+
+    @PostMapping("editPassword")
+    public Response editPassword(@RequestBody @Valid EditPasswordReqBean editPasswordReqBean,
+                                 HttpSession httpSession) {
+        String plainPassword = editPasswordReqBean.getPassword();
+        String emailCode = editPasswordReqBean.getEmailCode();
+
+        User user = (User) httpSession.getAttribute("user");
+        Integer userId = user.getId();
+
+        String code = (String) httpSession.getAttribute("emailCode");
+
+        if (!StringUtils.equals(code, emailCode)) {
+            return ResultUtil.error(UserResponseCode.INVALID_CAPTCHA, "验证码不正确");
+        }
+
+        userService.editPassword(userId, plainPassword);
+
         return ResultUtil.success();
     }
 }

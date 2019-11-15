@@ -20,4 +20,6 @@ public interface UserService {
     User getById(Integer Id);
 
     void editProfile(Integer id, String nickname, Integer gender, Timestamp birthday);
+
+    void editPassword(Integer userId, String plainPassword);
 }
