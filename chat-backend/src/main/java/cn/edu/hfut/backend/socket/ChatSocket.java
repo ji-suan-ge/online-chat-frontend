@@ -102,7 +102,7 @@ public class ChatSocket {
         if (friendSocket != null) {
             friendSocket.session.getAsyncRemote().sendText(socketMessageString);
         }
-        session.getAsyncRemote().sendText(JSON.toJSONString(socketMessageString));
+        session.getAsyncRemote().sendText(socketMessageString);
     }
 
     public void sendMessage(String message) throws IOException {
