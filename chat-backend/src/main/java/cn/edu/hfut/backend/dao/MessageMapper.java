@@ -1,10 +1,7 @@
 package cn.edu.hfut.backend.dao;
 
 import cn.edu.hfut.backend.entity.Message;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,5 +20,9 @@ public interface MessageMapper {
 
     @Select("SELECT * from message WHERE (userId = #{userId} and friendId = #{friendId} and type = 1 and state = 1) " +
             "or (userId = #{friendId} and friendId = #{userId} and type = 1 and state = 1)")
-    List<Message> selectNotReadMessage(Integer userId, Integer friendId);
+    List<Message> selectNotPullMessage(Integer userId, Integer friendId);
+
+    @Update("UPDATE message SET state = 2 WHERE (userId = #{userId} and friendId = #{friendId} and type = 1 and state = 1)"+
+            " or (userId = #{friendId} and friendId = #{userId} and type = 1 and state = 1)")
+    void updateMessage(Integer userId, Integer friendId);
 }

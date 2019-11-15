@@ -13,5 +13,5 @@ public interface MessageService {
     Message addMessage(Integer userId, Integer friendId, Integer groupId,
                     Integer type, String content, Timestamp timestamp, Integer messageState);
 
-    List<Message> getNotReadMessage(Integer userId, Integer friendId);
+    List<Message> getNotPullMessage(Integer userId, Integer friendId);
 }
