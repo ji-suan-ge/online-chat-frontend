@@ -52,15 +52,18 @@ public class MessageController {
         return ResultUtil.success(getRecordRespBean);
     }
 
-//    @PostMapping("getNotPullGroupMessage")
-//    public Response getNotReadRecordByGroupId(@RequestBody @Valid GetGroupMessageReqBean getGroupMessageReqBean) {
-//        Integer friendId = getMessageReqBean.getFriendId();
-//
-//        List<Message> messageList = messageService.getNotPullMessage(userId, friendId);
-//
-//        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
-//        return ResultUtil.success(getRecordRespBean);
-//    }
+    @PostMapping("getNotPullGroupMessage")
+    public Response getNotReadRecordByGroupId(@RequestBody @Valid GetGroupMessageReqBean getGroupMessageReqBean,
+                                              HttpSession httpSession) {
+        Integer groupId = getGroupMessageReqBean.getGroupId();
+        User user = (User) httpSession.getAttribute("user");
+        Integer userId = user.getId();
+
+        List<Message> messageList = messageService.getNotPullGroupMessage(userId,groupId);
+
+        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
+        return ResultUtil.success(getRecordRespBean);
+    }
 
     @PostMapping("getIsPullMessage")
     public Response getIsReadRecordByFriendId(HttpSession httpSession) {

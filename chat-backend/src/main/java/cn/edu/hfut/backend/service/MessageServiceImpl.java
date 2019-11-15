@@ -56,4 +56,11 @@ public class MessageServiceImpl implements MessageService {
         return friendMessageList;
     }
 
+    @Override
+    public List<Message> getNotPullGroupMessage(Integer userId,Integer groupId) {
+        List<Message> messageList = messageMapper.selectNotPullGroupMessage(userId,groupId);
+        messageMapper.updateGroupMessage(userId,groupId);
+        return messageList;
+    }
+
 }
