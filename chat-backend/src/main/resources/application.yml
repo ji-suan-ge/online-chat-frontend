@@ -18,7 +18,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
     username: chat
     password: chat-2019
-    url: jdbc:mysql://47.101.53.141:3306/chat
+    url: jdbc:mysql://47.101.53.141:3306/chat?useUnicode=true&characterEncoding=utf8
 
   redis:
     host: 47.101.53.141

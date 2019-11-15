@@ -6,7 +6,9 @@ import cn.edu.hfut.backend.entity.User;
 import cn.edu.hfut.backend.exception.InvalidLoginTypeException;
 import cn.edu.hfut.backend.exception.InvalidPasswordException;
 import cn.edu.hfut.backend.exception.UserNotFoundException;
+import cn.edu.hfut.backend.util.EmailUtil;
 import cn.edu.hfut.backend.util.PasswordUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,20 +45,46 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void enroll(String account, String password, String email, String nickname, String avatar, Timestamp birthday, Integer gender) {
+    public void enroll(String account, String password, String email, String nickname,
+                       String avatar, Timestamp birthday, Integer gender) {
         userMapper.enroll(account, password, email, nickname, avatar, birthday, gender);
     }
 
-    public Integer getIdByCredential(String credential, Integer type) {
+    @Override
+    public String sendEmailCode(String email) {
+        String emailCode = RandomStringUtils.randomAlphanumeric(4);
+        String content = "您的邮箱验证码为：" + emailCode;
+        String subject = "邮箱验证码";
+        EmailUtil.send(email, subject, content);
+        return emailCode;
+    }
 
-        Integer Id = null;
-        if (LoginTypeConstant.EMAIL.equals(type)) {
-            Id = userMapper.getIdByEmail(credential);
-        } else if (LoginTypeConstant.ACCOUNT.equals(type)) {
-            Id = userMapper.getIdByEmail(credential);
-        } else {
-            throw new InvalidLoginTypeException(type);
-        }
-        return Id;
+    @Override
+    public User getByAccount(String account) {
+        User user = userMapper.getByAccount(account);
+        return user;
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        User user = userMapper.getByEmail(email);
+        return user;
+    }
+
+    @Override
+    public User getById(Integer id) {
+        User user = userMapper.getUserById(id);
+        return user;
+    }
+
+    @Override
+    public void editProfile(Integer id, String nickname, Integer gender, Timestamp birthday) {
+        userMapper.updateById(id, nickname, gender, birthday);
+    }
+
+    @Override
+    public void editPassword(Integer userId, String plainPassword) {
+        String encodedPassword = PasswordUtil.encode(plainPassword);
+        userMapper.updatePasswordById(userId, encodedPassword);
     }
 }

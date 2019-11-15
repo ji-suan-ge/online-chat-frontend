@@ -37,9 +37,19 @@ public class ResultUtil {
     /**
      * 接口请求失败返回
      */
-    public static Response error(Integer code, String resultMessage) {
+    public static Response error(String code, String resultMessage) {
         Response response = new Response();
-        response.setCode(code.toString());
+        response.setCode(code);
+        response.setMsg(resultMessage);
+        return response;
+    }
+
+    /**
+     * 接口请求失败返回
+     */
+    public static Response error(String resultMessage) {
+        Response response = new Response();
+        response.setCode(GlobalResponseCode.FAILED);
         response.setMsg(resultMessage);
         return response;
     }
