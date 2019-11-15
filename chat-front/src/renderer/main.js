@@ -6,7 +6,6 @@ import store from './store'
 
 import './config/elementUi'
 import './config/axios'
-import './config/chatSocket'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false

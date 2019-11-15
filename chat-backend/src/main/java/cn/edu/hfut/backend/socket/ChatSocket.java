@@ -3,7 +3,6 @@ package cn.edu.hfut.backend.socket;
 import cn.edu.hfut.backend.dto.socket.SocketMessage;
 import cn.edu.hfut.backend.service.UserService;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,9 +32,6 @@ public class ChatSocket {
     private Session session;
     private Integer userId;
 
-    /**
-     * 连接建立成功调用的方法
-     */
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
@@ -45,20 +41,12 @@ public class ChatSocket {
         System.out.println(userId);
     }
 
-    /**
-     * 连接关闭调用的方法
-     */
     @OnClose
     public void onClose() {
-        webSocketSet.remove(this);  //从set中删除
+        webSocketSet.remove(this);
         System.out.println("logout");
     }
 
-    /**
-     * 收到客户端消息后调用的方法
-     *
-     * @param message 客户端发送过来的消息
-     */
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("message:" + message);
@@ -82,9 +70,6 @@ public class ChatSocket {
         error.printStackTrace();
     }
 
-    /**
-     * 实现服务器主动推送
-     */
     public void sendMessage(String message) throws IOException {
         this.session.getAsyncRemote().sendText(message);
     }

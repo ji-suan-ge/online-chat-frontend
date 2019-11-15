@@ -5,7 +5,7 @@ import global from './globalConfig'
 // import router from '../router'
 
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = global.local
+axios.defaults.baseURL = global.host
 axios.defaults.withCredentials = true
 
 // axios.interceptors.response.use(

@@ -6,11 +6,12 @@ import {
   ONLINE_MUTATION,
   USER_MUTATION
 } from './mutations-type'
+import globalConfig from '../config/globalConfig'
 
 export default {
   async loginAction ({state, commit}, {token, user}) {
     commit(USER_MUTATION, user)
-    const ws = new WebSocket('ws://127.0.0.1:8002/chatSocket?token=' + token)
+    const ws = new WebSocket(globalConfig.socketAddress + '/chatSocket?token=' + token)
     ws.onopen = () => {
       commit(ONLINE_MUTATION, true)
       commit(CHAT_SOCKET_MUTATION, ws)
