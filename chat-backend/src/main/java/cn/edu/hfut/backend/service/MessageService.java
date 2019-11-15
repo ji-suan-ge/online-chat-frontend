@@ -14,4 +14,6 @@ public interface MessageService {
                     Integer type, String content, Timestamp timestamp, Integer messageState);
 
     List<Message> getNotPullMessage(Integer userId, Integer friendId);
+
+    List<Message> getIsPullMessage(Integer userId, Integer friendId);
 }

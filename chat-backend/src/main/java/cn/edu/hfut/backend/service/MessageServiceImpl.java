@@ -34,4 +34,11 @@ public class MessageServiceImpl implements MessageService {
         return messageList;
     }
 
+    @Override
+    public List<Message> getIsPullMessage(Integer userId, Integer friendId) {
+        List<Message> messageList = messageMapper.selectIsPullMessage(userId, friendId);
+        messageMapper.updateMessage(userId,friendId);
+        return messageList;
+    }
+
 }
