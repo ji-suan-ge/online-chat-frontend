@@ -58,10 +58,10 @@ export default {
     #inputArea {
         margin: 0;
         padding: 0;
-        height: 26vh;
+        height: 23vh;
     }
     #inputK {
-        height: 26vh;
+        height: 23vh;
         border: none;
     }
 </style>
