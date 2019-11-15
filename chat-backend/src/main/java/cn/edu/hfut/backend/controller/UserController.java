@@ -95,7 +95,9 @@ public class UserController {
         Integer gender = enrollReqBean.getGender();
 
         userService.enroll(account, password, email, nickname, avatar, birthday, gender);
-        return ResultUtil.success();
+        EnrollRespBean enrollRespBean = new EnrollRespBean();
+        enrollRespBean.setAccount(account);
+        return ResultUtil.success(enrollRespBean);
     }
 
     @PostMapping("getById")

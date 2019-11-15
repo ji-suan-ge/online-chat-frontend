@@ -26,4 +26,9 @@ public class MessageServiceImpl implements MessageService {
         messageMapper.insertMessage(message);
         return message;
     }
+
+    @Override
+    public List<Message> getNotReadMessage(Integer userId, Integer friendId) {
+        return messageMapper.selectNotReadMessage(userId, friendId);
+    }
 }

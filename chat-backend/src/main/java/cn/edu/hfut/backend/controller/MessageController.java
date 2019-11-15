@@ -36,4 +36,17 @@ public class MessageController {
         GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
         return ResultUtil.success(getRecordRespBean);
     }
+
+    @PostMapping("getNotReadMessage")
+    public Response getNotReadRecordByFriendId(@RequestBody @Valid GetMessageReqBean getMessageReqBean,
+                                               HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        Integer userId = user.getId();
+        Integer friendId = getMessageReqBean.getFriendId();
+
+        List<Message> messageList = messageService.getNotReadMessage(userId, friendId);
+
+        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
+        return ResultUtil.success(getRecordRespBean);
+    }
 }
