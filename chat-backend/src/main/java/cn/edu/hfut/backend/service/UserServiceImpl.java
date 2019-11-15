@@ -45,7 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void enroll(String account, String password, String email, String nickname, String avatar, Timestamp birthday, Integer gender) {
+    public void enroll(String account, String password, String email, String nickname,
+                       String avatar, Timestamp birthday, Integer gender) {
         userMapper.enroll(account, password, email, nickname, avatar, birthday, gender);
     }
 
@@ -83,5 +84,10 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException(String.valueOf(id));
         }
         return user;
+    }
+
+    @Override
+    public void editProfile(Integer id, String nickname, Integer gender, Timestamp birthday) {
+        userMapper.updateById(id, nickname, gender, birthday);
     }
 }

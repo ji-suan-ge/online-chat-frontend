@@ -84,7 +84,8 @@ public class UserController {
         String nickname = enrollReqBean.getNickname();
         String avatar = "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=296688303,2394085764&fm=26&gp=0.jpg";
         Timestamp birthday = new Timestamp(System.currentTimeMillis());
-        Integer gender = null;
+        Integer gender = enrollReqBean.getGender();
+
         userService.enroll(account, password, email, nickname, avatar, birthday, gender);
         return ResultUtil.success();
     }
@@ -98,5 +99,19 @@ public class UserController {
 
         GetByIdRespBean getByIdRespBean = new GetByIdRespBean(user);
         return ResultUtil.success(getByIdRespBean);
+    }
+
+    @PostMapping("editProfile")
+    public Response editProfile(@RequestBody @Valid EditProfileReqBean editProfileReqBean,
+                                HttpSession httpSession) {
+        String nickname = editProfileReqBean.getNickname();
+        Integer gender = editProfileReqBean.getGender();
+        Timestamp birthday = editProfileReqBean.getBirthday();
+
+        User user = (User) httpSession.getAttribute("user");
+        Integer id = user.getId();
+
+        userService.editProfile(id, nickname, gender, birthday);
+        return ResultUtil.success();
     }
 }

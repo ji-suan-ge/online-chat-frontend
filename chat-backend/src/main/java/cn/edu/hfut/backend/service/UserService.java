@@ -18,4 +18,6 @@ public interface UserService {
     User getByEmail(String email);
 
     User getById(Integer Id);
+
+    void editProfile(Integer id, String nickname, Integer gender, Timestamp birthday);
 }
