@@ -1,7 +1,9 @@
 package cn.edu.hfut.backend.controller;
 
 import cn.edu.hfut.backend.dto.friend.GetMessageReqBean;
+import cn.edu.hfut.backend.dto.friend.GetPulledMessageRespBean;
 import cn.edu.hfut.backend.dto.friend.GetRecordRespBean;
+import cn.edu.hfut.backend.dto.group.GetGroupMessageReqBean;
 import cn.edu.hfut.backend.entity.Message;
 import cn.edu.hfut.backend.entity.Response;
 import cn.edu.hfut.backend.entity.User;
@@ -48,5 +50,27 @@ public class MessageController {
 
         GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
         return ResultUtil.success(getRecordRespBean);
+    }
+
+//    @PostMapping("getNotPullGroupMessage")
+//    public Response getNotReadRecordByGroupId(@RequestBody @Valid GetGroupMessageReqBean getGroupMessageReqBean) {
+//        Integer friendId = getMessageReqBean.getFriendId();
+//
+//        List<Message> messageList = messageService.getNotPullMessage(userId, friendId);
+//
+//        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
+//        return ResultUtil.success(getRecordRespBean);
+//    }
+
+    @PostMapping("getIsPullMessage")
+    public Response getIsReadRecordByFriendId(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        Integer userId = user.getId();
+
+        List<GetPulledMessageRespBean.FriendMessage> messageList =
+                messageService.getIsPullMessage(userId);
+
+        GetPulledMessageRespBean getPulledMessageRespBean = new GetPulledMessageRespBean(messageList);
+        return ResultUtil.success(getPulledMessageRespBean);
     }
 }
