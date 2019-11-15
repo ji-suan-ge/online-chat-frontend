@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main id="messageFlow">
-      <MessageItem v-for="message in messageList" :key="message.id" :message="message"></MessageItem>
+      <MessageItem v-for="message in currentMessageList" :key="message.id" :message="message"></MessageItem>
     </el-main>
   </el-container>
 </template>
@@ -23,18 +23,28 @@ export default {
         getCurrentChat () {
           return this.$store.getters.currentChat
         },
-        messageList () {
-          return this.$store.getters.messageList
+        friendMessageList () {
+          return this.$store.getters.friendMessageList
+        },
+        currentMessageList () {
+          for (const friendMessage of this.friendMessageList) {
+            if (friendMessage.friendId === this.getCurrentChat) {
+              return friendMessage.messageList
+            }
+          }
         }
       },
       methods: {
         getMessageList () {
-          this.axios.post(messageUrl.getList, {
+          this.axios.post(messageUrl.getNewList, {
             friendId: this.getCurrentChat
           }).then(res => {
             let resp = res.data
             if (resp.code === globalRespCode.SUCCESS) {
-              this.$store.dispatch('changeMessageListAction', resp.data.messageList)
+              resp.data.messageList.forEach(message => {
+                console.log('添加中')
+                this.$store.dispatch('addMessageAction', message)
+              })
             } else {
               this.$message({
                 type: 'error',
