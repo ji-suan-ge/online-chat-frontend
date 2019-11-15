@@ -26,4 +26,12 @@ public class MessageServiceImpl implements MessageService {
         messageMapper.insertMessage(message);
         return message;
     }
+
+    @Override
+    public List<Message> getNotPullMessage(Integer userId, Integer friendId) {
+        List<Message> messageList = messageMapper.selectNotPullMessage(userId, friendId);
+        messageMapper.updateMessage(userId,friendId);
+        return messageList;
+    }
+
 }

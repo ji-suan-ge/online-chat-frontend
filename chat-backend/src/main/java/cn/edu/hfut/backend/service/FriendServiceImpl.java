@@ -18,4 +18,15 @@ public class FriendServiceImpl implements FriendService {
         return friendMapper.getAllFriendById(userId);
     }
 
+    @Override
+    public void addFriend(Integer userId, Integer friendId) {
+        friendMapper.addFriend(userId,friendId);
+        friendMapper.addFriend(friendId,userId);
+    }
+
+    @Override
+    public Integer getFriendIdByAccount(String account) {
+        return friendMapper.getFriendIdByAccount(account);
+    }
+
 }
