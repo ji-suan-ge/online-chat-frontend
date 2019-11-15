@@ -1,5 +1,6 @@
 package cn.edu.hfut.backend.service;
 
+import cn.edu.hfut.backend.dto.friend.GetPulledMessageRespBean;
 import cn.edu.hfut.backend.entity.Message;
 
 import java.sql.Timestamp;
@@ -15,5 +16,5 @@ public interface MessageService {
 
     List<Message> getNotPullMessage(Integer userId, Integer friendId);
 
-    List<Message> getIsPullMessage(Integer userId, Integer friendId);
+    List<GetPulledMessageRespBean.FriendMessage> getIsPullMessage(Integer userId);
 }

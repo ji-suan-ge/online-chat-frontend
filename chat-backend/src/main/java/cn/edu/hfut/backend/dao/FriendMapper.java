@@ -20,4 +20,8 @@ public interface FriendMapper {
 
     @Select("SELECT ID from user WHERE account = #{account})")
     Integer getFriendIdByAccount(String account);
+
+    @Select("SELECT ID from user WHERE ID in ( " +
+            "SELECT friendId FROM friend WHERE friend.userId= #{userId})")
+    List<Integer> getAllFriendId(Integer userId);
 }
