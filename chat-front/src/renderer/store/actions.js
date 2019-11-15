@@ -11,7 +11,7 @@ import globalConfig from '../config/globalConfig'
 export default {
   async loginAction ({state, commit}, {token, user}) {
     commit(USER_MUTATION, user)
-    const ws = new WebSocket(globalConfig.socketAddress + '/chatSocket?token=' + token)
+    const ws = new WebSocket(globalConfig.socketLocal + '/chatSocket?token=' + token)
     ws.onopen = () => {
       commit(ONLINE_MUTATION, true)
       commit(CHAT_SOCKET_MUTATION, ws)

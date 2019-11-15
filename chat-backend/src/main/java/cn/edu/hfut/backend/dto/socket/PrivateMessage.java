@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocketMessage {
-    private String messageType;
-    private String data;
+public class PrivateMessage {
+    private Integer friendId;
+    private String content;
 }
