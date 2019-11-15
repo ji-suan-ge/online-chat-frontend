@@ -52,8 +52,8 @@ public class ChatSocket {
         System.out.println("message:" + message);
         System.out.println("userId: " + this.userId);
         SocketMessage socketMessage = JSON.parseObject(message, SocketMessage.class);
-        System.out.println("friendId: " + socketMessage.getFriendId());
-        System.out.println("content: " + socketMessage.getContent());
+//        System.out.println("friendId: " + socketMessage.getFriendId());
+//        System.out.println("content: " + socketMessage.getContent());
 
 //        //群发消息
 //        for (ChatSocketServer item : webSocketSet) {
