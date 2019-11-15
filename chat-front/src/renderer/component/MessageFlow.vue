@@ -1,5 +1,6 @@
 <template>
   <el-container>
+    <el-header v-text="friend ? friend.nickname : ''" height="38px"></el-header>
     <el-main id="messageFlow">
       <MessageItem v-for="message in currentMessageList" :key="message.id" :message="message"></MessageItem>
     </el-main>
@@ -30,6 +31,16 @@ export default {
           for (const friendMessage of this.friendMessageList) {
             if (friendMessage.friendId === this.getCurrentChat) {
               return friendMessage.messageList
+            }
+          }
+        },
+        friendList () {
+          return this.$store.getters.friendList
+        },
+        friend () {
+          for (const friend of this.friendList) {
+            if (friend.id === this.getCurrentChat) {
+              return friend
             }
           }
         }
@@ -74,12 +85,16 @@ export default {
 </script>
 
 <style scoped>
+  .el-header {
+    margin: 5px;
+    font-size: 25px;
+  }
   .el-main {
     margin: 0;
     padding: 0;
   }
   #messageFlow {
-    height: 60vh;
+    height: 56vh;
   }
 
 </style>
