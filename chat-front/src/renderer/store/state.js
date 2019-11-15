@@ -5,6 +5,9 @@ const state = local ? JSON.parse(local) : {
   user: {},
   friendList: [],
   online: false,
-  messageList: []
+  friendMessageList: [{
+    friendId: -1,
+    messageList: []
+  }]
 }
 export default state

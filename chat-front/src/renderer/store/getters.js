@@ -4,5 +4,5 @@ export default {
   user: state => state.user,
   friendList: state => state.friendList,
   online: state => state.online,
-  messageList: state => state.messageList
+  friendMessageList: state => state.friendMessageList
 }

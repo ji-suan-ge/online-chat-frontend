@@ -1,3 +1,4 @@
 export default {
-  getList: '/message/getMessage'
+  getList: '/message/getMessage',
+  getNewList: '/message/getNotPullMessage'
 }
