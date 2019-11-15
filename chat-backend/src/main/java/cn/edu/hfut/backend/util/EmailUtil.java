@@ -16,25 +16,26 @@ public class EmailUtil {
 
     /**
      * 获取Session
+     *
      * @return
      */
     private static Session getSession() {
         Properties props = new Properties();
         props.put("mail.smtp.host", HOST);//设置服务器地址
-        props.put("mail.store.protocol" , PROTOCOL);//设置协议
+        props.put("mail.store.protocol", PROTOCOL);//设置协议
         props.put("mail.smtp.port", PORT);//设置端口
-        props.put("mail.smtp.auth" , "true");//身份认证
+        props.put("mail.smtp.auth", "true");//身份认证
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(FROM, PWD);
             }
         };
-        Session session = Session.getDefaultInstance(props , authenticator);
+        Session session = Session.getDefaultInstance(props, authenticator);
         return session;
     }
 
-    public static void send(String toEmail , String subject, String content) {
+    public static void send(String toEmail, String subject, String content) {
         Session session = getSession();
         try {
             Message msg = new MimeMessage(session);
@@ -43,10 +44,9 @@ public class EmailUtil {
             msg.setRecipients(Message.RecipientType.TO, address);
             msg.setSubject(subject);
             msg.setSentDate(new Date());
-            msg.setContent(content , "text/html;charset=utf-8");
+            msg.setContent(content, "text/html;charset=utf-8");
             Transport.send(msg);
-        }
-        catch (MessagingException mex) {
+        } catch (MessagingException mex) {
             mex.printStackTrace();
         }
     }

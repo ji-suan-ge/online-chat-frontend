@@ -3,7 +3,6 @@ package cn.edu.hfut.backend.socket;
 import cn.edu.hfut.backend.dto.socket.SocketMessage;
 import cn.edu.hfut.backend.service.UserService;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

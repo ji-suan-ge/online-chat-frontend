@@ -6,7 +6,6 @@ import cn.edu.hfut.backend.dto.user.*;
 import cn.edu.hfut.backend.entity.Response;
 import cn.edu.hfut.backend.entity.User;
 import cn.edu.hfut.backend.service.UserService;
-import cn.edu.hfut.backend.util.EmailUtil;
 import cn.edu.hfut.backend.util.PasswordUtil;
 import cn.edu.hfut.backend.util.ResultUtil;
 import org.apache.commons.lang3.RandomStringUtils;
