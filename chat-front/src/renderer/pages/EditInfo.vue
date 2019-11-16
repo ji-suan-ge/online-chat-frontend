@@ -19,21 +19,16 @@
                     </el-row>
                     <el-row type="flex" justify="center" style="height: 50px;">
                         <el-form-item label="邮箱：" prop="email" label-width="60px">
-                            <el-input v-model="userInfo.email" size="small"  class="input_width"></el-input>
+                            <el-input v-model="userInfo.email" size="small"  class="input_width" disabled></el-input>
                         </el-form-item>
                     </el-row>
                     <el-row type="flex" justify="center" style="height: 50px;">
                         <el-form-item label="性别：" prop="gender" label-width="60px">
-                            <el-input v-model="userInfo.nickname" size="small"  class="input_width"></el-input>
+                            <el-input v-model="userInfo.gender" size="small"  class="input_width"></el-input>
                         </el-form-item>
                     </el-row>
                     <el-row type="flex" justify="center" style="height: 50px;">
-                        <el-form-item label="昵称：" prop="nickname" label-width="60px">
-                            <el-input v-model="userInfo.gender==1? '男': '女'" size="small"  class="input_width"></el-input>
-                        </el-form-item>
-                    </el-row>
-                    <el-row type="flex" justify="center" style="height: 50px;">
-                        <el-form-item label="生日：" prop="gender" label-width="100px">
+                        <el-form-item label="生日：" prop="birthday" label-width="100px">
                             <el-date-picker
                                     v-model="userInfo.birthday"
                                     type="date"
@@ -51,6 +46,7 @@
     </div>
 </template>
 <script>
+    import userUrl from '../constant/url/userUrl'
     export default {
       name: 'SelfInfo',
       data () {
@@ -68,12 +64,21 @@
       },
       methods: {
         save: function () {
-          this.$router.push('/selfInfo')
+          this.axios.post(userUrl.editProfile, {
+            nickname: this.userInfo.nickname,
+            gender: this.userInfo.gender === '男' ? 1 : 2,
+            birthday: this.userInfo.birthday
+          }).then(data => {
+            this.userInfo.gender === '男' ? 1 : 2
+            localStorage.setItem('si_account', JSON.stringify(this.userInfo))
+            this.$router.push('/selfInfo')
+          })
         }
       },
       created: function () {
         this.userInfo = JSON.parse(localStorage.getItem('si_account'))
-      },
+        this.userInfo.gender = this.userInfo.gender === 1 ? '男' : '女'
+  },
       mounted: function () {
       }
     }
