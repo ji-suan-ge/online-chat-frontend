@@ -4,5 +4,6 @@ export default {
   register: '/user/enroll',
   findPasswordCaptcha: '/user/findPasswordCode',
   findPassword: '/user/findPassword',
-  editProfile: '/user/editProfile'
+  editProfile: '/user/editProfile',
+  editAvatar: '/user/editAvatar'
 }

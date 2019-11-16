@@ -3,6 +3,8 @@
         <div id="main_frame">
             <div id="avatar">
                 <el-image fit="fill" :src=userInfo.avatar></el-image>
+                <input type="file" ref="myfile">
+                <el-button @click="uploadAvatar" type="success" size="mini" icon="el-icon-upload2">修改头像</el-button>
                 <el-button type="primary" icon="el-icon-edit" @click="editInfo" circle></el-button>
             </div>
             <div id="info_text">
@@ -57,7 +59,10 @@
     </div>
 </template>
 <script>
-  const ipc = require('electron').ipcRenderer
+  import * as axios from 'axios'
+  import userUrl from '../constant/url/userUrl'
+
+const ipc = require('electron').ipcRenderer
   ipc.on('sendSelfAcc', (e, data) => {
     localStorage.setItem('si_account', JSON.stringify(data))
   })
@@ -78,6 +83,36 @@
     methods: {
       editInfo: function () {
         this.$router.push('/editInfo')
+      },
+      uploadF (url, params) {
+        return axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8002/uploadFile',
+          data: params,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      },
+      uploadAvatar () {
+        let myfile = this.$refs.myfile
+        let files = myfile.files
+        let file = files[0]
+        var formData = new FormData()
+        formData.append('file', file)
+        this.uploadF('http://127.0.0.1:8002/uploadFile', formData).then(resp => {
+          if (resp) {
+            let url = resp.data.data
+            console.log(url)
+            this.axios.post(userUrl.editAvatar, {
+              avatar: url
+            }).then(res => {
+              console.log(res)
+              this.userInfo.avatar = url
+              ipc.send('updateAvatar', {url})
+            })
+          }
+        })
       }
     },
     created: function () {
@@ -104,14 +139,14 @@
     }
 
     #avatar {
-        height: 150px;
+        height: 180px;
         border-bottom: 2px solid deepskyblue;
         padding-top: 30px;
     }
 
     #info_text {
         margin-top: 10px;
-        height: 310px;
+        height: 280px;
     }
 
     .tag {

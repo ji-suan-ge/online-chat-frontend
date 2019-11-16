@@ -1,4 +1,9 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
