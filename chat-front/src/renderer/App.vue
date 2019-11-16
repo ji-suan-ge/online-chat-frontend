@@ -19,15 +19,15 @@
 <style>
     /* CSS */
     body{
-        padding: 0px;
-        margin: 0px;
-        border: 0px;
+        padding: 0;
+        margin: 0;
+        border: 0;
         -webkit-app-region: no-drag;
     }
     #app {
         border-radius: 10px;
         background: white;
-        height: 563px;
+        height: 100vh;
     }
     #main_title_bar {
         position: absolute;

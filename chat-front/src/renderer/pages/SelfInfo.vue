@@ -48,7 +48,7 @@
                         生日：
                     </el-col>
                     <el-col :span="14" :push="7" class="tag_content">
-                        {{userInfo.birthday || '未设置'}}
+                        {{userInfo.birthday ? userInfo.birthday.substr(0, 10) : '未设置'}}
                     </el-col>
                 </el-row>
                 <br/>

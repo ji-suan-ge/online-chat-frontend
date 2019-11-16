@@ -4,10 +4,10 @@
             <el-menu-item index="1" route="{name: '/main'}">
                 <i class="el-icon-chat-dot-round" style="font-size: 25px;"></i>
             </el-menu-item>
-            <el-menu-item index="2" @click="displaySearchFriend" >
+            <el-menu-item index="2" @click="findFriend" >
                 <i class="el-icon-circle-plus-outline" style="font-size: 25px;"></i>
             </el-menu-item>
-            <el-menu-item index="3" @click="displaySelfInfo">
+            <el-menu-item index="3" @click="showProfile">
                 <i class="el-icon-user" style="font-size: 25px;"></i>
             </el-menu-item>
         </el-row>
@@ -24,11 +24,11 @@
       }
     },
     methods: {
-      displaySelfInfo () {
+      showProfile () {
         ipc.send('selfInfo')
         ipc.send('getSelfAcc', this.user)
       },
-      displaySearchFriend () {
+      findFriend () {
         ipc.send('searchFriend')
       }
     }

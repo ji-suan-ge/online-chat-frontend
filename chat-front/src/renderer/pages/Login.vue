@@ -64,10 +64,10 @@
         if (validateResult) {
           this.axios.post(userUrl.login, this.loginForm).then(res => {
             if (res.data.code === globalRespCode.SUCCESS) {
-              this.$message({
-                type: 'success',
-                message: '登录成功！'
-              })
+              // this.$message({
+              //   type: 'success',
+              //   message: '登录成功！'
+              // })
               this.loginForm.token = res.data.data.id
               this.$store.dispatch('loginAction', {
                 token: this.loginForm.token,

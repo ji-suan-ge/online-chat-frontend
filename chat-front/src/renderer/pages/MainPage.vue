@@ -80,15 +80,16 @@ export default {
               this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
             }
           })
-        },
-        showProfile () {
-          ipc.send('selfInfo')
-          ipc.send('getSelfAcc', this.user)
         }
       },
       created () {
         this.getFriendList().then(() => {
           this.initFriendMessageList()
+        })
+        ipc.on('refresh_main', () => {
+          this.getFriendList().then(() => {
+            this.initFriendMessageList()
+          })
         })
       },
       watch: {
