@@ -21,6 +21,10 @@ export default new Router({
       path: '/registerSuccess',
       name: 'registerSuccess-page',
       component: require('@/pages/RegisterSuccess').default
+    }, {
+      path: '/findPassword',
+      name: 'findPassword-page',
+      component: require('@/pages/FindPassword').default
     }
   ]
 })

@@ -1,25 +1,25 @@
 <template>
     <el-container>
-        <el-header>Register.vue</el-header>
+        <el-header>Register</el-header>
         <el-main>
             <el-row type="flex" justify="center">
-                <el-form ref="RegisterForm" :model="newUser" label-width="80px" class="RegisterForm">
+                <el-form ref="registerForm" :model="registerForm" label-width="80px" class="RegisterForm">
                     <el-form-item label="邮箱">
-                        <el-input v-model="newUser.email"></el-input>
+                        <el-input v-model="registerForm.email"></el-input>
                     </el-form-item>
                     <el-form-item label="验证码" type="float">
-                        <el-input v-model="newUser.captcha" class="captchaInput"></el-input>
+                        <el-input v-model="registerForm.captcha" class="captchaInput"></el-input>
                         <el-button type="primary" plain class="captchaButton" @click="sendCaptcha()"
                                    :disabled="sendCaptchaCoolDown">发送验证码</el-button>
                     </el-form-item>
                     <el-form-item label="昵称">
-                        <el-input v-model="newUser.nickname"></el-input>
+                        <el-input v-model="registerForm.nickname"></el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-input v-model="newUser.password" type="password"></el-input>
+                        <el-input v-model="registerForm.password" type="password"></el-input>
                     </el-form-item>
                     <el-form-item label="确认密码">
-                        <el-input v-model="newUser.passwordOfVerification" type="password"></el-input>
+                        <el-input v-model="registerForm.password2" type="password"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="Confirm">注册</el-button>
@@ -38,12 +38,12 @@ export default {
   name: 'Register',
   data () {
     return {
-      newUser: {
+      registerForm: {
         email: 'prassiacaesar@163.com',
         captcha: '',
         nickname: 'FlyingCoo',
         password: '666',
-        passwordOfVerification: '666'
+        password2: '666'
       },
       sendCaptchaCoolDown: false
     }
@@ -90,7 +90,7 @@ export default {
       this.Submit()
     },
     VerifyPassword () {
-      return (this.password === this.passwordOfVerification)
+      return (this.password === this.password2)
     },
     Submit: function () {
       this.axios.post(userUrl.register, this.newUser).then(res => {

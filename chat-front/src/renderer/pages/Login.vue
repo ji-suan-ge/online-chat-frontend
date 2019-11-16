@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>Header</el-header>
+        <el-header>Login</el-header>
         <el-main>
             <el-row type="flex" justify="center">
                 <el-form ref="loginForm" :model="user" label-width="80px" class="loginForm">
@@ -16,6 +16,7 @@
                 </el-form>
             </el-row>
             <router-link to="/register">注册账户</router-link>
+            <router-link to="/findPassword">找回密码</router-link>
         </el-main>
     </el-container>
 </template>
