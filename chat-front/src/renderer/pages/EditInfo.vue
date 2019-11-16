@@ -69,7 +69,8 @@
             gender: this.userInfo.gender === '男' ? 1 : 2,
             birthday: this.userInfo.birthday
           }).then(data => {
-            this.userInfo.gender === '男' ? 1 : 2
+            // eslint-disable-next-line no-unused-expressions
+            this.userInfo.gender = this.userInfo.gender === '男' ? 1 : 2
             localStorage.setItem('si_account', JSON.stringify(this.userInfo))
             this.$router.push('/selfInfo')
           })
