@@ -71,7 +71,7 @@ export default {
         }
       },
       created () {
-        this.getMessageList()
+        // this.getMessageList()
       },
       updated () {
         document.getElementById('messageFlow').scrollTop = 9999999999999999999
