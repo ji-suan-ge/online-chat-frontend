@@ -1,9 +1,9 @@
 <template>
     <el-container>
-        <el-header>
-            <el-avatar :src="user.avatar"  class="avatar" @click.native="showProfile"></el-avatar>
+        <el-header style="padding: 0;">
+<!--            <el-avatar :src="user.avatar"  class="avatar" @click.native="showProfile"></el-avatar>-->
+            <MainTopBar :user="user"></MainTopBar>
         </el-header>
-        <MainTopBar></MainTopBar>
         <el-container>
             <el-aside width="260px">
                 <FriendItem v-for="friend in friendList"
@@ -27,11 +27,12 @@
     import MessageFlow from '../component/MessageFlow'
     import MessageEdit from '../component/MessageEdit'
     import messageUrl from '../constant/url/messageUrl'
+    import MainTopBar from '../component/titlebar/MainTopBar'
 
     const ipc = require('electron').ipcRenderer
 export default {
       name: 'MainPage',
-      components: {MessageEdit, MessageFlow, FriendItem},
+      components: {MainTopBar, MessageEdit, MessageFlow, FriendItem},
       data () {
         return {
         }
@@ -110,8 +111,5 @@ export default {
     .el-main {
         margin: 0;
         padding: 0;
-    }
-    .el-avatar {
-        margin: 10px 0 0 -5px;
     }
 </style>

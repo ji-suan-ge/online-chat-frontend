@@ -59,7 +59,7 @@
 <script>
   const ipc = require('electron').ipcRenderer
   ipc.on('sendSelfAcc', (e, data) => {
-    localStorage.setItem('si_account', data)
+    localStorage.setItem('si_account', JSON.stringify(data))
   })
   export default {
     name: 'SelfInfo',
