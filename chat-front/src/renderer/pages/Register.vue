@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>Register</el-header>
+        <el-header></el-header>
         <el-main>
             <el-row type="flex" justify="center">
                 <el-form ref="registerForm" :model="registerForm" :rules="rules"
@@ -24,6 +24,7 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+                        <el-button type="primary" @click="returnToLogin">返回</el-button>
                     </el-form-item>
                 </el-form>
             </el-row>
@@ -39,17 +40,17 @@ export default {
   name: 'Register',
   data () {
     var validatePass2 = (rule, value, callback) => {
-      if (value !== this.findPasswordForm.password) {
+      if (value !== this.registerForm.password) {
         callback(new Error('两次密码不一致'))
       }
     }
     return {
       registerForm: {
-        email: 'prassiacaesar@163.com',
+        email: '',
         captcha: '',
-        nickname: 'FlyingCoo',
-        password: '666',
-        password2: '666'
+        nickname: '',
+        password: '',
+        password2: ''
       },
       rules: {
         email: [
@@ -133,6 +134,11 @@ export default {
           message: '提交失败！'
         })
       }
+    },
+    returnToLogin () {
+      this.$router.push({
+        name: 'login-page'
+      })
     }
   }
 }
