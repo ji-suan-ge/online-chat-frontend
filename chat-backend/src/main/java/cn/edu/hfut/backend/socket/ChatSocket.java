@@ -5,6 +5,7 @@ import cn.edu.hfut.backend.constant.message.MessageType;
 import cn.edu.hfut.backend.constant.socket.SocketMessageType;
 import cn.edu.hfut.backend.dto.socket.PrivateMessage;
 import cn.edu.hfut.backend.dto.socket.SocketMessage;
+import cn.edu.hfut.backend.entity.FriendRequest;
 import cn.edu.hfut.backend.entity.Message;
 import cn.edu.hfut.backend.service.MessageService;
 import cn.edu.hfut.backend.service.UserService;
@@ -72,7 +73,32 @@ public class ChatSocket {
             handlePrivateMessage(data);
         } else if (SocketMessageType.MARK_READ_MESSAGE.equals(messageType)) {
             handleMarkReadMessage(data);
+        } else if (SocketMessageType.FRIEND_APPLY.equals(messageType)) {
+            handleFriendApplyMessage(data);
         }
+    }
+
+    private void handleFriendApplyMessage(String data) {
+        PrivateMessage privateMessage = JSON.parseObject(data, PrivateMessage.class);
+        Integer friendId = privateMessage.getFriendId();
+        String content = privateMessage.getContent();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        ChatSocket friendSocket = null;
+        for (ChatSocket chatSocket : webSocketSet) {
+            if (chatSocket.userId.equals(friendId)) {
+                friendSocket = chatSocket;
+            }
+        }
+        FriendRequest friendRequest = messageService.addFriendRequest(this.userId, friendId, content, timestamp);
+        SocketMessage socketMessage = new SocketMessage();
+        socketMessage.setSocketMessageType(SocketMessageType.FRIEND_APPLY);
+        socketMessage.setData(JSON.toJSONString(friendRequest));
+        String socketMessageString = JSON.toJSONString(socketMessage);
+        if (friendSocket != null) {
+            friendSocket.session.getAsyncRemote().sendText(socketMessageString);
+        }
+        session.getAsyncRemote().sendText(socketMessageString);
     }
 
     private void handleMarkReadMessage(String data) {
