@@ -58,17 +58,14 @@ public class FriendController {
     }
 
     @PostMapping("findFriend")
-    public Response findFriend(@RequestBody @Valid FindFriendReqBean findFriendReqBean,
-                               HttpSession httpSession) {
-//        User user = (User) httpSession.getAttribute("user");
-//        Integer userId = user.getId();
-        Integer friendId = findFriendReqBean.getFriendId();
-        String nickname = findFriendReqBean.getNickname();
-        String account = findFriendReqBean.getAccount();
-        User friend = friendService.findFriend(friendId, nickname, account);
-        if (friend != null)
+    public Response findFriend(@RequestBody @Valid FindFriendReqBean findFriendReqBean) {
+
+        String keyword = findFriendReqBean.getKeyword();
+        List<User> friendList = friendService.findFriend(keyword);
+        friendList.forEach(friend -> {
             friend.setPassword(null);
-        FindFriendRespBean findFriendRespBean = new FindFriendRespBean(friend);
+        });
+        FindFriendRespBean findFriendRespBean = new FindFriendRespBean(friendList);
         return ResultUtil.success(findFriendRespBean);
     }
 }

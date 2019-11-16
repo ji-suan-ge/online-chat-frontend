@@ -5,7 +5,5 @@ import lombok.Data;
 @Data
 public class FindFriendReqBean {
 
-    private Integer friendId;
-    private String nickname;
-    private String account;
+    private String keyword;
 }

@@ -30,8 +30,8 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public User findFriend(Integer friendId, String nickname, String account) {
-        return friendMapper.findFriend(friendId, nickname, account);
+    public List<User> findFriend(String keyword) {
+        return friendMapper.findFriend(keyword);
     }
 
 }
