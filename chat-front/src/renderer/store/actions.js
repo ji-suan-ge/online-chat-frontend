@@ -56,5 +56,11 @@ export default {
       commit(UPDATE_LAST_MESSAGE_MUTATION, message)
     })
     commit(SORT_FRIEND_LIST_MUTATION)
+  },
+  async avatarAction ({state, commit}, data) {
+    console.log('action')
+    const user = state.user
+    user.avatar = data.url
+    commit(USER_MUTATION, user)
   }
 }

@@ -159,6 +159,9 @@ ipc.on('getSelfAcc', (event, data) => {
 ipc.on('refresh', (event) => {
   mainWindow.webContents.send('refresh_main')
 })
+ipc.on('updateAvatar', (event, data) => {
+  mainWindow.webContents.send('updateAvatar_main', data)
+})
 ipc.on('min', function (e) {
   let curWin = BrowserWindow.getFocusedWindow()
   curWin.minimize()

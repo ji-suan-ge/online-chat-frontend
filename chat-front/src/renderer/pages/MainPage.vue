@@ -91,6 +91,11 @@ export default {
             this.initFriendMessageList()
           })
         })
+        ipc.on('updateAvatar_main', (event, data) => {
+          console.log('mainPage')
+          console.log(data)
+          this.$store.dispatch('avatarAction', data)
+        })
       },
       watch: {
         online (val) {
