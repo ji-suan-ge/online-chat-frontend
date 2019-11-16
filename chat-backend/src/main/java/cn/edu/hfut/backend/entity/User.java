@@ -19,4 +19,5 @@ public class User {
     private String avatar;
     private String email;
     private Integer state;
+    private Integer newMessageNumber;
 }

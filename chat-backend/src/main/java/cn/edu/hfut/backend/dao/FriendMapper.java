@@ -1,9 +1,11 @@
 package cn.edu.hfut.backend.dao;
 
+import cn.edu.hfut.backend.dao.provider.FriendProvider;
 import cn.edu.hfut.backend.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
 
@@ -24,4 +26,7 @@ public interface FriendMapper {
     @Select("SELECT ID from user WHERE ID in ( " +
             "SELECT friendId FROM friend WHERE friend.userId= #{userId})")
     List<Integer> getAllFriendId(Integer userId);
+
+    @SelectProvider(type = FriendProvider.class, method = "findFriend")
+    User findFriend(Integer friendId, String nickname, String account);
 }

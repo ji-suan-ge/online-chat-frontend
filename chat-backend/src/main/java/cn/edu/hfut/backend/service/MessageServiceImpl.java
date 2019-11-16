@@ -46,6 +46,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<Message> getNotPullMessageCount(Integer userId, Integer friendId) {
+        List<Message> messageList = messageMapper.selectNotPullMessage(userId, friendId);
+        return messageList;
+    }
+
+    @Override
     public List<GetPulledMessageRespBean.FriendMessage> getIsPullMessage(Integer userId) {
         List<GetPulledMessageRespBean.FriendMessage> friendMessageList =
                 new ArrayList<>();

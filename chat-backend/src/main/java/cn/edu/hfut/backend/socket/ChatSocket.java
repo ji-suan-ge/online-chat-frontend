@@ -88,10 +88,6 @@ public class ChatSocket {
             }
         }
 
-        if (friendSocket != null) {
-            messageState = MessageState.PUSHED_MESSAGE;
-        }
-
         Message message = messageService.addMessage(this.userId, friendId, null, messageType,
                 content, timestamp, messageState);
         SocketMessage socketMessage = new SocketMessage();
