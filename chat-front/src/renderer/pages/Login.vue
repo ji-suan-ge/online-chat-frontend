@@ -1,15 +1,17 @@
 <template>
     <el-container>
-        <el-header>Login</el-header>
+        <el-header></el-header>
         <el-main>
             <el-row type="flex" justify="center">
                 <el-form ref="loginForm" v-model="loginForm"
                          label-width="80px" class="loginForm">
                     <el-form-item label="账号" prop="credential">
-                        <el-input v-model="loginForm.credential"></el-input>
+                        <el-input v-model="loginForm.credential"
+                                  prefix-icon="el-icon-user-solid"></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
-                        <el-input v-model="loginForm.password" type="password"></el-input>
+                        <el-input v-model="loginForm.password" type="password"
+                                  prefix-icon="el-icon-lock"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit('loginForm')">登录</el-button>

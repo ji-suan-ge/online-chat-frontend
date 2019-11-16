@@ -56,7 +56,7 @@ export default {
     return {
       sendCaptchaCoolDown: false,
       findPasswordForm: {
-        email: 'prassiacaesar@163.com',
+        email: '',
         password: '',
         password2: '',
         captcha: ''
