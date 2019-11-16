@@ -3,12 +3,14 @@ package cn.edu.hfut.backend.socket;
 import cn.edu.hfut.backend.constant.message.MessageState;
 import cn.edu.hfut.backend.constant.message.MessageType;
 import cn.edu.hfut.backend.constant.socket.SocketMessageType;
+import cn.edu.hfut.backend.dto.socket.MarkReadMessage;
 import cn.edu.hfut.backend.dto.socket.PrivateMessage;
 import cn.edu.hfut.backend.dto.socket.SocketMessage;
 import cn.edu.hfut.backend.entity.Message;
 import cn.edu.hfut.backend.service.MessageService;
 import cn.edu.hfut.backend.service.UserService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -70,7 +72,14 @@ public class ChatSocket {
 
         if (SocketMessageType.PRIVATE_MESSAGE.equals(messageType)) {
             handlePrivateMessage(data);
+        } else if (SocketMessageType.MARK_READ_MESSAGE.equals(messageType)) {
+            handleMarkReadMessage(data);
         }
+    }
+
+    private void handleMarkReadMessage(String data) {
+        Integer friendId = JSON.parseObject(data, int.class);
+        messageService.editMessageState(userId, friendId);
     }
 
     private void handlePrivateMessage(String data) {

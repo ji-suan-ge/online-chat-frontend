@@ -41,4 +41,14 @@ public interface MessageMapper {
     @Select("SELECT * from message WHERE  " +
             " userId != #{userId} and groupId = #{groupId} and type = 2 and state = 1")
     List<Message> selectNotPullGroupMessage(Integer userId, Integer groupId);
+
+    @Update("UPDATE message SET state = 2 WHERE ID = #{messageId}")
+    void updateMessageState(Integer messageId);
+
+    @Update("UPDATE message " +
+            "SET state=2 " +
+            "WHERE userId = #{friendId} " +
+            "and friendId = #{userId} " +
+            "and type = 1 and state = 1")
+    void readAllMessage(Integer userId, Integer friendId);
 }

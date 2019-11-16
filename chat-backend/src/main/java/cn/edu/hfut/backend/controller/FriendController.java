@@ -36,7 +36,9 @@ public class FriendController {
         List<User> friendList = friendService.getAllFriendById(userId);
         friendList.forEach(friend -> {
             friend.setPassword(null);
-            friend.setNewMessageNumber(messageService.getNotPullMessageCount(userId,friend.getId()).size());
+            friend.setNewMessageNumber(
+                    messageService.getNotPullMessageCount(userId,friend.getId()).size()
+            );
         });
 
 

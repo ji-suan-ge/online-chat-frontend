@@ -47,12 +47,11 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getNotPullMessageCount(Integer userId, Integer friendId) {
-        List<Message> messageList = messageMapper.selectNotPullMessage(userId, friendId);
-        return messageList;
+        return messageMapper.selectNotPullMessage(userId, friendId);
     }
 
     @Override
-    public List<GetPulledMessageRespBean.FriendMessage> getIsPullMessage(Integer userId) {
+    public List<GetPulledMessageRespBean.FriendMessage> getAllFriendMessage(Integer userId) {
         List<GetPulledMessageRespBean.FriendMessage> friendMessageList =
                 new ArrayList<>();
         List<Integer> friendIdList = friendMapper.getAllFriendId(userId);
@@ -60,7 +59,7 @@ public class MessageServiceImpl implements MessageService {
             GetPulledMessageRespBean.FriendMessage friendMessage =
                     new GetPulledMessageRespBean.FriendMessage();
             friendMessage.setFriendId(friendId);
-            List<Message> messageList = messageMapper.selectIsPullMessage(userId, friendId);
+            List<Message> messageList = messageMapper.selectMessage(userId, friendId);
             friendMessage.setMessageList(messageList);
             friendMessageList.add(friendMessage);
         });
@@ -88,6 +87,11 @@ public class MessageServiceImpl implements MessageService {
             groupMessageList.add(groupMessage);
         });
         return groupMessageList;
+    }
+
+    @Override
+    public void editMessageState(Integer userId, Integer friendId) {
+        messageMapper.readAllMessage(userId, friendId);
     }
 
 }

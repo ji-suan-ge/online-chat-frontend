@@ -19,9 +19,11 @@ public interface MessageService {
 
     List<Message> getNotPullMessageCount(Integer userId, Integer friendId);
 
-    List<GetPulledMessageRespBean.FriendMessage> getIsPullMessage(Integer userId);
+    List<GetPulledMessageRespBean.FriendMessage> getAllFriendMessage(Integer userId);
 
     List<Message> getNotPullGroupMessage(Integer userId, Integer groupId);
 
     List<GetPulledGroupMessageRespBean.GroupMessage> getIsPullGroupMessage(Integer userId);
+
+    void editMessageState(Integer userId, Integer friendId);
 }

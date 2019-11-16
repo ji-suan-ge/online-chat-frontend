@@ -27,31 +27,31 @@ public class MessageController {
     @Autowired
     MessageService messageService;
 
-    @PostMapping("getMessage")
-    public Response getRecordByFriendId(@RequestBody @Valid GetMessageReqBean getMessageReqBean,
-                                        HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        Integer userId = user.getId();
-        Integer friendId = getMessageReqBean.getFriendId();
+//    @PostMapping("getMessage")
+//    public Response getRecordByFriendId(@RequestBody @Valid GetMessageReqBean getMessageReqBean,
+//                                        HttpSession httpSession) {
+//        User user = (User) httpSession.getAttribute("user");
+//        Integer userId = user.getId();
+//        Integer friendId = getMessageReqBean.getFriendId();
+//
+//        List<Message> messageList = messageService.getMessage(userId, friendId);
+//
+//        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
+//        return ResultUtil.success(getRecordRespBean);
+//    }
 
-        List<Message> messageList = messageService.getMessage(userId, friendId);
-
-        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
-        return ResultUtil.success(getRecordRespBean);
-    }
-
-    @PostMapping("getNotPullMessage")
-    public Response getNotReadRecordByFriendId(@RequestBody @Valid GetMessageReqBean getMessageReqBean,
-                                               HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        Integer userId = user.getId();
-        Integer friendId = getMessageReqBean.getFriendId();
-
-        List<Message> messageList = messageService.getNotPullMessage(userId, friendId);
-
-        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
-        return ResultUtil.success(getRecordRespBean);
-    }
+//    @PostMapping("getNotPullMessage")
+//    public Response getNotReadRecordByFriendId(@RequestBody @Valid GetMessageReqBean getMessageReqBean,
+//                                               HttpSession httpSession) {
+//        User user = (User) httpSession.getAttribute("user");
+//        Integer userId = user.getId();
+//        Integer friendId = getMessageReqBean.getFriendId();
+//
+//        List<Message> messageList = messageService.getNotPullMessage(userId, friendId);
+//
+//        GetRecordRespBean getRecordRespBean = new GetRecordRespBean(messageList);
+//        return ResultUtil.success(getRecordRespBean);
+//    }
 
     @PostMapping("getNotPullGroupMessage")
     public Response getNotReadRecordByGroupId(@RequestBody @Valid GetGroupMessageReqBean getGroupMessageReqBean,
@@ -66,13 +66,13 @@ public class MessageController {
         return ResultUtil.success(getRecordRespBean);
     }
 
-    @PostMapping("getIsPullMessage")
+    @PostMapping("getAllFriendMessage")
     public Response getIsReadRecordByFriendId(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         Integer userId = user.getId();
 
         List<GetPulledMessageRespBean.FriendMessage> messageList =
-                messageService.getIsPullMessage(userId);
+                messageService.getAllFriendMessage(userId);
 
         GetPulledMessageRespBean getPulledMessageRespBean = new GetPulledMessageRespBean(messageList);
         return ResultUtil.success(getPulledMessageRespBean);
