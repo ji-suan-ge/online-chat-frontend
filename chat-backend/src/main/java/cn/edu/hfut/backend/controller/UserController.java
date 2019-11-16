@@ -175,4 +175,15 @@ public class UserController {
 
         return ResultUtil.success();
     }
+
+    @PostMapping("editAvatar")
+    public Response editAvatar(@RequestBody @Valid EditAvatarReqBean editAvatarReqBean,
+                               HttpSession httpSession) {
+        String avatar = editAvatarReqBean.getAvatar();
+        User user = (User) httpSession.getAttribute("user");
+        Integer userId = user.getId();
+
+        userService.editAvatar(userId,avatar);
+        return ResultUtil.success();
+    }
 }

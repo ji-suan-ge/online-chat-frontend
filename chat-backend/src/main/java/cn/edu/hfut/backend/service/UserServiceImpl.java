@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = PasswordUtil.encode(plainPassword);
         userMapper.updatePasswordById(userId, encodedPassword);
     }
+
+    @Override
+    public void editAvatar(Integer userId, String avatar) {
+        userMapper.editAvatar(userId,avatar);
+    }
 }
