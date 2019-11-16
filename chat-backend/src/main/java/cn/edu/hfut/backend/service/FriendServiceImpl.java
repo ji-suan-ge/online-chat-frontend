@@ -20,8 +20,8 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void addFriend(Integer userId, Integer friendId) {
-        friendMapper.addFriend(userId,friendId);
-        friendMapper.addFriend(friendId,userId);
+        friendMapper.addFriend(userId, friendId);
+        friendMapper.addFriend(friendId, userId);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public User findFriend(Integer friendId, String nickname, String account) {
-        return friendMapper.findFriend(friendId,nickname,account);
+        return friendMapper.findFriend(friendId, nickname, account);
     }
 
 }

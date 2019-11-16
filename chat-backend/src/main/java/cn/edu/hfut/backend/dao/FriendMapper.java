@@ -16,7 +16,7 @@ public interface FriendMapper {
             "SELECT friendId FROM friend WHERE friend.userId= #{userId})")
     List<User> getAllFriendById(Integer userId);
 
-    @Insert("INSERT INTO friend(userId,friendId,state)"+
+    @Insert("INSERT INTO friend(userId,friendId,state)" +
             " VALUES(#{userId},#{friendId},1)")
     void addFriend(Integer userId, Integer friendId);
 

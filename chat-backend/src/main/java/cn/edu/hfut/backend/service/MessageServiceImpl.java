@@ -26,23 +26,11 @@ public class MessageServiceImpl implements MessageService {
     GroupMapper groupMapper;
 
     @Override
-    public List<Message> getMessage(Integer userId, Integer friendId) {
-        return messageMapper.selectMessage(userId, friendId);
-    }
-
-    @Override
     public Message addMessage(Integer userId, Integer friendId, Integer groupId,
-                           Integer type, String content, Timestamp timestamp, Integer messageState) {
+                              Integer type, String content, Timestamp timestamp, Integer messageState) {
         Message message = new Message(null, userId, friendId, groupId, type, content, timestamp, messageState);
         messageMapper.insertMessage(message);
         return message;
-    }
-
-    @Override
-    public List<Message> getNotPullMessage(Integer userId, Integer friendId) {
-        List<Message> messageList = messageMapper.selectNotPullMessage(userId, friendId);
-        messageMapper.updateMessage(userId,friendId);
-        return messageList;
     }
 
     @Override
@@ -67,9 +55,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getNotPullGroupMessage(Integer userId,Integer groupId) {
-        List<Message> messageList = messageMapper.selectNotPullGroupMessage(userId,groupId);
-        messageMapper.updateGroupMessage(userId,groupId);
+    public List<Message> getNotPullGroupMessage(Integer userId, Integer groupId) {
+        List<Message> messageList = messageMapper.selectNotPullGroupMessage(userId, groupId);
+        messageMapper.updateGroupMessage(userId, groupId);
         return messageList;
     }
 
@@ -90,8 +78,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void editMessageState(Integer userId, Integer friendId) {
-        messageMapper.readAllMessage(userId, friendId);
+    public void readAllPrivateMessage(Integer userId, Integer friendId) {
+        messageMapper.readAllPrivateMessage(userId, friendId);
     }
 
 }

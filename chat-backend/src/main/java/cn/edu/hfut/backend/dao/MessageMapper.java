@@ -3,7 +3,6 @@ package cn.edu.hfut.backend.dao;
 import cn.edu.hfut.backend.entity.Message;
 import org.apache.ibatis.annotations.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -31,7 +30,7 @@ public interface MessageMapper {
             " userId != #{userId} and groupId = #{groupId} and type = 2 and state = 2")
     List<Message> selectIsPullGroupMessage(Integer userId, Integer groupId);
 
-    @Update("UPDATE message SET state = 2 WHERE (userId = #{userId} and friendId = #{friendId} and type = 1 and state = 1)"+
+    @Update("UPDATE message SET state = 2 WHERE (userId = #{userId} and friendId = #{friendId} and type = 1 and state = 1)" +
             " or (userId = #{friendId} and friendId = #{userId} and type = 1 and state = 1)")
     void updateMessage(Integer userId, Integer friendId);
 
@@ -50,5 +49,5 @@ public interface MessageMapper {
             "WHERE userId = #{friendId} " +
             "and friendId = #{userId} " +
             "and type = 1 and state = 1")
-    void readAllMessage(Integer userId, Integer friendId);
+    void readAllPrivateMessage(Integer userId, Integer friendId);
 }

@@ -1,9 +1,9 @@
 package cn.edu.hfut.backend.controller;
 
+import cn.edu.hfut.backend.dto.friend.AddFriendReqBean;
 import cn.edu.hfut.backend.dto.friend.FindFriendReqBean;
 import cn.edu.hfut.backend.dto.friend.FindFriendRespBean;
 import cn.edu.hfut.backend.dto.friend.GetAllFriendRespBean;
-import cn.edu.hfut.backend.dto.friend.AddFriendReqBean;
 import cn.edu.hfut.backend.entity.Response;
 import cn.edu.hfut.backend.entity.User;
 import cn.edu.hfut.backend.service.FriendService;
@@ -37,7 +37,7 @@ public class FriendController {
         friendList.forEach(friend -> {
             friend.setPassword(null);
             friend.setNewMessageNumber(
-                    messageService.getNotPullMessageCount(userId,friend.getId()).size()
+                    messageService.getNotPullMessageCount(userId, friend.getId()).size()
             );
         });
 
@@ -48,24 +48,24 @@ public class FriendController {
 
     @PostMapping("addFriend")
     public Response addFriend(@RequestBody @Valid AddFriendReqBean addFriendReqBean,
-                                      HttpSession httpSession) {
+                              HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         Integer userId = user.getId();
         Integer friendId = addFriendReqBean.getFriendId();
-        friendService.addFriend(userId,friendId);
+        friendService.addFriend(userId, friendId);
 
         return ResultUtil.success();
     }
 
     @PostMapping("findFriend")
     public Response findFriend(@RequestBody @Valid FindFriendReqBean findFriendReqBean,
-                              HttpSession httpSession) {
+                               HttpSession httpSession) {
 //        User user = (User) httpSession.getAttribute("user");
 //        Integer userId = user.getId();
         Integer friendId = findFriendReqBean.getFriendId();
         String nickname = findFriendReqBean.getNickname();
         String account = findFriendReqBean.getAccount();
-        User friend = friendService.findFriend(friendId,nickname,account);
+        User friend = friendService.findFriend(friendId, nickname, account);
         if (friend != null)
             friend.setPassword(null);
         FindFriendRespBean findFriendRespBean = new FindFriendRespBean(friend);

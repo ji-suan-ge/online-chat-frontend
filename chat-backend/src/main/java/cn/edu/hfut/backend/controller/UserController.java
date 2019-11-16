@@ -60,7 +60,7 @@ public class UserController {
 
     @PostMapping("findPasswordCode")
     public Response sendFindPasswordCaptcha(@RequestBody @Valid SendCaptchaReqBean sendCaptchaReqBean,
-                                HttpSession httpSession) {
+                                            HttpSession httpSession) {
         String email = sendCaptchaReqBean.getEmail();
 
         User user = userService.getByEmail(email);
@@ -76,18 +76,18 @@ public class UserController {
 
     @PostMapping("findPassword")
     public Response findPassword(@RequestBody @Valid FindPasswordReqBean findPasswordReqBean,
-                                HttpSession httpSession) {
+                                 HttpSession httpSession) {
         String email = findPasswordReqBean.getEmail();
         String password = findPasswordReqBean.getPassword();
         String captcha = findPasswordReqBean.getCaptcha();
 
-        String code = (String) httpSession.getAttribute("emailCode") ;
+        String code = (String) httpSession.getAttribute("emailCode");
         User user = userService.getByEmail(email);
 
-        if(!code.equals(captcha)) {
+        if (!code.equals(captcha)) {
             return ResultUtil.error(UserResponseCode.INVALID_CAPTCHA, "校验错误");
-        }else {
-            userService.editPassword(user.getId(),password);
+        } else {
+            userService.editPassword(user.getId(), password);
             return ResultUtil.success();
         }
     }

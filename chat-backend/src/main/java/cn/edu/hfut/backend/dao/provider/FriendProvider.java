@@ -11,9 +11,9 @@ public class FriendProvider {
                 WHERE("ID = #{friendId}");
             } else if (nickname != null) {
                 WHERE("nickname = #{nickname}");
-            } else if(account != null){
+            } else if (account != null) {
                 WHERE("account = #{account}");
-            }else {
+            } else {
                 WHERE("1 = 9");
             }
         }}.toString();
