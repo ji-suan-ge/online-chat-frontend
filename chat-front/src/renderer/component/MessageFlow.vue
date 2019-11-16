@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import messageUrl from '../constant/url/messageUrl'
-    import globalRespCode from '../constant/code/globalRespCode'
+    // import messageUrl from '../constant/url/messageUrl'
+    // import globalRespCode from '../constant/code/globalRespCode'
     import MessageItem from './MessageItem'
     import MessageEdit from './MessageEdit'
 
@@ -46,29 +46,29 @@ export default {
         }
       },
       methods: {
-        getMessageList () {
-          this.axios.post(messageUrl.getNewList, {
-            friendId: this.getCurrentChat
-          }).then(res => {
-            let resp = res.data
-            if (resp.code === globalRespCode.SUCCESS) {
-              resp.data.messageList.forEach(message => {
-                console.log('添加中')
-                this.$store.dispatch('addMessageAction', message)
-              })
-            } else {
-              this.$message({
-                type: 'error',
-                message: 'get message list failed'
-              })
-            }
-          }).catch(e => {
-            this.$message({
-              type: 'error',
-              message: 'get message list failed'
-            })
-          })
-        }
+        // getMessageList () {
+        //   this.axios.post(messageUrl.getNewList, {
+        //     friendId: this.getCurrentChat
+        //   }).then(res => {
+        //     let resp = res.data
+        //     if (resp.code === globalRespCode.SUCCESS) {
+        //       resp.data.messageList.forEach(message => {
+        //         console.log('添加中')
+        //         this.$store.dispatch('addMessageAction', message)
+        //       })
+        //     } else {
+        //       this.$message({
+        //         type: 'error',
+        //         message: 'get message list failed'
+        //       })
+        //     }
+        //   }).catch(e => {
+        //     this.$message({
+        //       type: 'error',
+        //       message: 'get message list failed'
+        //     })
+        //   })
+        // }
       },
       created () {
         // this.getMessageList()
@@ -78,7 +78,7 @@ export default {
       },
       watch: {
         getCurrentChat (val) {
-          this.getMessageList()
+          // this.getMessageList()
         }
       }
 }

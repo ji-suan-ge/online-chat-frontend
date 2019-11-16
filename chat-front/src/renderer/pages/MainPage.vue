@@ -47,6 +47,8 @@ export default {
           await this.axios.post(friendUrl.getList).then(res => {
             const data = res.data
             if (data.code === globalRespCode.SUCCESS) {
+              console.log('getAllFriend')
+              console.log(data.data.friendList)
               this.$store.dispatch('changeFriendListAction', data.data.friendList)
               if (this.friendList.length > 0) {
                 this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
@@ -65,12 +67,9 @@ export default {
           })
         },
         initFriendMessageList () {
-          this.axios.post(messageUrl.getOldList, {}).then(res => {
-            console.log(res)
+          this.axios.post(messageUrl.getAllFriendMessage).then(res => {
             const friendMessageList = res.data.data.friendMessageList
             this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
-            // const friendMessageList = []
-            // messageList = res.data.data.
           })
         }
       },
@@ -78,9 +77,6 @@ export default {
         this.getFriendList().then(() => {
           this.initFriendMessageList()
         })
-        if (this.friendList.length > 0) {
-          this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
-        }
       },
       watch: {
         online (val) {
