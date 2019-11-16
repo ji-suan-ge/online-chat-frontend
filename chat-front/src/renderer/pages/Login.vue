@@ -15,6 +15,7 @@
                     </el-form-item>
                 </el-form>
             </el-row>
+            <router-link to="/register">注册账户</router-link>
         </el-main>
     </el-container>
 </template>
