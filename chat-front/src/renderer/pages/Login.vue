@@ -71,7 +71,7 @@
               this.loginForm.token = res.data.data.id
               this.$store.dispatch('loginAction', {
                 token: this.loginForm.token,
-                loginForm: res.data.data
+                user: res.data.data
               })
               this.$router.push({
                 name: 'main-page'
