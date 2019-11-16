@@ -55,5 +55,8 @@ public interface UserMapper {
 
     @Update("update user set password = #{password} where id = #{userId}")
     void updatePasswordById(Integer userId, String password);
+
+    @Update("update user set avatar = #{avatar} where id = #{userId}")
+    void editAvatar(Integer userId, String avatar);
 }
 
