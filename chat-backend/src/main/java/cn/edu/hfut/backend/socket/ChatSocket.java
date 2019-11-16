@@ -70,7 +70,14 @@ public class ChatSocket {
 
         if (SocketMessageType.PRIVATE_MESSAGE.equals(messageType)) {
             handlePrivateMessage(data);
+        } else if (SocketMessageType.MARK_READ_MESSAGE.equals(messageType)) {
+            handleMarkReadMessage(data);
         }
+    }
+
+    private void handleMarkReadMessage(String data) {
+        Integer friendId = JSON.parseObject(data, int.class);
+        messageService.readAllPrivateMessage(userId, friendId);
     }
 
     private void handlePrivateMessage(String data) {

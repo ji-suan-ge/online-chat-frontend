@@ -26,33 +26,20 @@ public class MessageServiceImpl implements MessageService {
     GroupMapper groupMapper;
 
     @Override
-    public List<Message> getMessage(Integer userId, Integer friendId) {
-        return messageMapper.selectMessage(userId, friendId);
-    }
-
-    @Override
     public Message addMessage(Integer userId, Integer friendId, Integer groupId,
-                           Integer type, String content, Timestamp timestamp, Integer messageState) {
+                              Integer type, String content, Timestamp timestamp, Integer messageState) {
         Message message = new Message(null, userId, friendId, groupId, type, content, timestamp, messageState);
         messageMapper.insertMessage(message);
         return message;
     }
 
     @Override
-    public List<Message> getNotPullMessage(Integer userId, Integer friendId) {
-        List<Message> messageList = messageMapper.selectNotPullMessage(userId, friendId);
-        messageMapper.updateMessage(userId,friendId);
-        return messageList;
-    }
-
-    @Override
     public List<Message> getNotPullMessageCount(Integer userId, Integer friendId) {
-        List<Message> messageList = messageMapper.selectNotPullMessage(userId, friendId);
-        return messageList;
+        return messageMapper.selectNotPullMessage(userId, friendId);
     }
 
     @Override
-    public List<GetPulledMessageRespBean.FriendMessage> getIsPullMessage(Integer userId) {
+    public List<GetPulledMessageRespBean.FriendMessage> getAllFriendMessage(Integer userId) {
         List<GetPulledMessageRespBean.FriendMessage> friendMessageList =
                 new ArrayList<>();
         List<Integer> friendIdList = friendMapper.getAllFriendId(userId);
@@ -60,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
             GetPulledMessageRespBean.FriendMessage friendMessage =
                     new GetPulledMessageRespBean.FriendMessage();
             friendMessage.setFriendId(friendId);
-            List<Message> messageList = messageMapper.selectIsPullMessage(userId, friendId);
+            List<Message> messageList = messageMapper.selectMessage(userId, friendId);
             friendMessage.setMessageList(messageList);
             friendMessageList.add(friendMessage);
         });
@@ -68,9 +55,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getNotPullGroupMessage(Integer userId,Integer groupId) {
-        List<Message> messageList = messageMapper.selectNotPullGroupMessage(userId,groupId);
-        messageMapper.updateGroupMessage(userId,groupId);
+    public List<Message> getNotPullGroupMessage(Integer userId, Integer groupId) {
+        List<Message> messageList = messageMapper.selectNotPullGroupMessage(userId, groupId);
+        messageMapper.updateGroupMessage(userId, groupId);
         return messageList;
     }
 
@@ -88,6 +75,11 @@ public class MessageServiceImpl implements MessageService {
             groupMessageList.add(groupMessage);
         });
         return groupMessageList;
+    }
+
+    @Override
+    public void readAllPrivateMessage(Integer userId, Integer friendId) {
+        messageMapper.readAllPrivateMessage(userId, friendId);
     }
 
 }
