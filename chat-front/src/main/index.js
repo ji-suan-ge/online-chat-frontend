@@ -1,6 +1,6 @@
 'use strict'
 
-import {app, BrowserWindow} from 'electron'
+import {app, BrowserWindow, ipcMain} from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -48,6 +48,127 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
+  }
+})
+
+const ipc = ipcMain
+let friendInfoWindow
+ipc.on('friendInfo', function (event, data) {
+  friendInfoWindow = new BrowserWindow(
+    {
+      height: 563,
+      useContentSize: true,
+      width: 410,
+      resizable: false,
+      movable: true,
+      hasShadow: false,
+      frame: false,
+      transparent: true,
+      webPreferences: {
+        webSecurity: false
+      }
+    }
+  )
+  friendInfoWindow.loadURL(winURL + '#/friendInfo')
+  friendInfoWindow.on('closed', () => { friendInfoWindow = null })
+})
+
+let infoWindow
+ipc.on('selfInfo', function (event, data) {
+  infoWindow = new BrowserWindow(
+    {
+      height: 563,
+      useContentSize: true,
+      width: 410,
+      resizable: false,
+      movable: true,
+      hasShadow: false,
+      frame: false,
+      transparent: true,
+      webPreferences: {
+        webSecurity: false
+      }
+    }
+  )
+  infoWindow.loadURL(winURL + '#/selfInfo')
+  infoWindow.on('closed', () => { infoWindow = null })
+})
+
+let searchFriendWindow
+ipc.on('searchFriend', function (event, data) {
+  if (searchFriendWindow == null) {
+    searchFriendWindow = new BrowserWindow(
+      {
+        height: 500,
+        useContentSize: true,
+        width: 650,
+        resizable: false,
+        movable: true,
+        hasShadow: false,
+        frame: false,
+        transparent: true,
+        webPreferences: {
+          webSecurity: false
+        }
+      }
+    )
+    searchFriendWindow.loadURL(winURL + '#/searchFriend')
+    searchFriendWindow.on('closed', () => { searchFriendWindow = null })
+  } else {
+    searchFriendWindow.show()
+  }
+})
+
+let searchGroupWindow
+ipc.on('searchGroup', function (event, data) {
+  if (searchGroupWindow == null) {
+    searchGroupWindow = new BrowserWindow(
+      {
+        height: 500,
+        useContentSize: true,
+        width: 650,
+        resizable: false,
+        movable: true,
+        hasShadow: false,
+        frame: false,
+        transparent: true,
+        webPreferences: {
+          webSecurity: false
+        }
+      }
+    )
+    searchGroupWindow.loadURL(winURL + '#/searchGroup')
+    searchGroupWindow.on('closed', () => { searchGroupWindow = null })
+  } else {
+    searchGroupWindow.show()
+  }
+})
+
+ipc.on('getAcc', (event, data) => {
+  mainWindow.webContents.send('sendAcc', data)
+})
+ipc.on('getSelfAcc', (event, data) => {
+  mainWindow.webContents.send('sendSelfAcc', data)
+})
+ipc.on('getAcc', (event, data) => {
+  mainWindow.webContents.send('sendAcc', data)
+})
+ipc.on('getSelfAcc', (event, data) => {
+  mainWindow.webContents.send('sendSelfAcc', data)
+})
+ipc.on('min', function (e) {
+  let curWin = BrowserWindow.getFocusedWindow()
+  curWin.minimize()
+})
+ipc.on('close', function () {
+  let curWin = BrowserWindow.getFocusedWindow()
+  let allWin = BrowserWindow.getAllWindows()
+  if (curWin === mainWindow) {
+    for (var i = 0; i < allWin.length; i++) {
+      allWin[i].close()
+    }
+  } else {
+    curWin.close()
   }
 })
 
