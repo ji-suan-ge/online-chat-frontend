@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -84,8 +86,14 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public void updateFriendRequestState(Integer requestId) {
+
+    }
+
+    @Override
     public FriendRequest addFriendRequest(Integer userId, Integer friendId, String content, Timestamp timestamp) {
-        return friendMapper.addFriendRequest(userId,friendId,content,timestamp);
+        friendMapper.addFriendRequest(userId, friendId, content, timestamp);
+        return friendMapper.getRequest(friendMapper.getNewID());
     }
 
 }

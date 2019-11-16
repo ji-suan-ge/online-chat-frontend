@@ -24,5 +24,7 @@ public interface MessageService {
 
     void readAllPrivateMessage(Integer userId, Integer friendId);
 
+    void updateFriendRequestState(Integer requestId);
+
     FriendRequest addFriendRequest(Integer userId, Integer friendId, String content, Timestamp timestamp);
 }

@@ -35,5 +35,11 @@ public interface FriendMapper {
 
     @Insert("INSERT INTO friendrequest(userId,friendId,content,time,state)" +
             " VALUES(#{userId},#{friendId},#{content},#{timestamp},1)")
-    FriendRequest addFriendRequest(Integer userId, Integer friendId, String content, Timestamp timestamp);
+    void addFriendRequest(Integer userId, Integer friendId, String content, Timestamp timestamp);
+
+    @Select("select max(ID) from friendrequest")
+    Integer getNewID();
+
+    @Select("SELECT * from friendrequest WHERE ID = #{id} ")
+    FriendRequest getRequest(Integer id);
 }
