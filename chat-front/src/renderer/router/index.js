@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import FriendInfo from '../pages/FriendInfo'
+import SelfInfo from '../pages/SelfInfo'
+import EditInfo from '../pages/EditInfo'
 
 Vue.use(Router)
 
@@ -25,6 +28,18 @@ export default new Router({
       path: '/findPassword',
       name: 'findPassword-page',
       component: require('@/pages/FindPassword').default
+    }, {
+      path: '/friendInfo',
+      name: 'friendInfo',
+      component: FriendInfo
+    }, {
+      path: '/selfInfo',
+      name: 'selfInfo',
+      component: SelfInfo
+    }, {
+      path: '/editInfo',
+      name: 'editInfo',
+      component: EditInfo
     }
   ]
 })

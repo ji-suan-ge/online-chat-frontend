@@ -3,7 +3,7 @@
           justify="space-between"
           :class="{activeChat: active}"
           @click.native="changeChat">
-      <el-avatar size="medium" :src="user.avatar" class="avatar"></el-avatar>
+      <el-avatar size="medium" :src="user.avatar" class="avatar" @click.native="showProfile"></el-avatar>
       <el-badge v-if="newMessageNumber > 0" :value="newMessageNumber" class="item">
         <div v-text="user.nickname" class="nickname"></div>
       </el-badge>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    const ipc = require('electron').ipcRenderer
     export default {
       name: 'FriendItem',
       props: ['user', 'active'],
@@ -41,7 +42,9 @@
             this.$store.dispatch('changeCurrentChatAction', this.user.id)
           }
         },
-        print () {
+        showProfile () {
+          ipc.send('friendInfo')
+          ipc.send('getAcc', this.user)
         }
       },
       created () {
@@ -50,8 +53,6 @@
         friend: {
           deep: true,
           handler (nv, ov) {
-            console.log('新值')
-            console.log(nv)
             this.newMessageNumber = nv.newMessageNumber
           }
         }

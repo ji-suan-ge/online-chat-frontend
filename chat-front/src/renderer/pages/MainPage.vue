@@ -1,7 +1,7 @@
 <template>
     <el-container>
         <el-header>
-            Header
+            <el-avatar :src="user.avatar"  class="avatar" @click.native="showProfile"></el-avatar>
         </el-header>
         <MainTopBar></MainTopBar>
         <el-container>
@@ -28,6 +28,7 @@
     import MessageEdit from '../component/MessageEdit'
     import messageUrl from '../constant/url/messageUrl'
 
+    const ipc = require('electron').ipcRenderer
 export default {
       name: 'MainPage',
       components: {MessageEdit, MessageFlow, FriendItem},
@@ -44,6 +45,9 @@ export default {
         },
         currentChat () {
           return this.$store.getters.currentChat
+        },
+        user () {
+          return this.$store.getters.user
         }
       },
       methods: {
@@ -75,6 +79,10 @@ export default {
               this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
             }
           })
+        },
+        showProfile () {
+          ipc.send('selfInfo')
+          ipc.send('getSelfAcc', this.user)
         }
       },
       created () {
@@ -102,5 +110,8 @@ export default {
     .el-main {
         margin: 0;
         padding: 0;
+    }
+    .el-avatar {
+        margin: 10px 0 0 -5px;
     }
 </style>
