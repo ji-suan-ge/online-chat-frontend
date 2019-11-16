@@ -14,12 +14,18 @@
                                   prefix-icon="el-icon-lock"></el-input>
                     </el-form-item>
                     <el-form-item>
+                        <el-row>
+                            <el-col :span="4" :push="5">
+                              <router-link to="/register">注册账户</router-link>
+                            </el-col>
+                            <el-col :span="4" :push="11">
+                                <router-link to="/findPassword">找回密码</router-link>
+                            </el-col>
+                        </el-row>
                         <el-button type="primary" @click="onSubmit('loginForm')">登录</el-button>
                     </el-form-item>
                 </el-form>
             </el-row>
-            <router-link to="/register">注册账户</router-link>
-            <router-link to="/findPassword">找回密码</router-link>
         </el-main>
     </el-container>
 </template>

@@ -16,6 +16,7 @@
         <el-footer>
             <span v-for="(item, index) in all_user" :key="index">
                 <FriendDisplay
+                        :userInfo="item"
                         :avatar="item.avatar"
                         :nickname="item.nickname"
                         :account="item.account"

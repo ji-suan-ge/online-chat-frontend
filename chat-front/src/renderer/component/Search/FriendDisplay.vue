@@ -1,13 +1,15 @@
 <template>
     <el-col :span="6" type="flex" justify="center">
         <div class="avatar">
-            <img :src="avatar" class="avatar_image">
+            <img :src="avatar" class="avatar_image" @click="showProfile">
         </div>
+        <br>
         <div class="info_text">
-            {{nickname}}({{account}})
+            {{nickname}}<br>({{account}})
         </div>
+        <br>
         <div class="bt">
-            <el-button v-if="!myFriend" type="primary" size="mini" @click="addFriend">添加</el-button>
+            <el-button :disabled="myFriend" type="primary" size="mini" @click="addFriend">添加</el-button>
         </div>
     </el-col>
 </template>
@@ -23,6 +25,10 @@
         }
       },
       props: {
+        userInfo: {
+          type: Object,
+          required: true
+        },
         avatar: {
           type: String,
           required: true
@@ -64,6 +70,10 @@
             friendId: this.id
           })
           ipc.send('refresh')
+        },
+        showProfile () {
+          ipc.send('friendInfo')
+          ipc.send('getAcc', this.userInfo)
         }
       }
     }
