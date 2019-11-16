@@ -3,5 +3,6 @@ export default {
   registerCaptcha: '/user/registerCode',
   register: '/user/enroll',
   findPasswordCaptcha: '/user/findPasswordCode',
-  findPassword: '/user/findPassword'
+  findPassword: '/user/findPassword',
+  editProfile: '/user/editProfile'
 }
