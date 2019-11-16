@@ -46,8 +46,8 @@
     data () {
       return {
         loginForm: {
-          credential: '123',
-          password: '666',
+          credential: '',
+          password: '',
           type: loginTypeConstant.EMAIL,
           token: '1'
         },

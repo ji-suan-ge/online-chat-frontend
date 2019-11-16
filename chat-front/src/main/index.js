@@ -26,7 +26,8 @@ function createWindow () {
     resizable: false,
     frame: false,
     webPreferences: {
-      webSecurity: false
+      webSecurity: false,
+      devTools: false
     }
   })
 
@@ -65,7 +66,8 @@ ipc.on('friendInfo', function (event, data) {
       frame: false,
       transparent: true,
       webPreferences: {
-        webSecurity: false
+        webSecurity: false,
+        devTools: false
       }
     }
   )
@@ -86,7 +88,8 @@ ipc.on('selfInfo', function (event, data) {
       frame: false,
       transparent: true,
       webPreferences: {
-        webSecurity: false
+        webSecurity: false,
+        devTools: false
       }
     }
   )
@@ -108,7 +111,8 @@ ipc.on('searchFriend', function (event, data) {
         frame: false,
         transparent: true,
         webPreferences: {
-          webSecurity: false
+          webSecurity: false,
+          devTools: false
         }
       }
     )
@@ -133,7 +137,8 @@ ipc.on('searchGroup', function (event, data) {
         frame: false,
         transparent: true,
         webPreferences: {
-          webSecurity: false
+          webSecurity: false,
+          devTools: false
         }
       }
     )
