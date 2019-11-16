@@ -8,7 +8,10 @@
             <span>{{ message.time | time }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
-            <el-avatar size="large" :src="myMessage ? this.user.avatar : friend.avatar" class="avatar"></el-avatar>
+            <el-avatar v-if="this.user && this.friend"
+                       size="large"
+                       :src="myMessage ? this.user.avatar : friend.avatar"
+                       class="avatar"></el-avatar>
             <div class="text">{{ message.content }}</div>
           </div>
     </div>

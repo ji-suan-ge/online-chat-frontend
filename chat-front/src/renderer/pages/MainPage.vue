@@ -7,6 +7,7 @@
                             :key="friend.id"
                             :user="friend"
                             :active="currentChat === friend.id"></FriendItem>
+                <p v-if="friendList.length === 0">您还没有好友！</p>
             </el-aside>
             <el-main>
                 <MessageFlow></MessageFlow>
@@ -50,9 +51,6 @@ export default {
               console.log('getAllFriend')
               console.log(data.data.friendList)
               this.$store.dispatch('changeFriendListAction', data.data.friendList)
-              if (this.friendList.length > 0) {
-                this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
-              }
             } else {
               this.$message({
                 type: 'error',
@@ -70,6 +68,9 @@ export default {
           this.axios.post(messageUrl.getAllFriendMessage).then(res => {
             const friendMessageList = res.data.data.friendMessageList
             this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
+            if (this.friendList.length > 0) {
+              this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
+            }
           })
         }
       },
