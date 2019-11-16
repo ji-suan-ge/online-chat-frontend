@@ -12,7 +12,7 @@ import SocketMessageType from '../constant/SocketMessageType'
 export default {
   async loginAction ({state, commit}, {token, user}) {
     commit(USER_MUTATION, user)
-    const ws = new WebSocket(globalConfig.socketLocal + '/chatSocket?token=' + token)
+    const ws = new WebSocket(globalConfig.socketHost + '/chatSocket?token=' + token)
     ws.onopen = () => {
       commit(ONLINE_MUTATION, true)
       commit(CHAT_SOCKET_MUTATION, ws)
@@ -39,13 +39,15 @@ export default {
   },
   async changeCurrentChatAction ({state, commit}, currentChat) {
     commit(CURRENT_CHAT_MUTATION, currentChat)
+    const socketMessage = {
+      socketMessageType: SocketMessageType.MARK_READ_MESSAGE,
+      data: currentChat
+    }
+    state.chatSocket.send(JSON.stringify(socketMessage))
     commit(CHANGE_NEW_MESSAGE_NUMBER_MUTATION, {friendId: currentChat, number: 0})
   },
   async changeFriendListAction ({state, commit}, friendList) {
     commit(FRIEND_LIST_MUTATION, friendList)
-  },
-  async addMessageAction ({state, commit}, message) {
-    commit(ADD_MESSAGE_MUTATION, message)
   },
   async changeFriendMessageListAction ({state, commit}, friendMessageList) {
     commit(FRIEND_MESSAGE_LIST_MUTATION, friendMessageList)
