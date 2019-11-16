@@ -2,6 +2,7 @@
     <el-container>
         <el-header>
             <el-avatar :src="user.avatar"  class="avatar" @click.native="showProfile"></el-avatar>
+            <button @click="findFriend"></button>
         </el-header>
         <MainTopBar></MainTopBar>
         <el-container>
@@ -83,6 +84,9 @@ export default {
         showProfile () {
           ipc.send('selfInfo')
           ipc.send('getSelfAcc', this.user)
+        },
+        findFriend () {
+          ipc.send('searchFriend')
         }
       },
       created () {

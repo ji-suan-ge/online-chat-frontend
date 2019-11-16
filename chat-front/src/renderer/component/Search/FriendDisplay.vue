@@ -7,12 +7,14 @@
             {{nickname}}({{account}})
         </div>
         <div class="bt">
-            <el-button type="primary" size="mini" @click="addFriend">添加</el-button>
+            <el-button v-if="!myFriend" type="primary" size="mini" @click="addFriend">添加</el-button>
         </div>
     </el-col>
 </template>
 
 <script>
+    import friendUrl from '../../constant/url/friendUrl'
+
     export default {
       name: 'FriendDisplay',
       data () {
@@ -32,13 +34,35 @@
         account: {
           type: String,
           required: true
+        },
+        id: {
+          type: Number,
+          required: true
+        },
+        friendList: {
+          type: Array,
+          required: true
         }
       },
       created: function () {
         this.selfAccount = localStorage.getItem('account')
       },
+      computed: {
+        myFriend () {
+          console.log(this.friendList)
+          for (const friend of this.friendList) {
+            if (friend.id === this.id) {
+              return true
+            }
+          }
+          return false
+        }
+      },
       methods: {
         addFriend: function () {
+          this.axios.post(friendUrl.addFriend, {
+            friendId: this.id
+          })
         }
       }
     }

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import FriendInfo from '../pages/FriendInfo'
 import SelfInfo from '../pages/SelfInfo'
 import EditInfo from '../pages/EditInfo'
+import SearchFriend from '../pages/SearchFriend'
 
 Vue.use(Router)
 
@@ -40,6 +41,10 @@ export default new Router({
       path: '/editInfo',
       name: 'editInfo',
       component: EditInfo
+    }, {
+      path: '/searchFriend',
+      name: 'searchFriend',
+      component: SearchFriend
     }
   ]
 })
