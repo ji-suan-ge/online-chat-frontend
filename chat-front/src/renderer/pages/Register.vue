@@ -23,7 +23,7 @@
                         <el-input v-model="registerForm.password2" type="password"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="Confirm">注册</el-button>
+                        <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
                     </el-form-item>
                 </el-form>
             </el-row>
@@ -77,13 +77,14 @@ export default {
     }
   },
   methods: {
-    VerifyEmail () {
+    VerifyEmail (str) {
       // 验证邮箱
-      return true
+      var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      return regEmail.test(str)
     },
     sendCaptcha () {
       // 校验邮箱格式
-      if (!this.VerifyEmail()) {
+      if (!this.VerifyEmail(this.registerForm.email)) {
         this.$message({
           type: 'error',
           message: '邮箱格式不正确'
@@ -107,35 +108,31 @@ export default {
         console.log(err)
       })
     },
-    Confirm () {
-      if (!this.VerifyPassword()) {
+    submitForm (formName) {
+      let validateResult = true
+      this.$refs[formName].validate((valid) => { validateResult = valid })
+      if (validateResult) {
+        this.axios.post(userUrl.register, this.registerForm).then(res => {
+          console.log(res.data)
+          if (res.data.code === globalRespCode.SUCCESS) {
+            this.$message({
+              type: 'success',
+              message: '注册成功！'
+            })
+            this.$router.push({
+              name: 'registerSuccess-page',
+              params: {
+                account: res.data.data.account
+              }
+            })
+          }
+        })
+      } else {
         this.$message({
           type: 'error',
-          message: '两次输入的密码不一致！'
+          message: '提交失败！'
         })
-        return
       }
-      this.Submit()
-    },
-    VerifyPassword () {
-      return (this.password === this.password2)
-    },
-    Submit: function () {
-      this.axios.post(userUrl.register, this.registerForm).then(res => {
-        console.log(res.data)
-        if (res.data.code === globalRespCode.SUCCESS) {
-          this.$message({
-            type: 'success',
-            message: '注册成功！'
-          })
-          this.$router.push({
-            name: 'registerSuccess-page',
-            params: {
-              account: res.data.data.account
-            }
-          })
-        }
-      })
     }
   }
 }

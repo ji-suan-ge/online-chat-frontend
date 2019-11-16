@@ -55,7 +55,6 @@ export default {
     }
     return {
       sendCaptchaCoolDown: false,
-      validateResult: true,
       findPasswordForm: {
         email: 'prassiacaesar@163.com',
         password: '',
@@ -84,12 +83,13 @@ export default {
     }
   },
   methods: {
-    VerifyEmail () {
-      return true
+    VerifyEmail (str) {
+      var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      return regEmail.test(str)
     },
     sendCaptcha () {
       // 校验邮箱格式
-      if (!this.VerifyEmail()) {
+      if (!this.VerifyEmail(this.findPasswordForm.email)) {
         this.$message({
           type: 'error',
           message: '邮箱格式不正确'
@@ -114,11 +114,9 @@ export default {
       })
     },
     submitForm (formName) {
-      this.validateResult = true
-      this.$refs[formName].validate((valid) => {
-        this.validateResult = valid
-      })
-      if (this.validateResult) {
+      let validateResult = true
+      this.$refs[formName].validate((valid) => { validateResult = valid })
+      if (validateResult) {
         this.axios.post(userUrl.findPassword, this.findPasswordForm).then(res => {
           console.log(res.data)
           if (res.data.code === globalRespCode.SUCCESS) {
