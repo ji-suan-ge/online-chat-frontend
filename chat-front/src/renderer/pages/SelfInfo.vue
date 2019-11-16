@@ -48,7 +48,7 @@
                         生日：
                     </el-col>
                     <el-col :span="14" :push="7" class="tag_content">
-                        {{userInfo.birthday || '未设置'}}
+                        {{userInfo.birthday ? userInfo.birthday.substr(0, 10) : '未设置'}}
                     </el-col>
                 </el-row>
                 <br/>
@@ -59,7 +59,7 @@
 <script>
   const ipc = require('electron').ipcRenderer
   ipc.on('sendSelfAcc', (e, data) => {
-    localStorage.setItem('si_account', data)
+    localStorage.setItem('si_account', JSON.stringify(data))
   })
   export default {
     name: 'SelfInfo',
