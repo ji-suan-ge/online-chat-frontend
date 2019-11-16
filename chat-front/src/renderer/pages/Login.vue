@@ -1,24 +1,30 @@
 <template>
     <el-container>
-        <el-header></el-header>
+        <el-header id="header">
+        </el-header>
         <el-main>
-            <el-row type="flex" justify="center">
+            <el-row>
+                <el-col :span="4" :push="10">
+                    <img src="../assets/coo.png" />
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center"style="margin-top: 50px;">
                 <el-form ref="loginForm" v-model="loginForm"
                          label-width="80px" class="loginForm">
                     <el-form-item label="账号" prop="credential">
                         <el-input v-model="loginForm.credential"
-                                  prefix-icon="el-icon-user-solid"></el-input>
+                                  prefix-icon="el-icon-user-solid" style="width: 250px"></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
                         <el-input v-model="loginForm.password" type="password"
-                                  prefix-icon="el-icon-lock"></el-input>
+                                  prefix-icon="el-icon-lock" style="width: 250px"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-row>
-                            <el-col :span="4" :push="5">
+                            <el-col :span="6" :push="4">
                               <router-link to="/register">注册账户</router-link>
                             </el-col>
-                            <el-col :span="4" :push="11">
+                            <el-col :span="6" :push="8">
                                 <router-link to="/findPassword">找回密码</router-link>
                             </el-col>
                         </el-row>
@@ -103,11 +109,16 @@
 </script>
 
 <style scoped>
-    .el-header {
-        background-color: aliceblue;
-    }
     .loginForm {
-        width: 60vw;
+        width: 40vw;
         text-align: center;
+    }
+    #header {
+        margin-top: 20px;
+        height: 200px;
+        text-align: center
+    }
+    .el-container {
+        margin: auto auto;
     }
 </style>
