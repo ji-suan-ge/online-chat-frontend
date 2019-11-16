@@ -3,22 +3,23 @@
         <el-header>Register</el-header>
         <el-main>
             <el-row type="flex" justify="center">
-                <el-form ref="registerForm" :model="registerForm" label-width="80px" class="RegisterForm">
-                    <el-form-item label="邮箱">
+                <el-form ref="registerForm" :model="registerForm" :rules="rules"
+                         label-width="80px" class="RegisterForm">
+                    <el-form-item label="邮箱" prop="email">
                         <el-input v-model="registerForm.email"></el-input>
                     </el-form-item>
-                    <el-form-item label="验证码" type="float">
+                    <el-form-item label="验证码" prop="captcha" type="float">
                         <el-input v-model="registerForm.captcha" class="captchaInput"></el-input>
                         <el-button type="primary" plain class="captchaButton" @click="sendCaptcha()"
                                    :disabled="sendCaptchaCoolDown">发送验证码</el-button>
                     </el-form-item>
-                    <el-form-item label="昵称">
+                    <el-form-item label="昵称" prop="nickname">
                         <el-input v-model="registerForm.nickname"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码">
+                    <el-form-item label="密码" prop="password">
                         <el-input v-model="registerForm.password" type="password"></el-input>
                     </el-form-item>
-                    <el-form-item label="确认密码">
+                    <el-form-item label="确认密码" prop="password2">
                         <el-input v-model="registerForm.password2" type="password"></el-input>
                     </el-form-item>
                     <el-form-item>
@@ -37,6 +38,11 @@ import userUrl from '@/constant/url/userUrl'
 export default {
   name: 'Register',
   data () {
+    var validatePass2 = (rule, value, callback) => {
+      if (value !== this.findPasswordForm.password) {
+        callback(new Error('两次密码不一致'))
+      }
+    }
     return {
       registerForm: {
         email: 'prassiacaesar@163.com',
@@ -44,6 +50,28 @@ export default {
         nickname: 'FlyingCoo',
         password: '666',
         password2: '666'
+      },
+      rules: {
+        email: [
+          {required: true, message: '邮箱不为空', trigger: 'blur'},
+          {type: 'email', message: '邮箱格式错误，请输入有效的邮箱', trigger: 'blur'}
+        ],
+        captcha: [
+          {required: true, message: '邮箱验证码不为空', trigger: 'blur'},
+          {pattern: /^([0-9a-zA-Z]){4}$/, message: '邮箱验证码组成为4位,字母和数字的组合', trigger: 'blur'}
+        ],
+        nickname: [
+          {required: true, message: '昵称不能为空', trigger: 'blur'}
+        ],
+        password: [
+          {required: true, message: '密码不为空', trigger: 'blur'}/*,
+          {min: 8, max: 16, message: '密码长度在 8 到 16 个字符', trigger: 'blur'} */
+        ],
+        password2: [
+          {required: true, message: '密码不为空', trigger: 'blur'}, /*
+          {min: 8, max: 16, message: '密码长度在 8 到 16 个字符', trigger: 'blur'}, */
+          {validator: validatePass2, trigger: 'blur'}
+        ]
       },
       sendCaptchaCoolDown: false
     }
@@ -63,13 +91,13 @@ export default {
         return
       }
       // 请求发送验证码
-      this.axios.post(userUrl.captcha, {email: this.newUser.email}).then(res => {
+      this.axios.post(userUrl.registerCaptcha, {email: this.registerForm.email}).then(res => {
         console.log(res.data)
         if (res.data.code === globalRespCode.SUCCESS) {
-          this.$message('验证码已发送至' + this.newUser.email)
+          this.$message('验证码已发送至' + this.registerForm.email)
           // 冻结发送验证码按钮
           this.sendCaptchaCoolDown = true
-        } else if (res.data.code === globalRespCode.WRONG) {
+        } else if (res.data.code === globalRespCode.EMAIL_REPETITION) {
           this.$message({
             type: 'error',
             message: '邮箱已被占用'
@@ -93,7 +121,7 @@ export default {
       return (this.password === this.password2)
     },
     Submit: function () {
-      this.axios.post(userUrl.register, this.newUser).then(res => {
+      this.axios.post(userUrl.register, this.registerForm).then(res => {
         console.log(res.data)
         if (res.data.code === globalRespCode.SUCCESS) {
           this.$message({
