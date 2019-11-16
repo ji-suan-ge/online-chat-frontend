@@ -29,4 +29,9 @@ public class FriendServiceImpl implements FriendService {
         return friendMapper.getFriendIdByAccount(account);
     }
 
+    @Override
+    public User findFriend(Integer friendId, String nickname, String account) {
+        return friendMapper.findFriend(friendId,nickname,account);
+    }
+
 }

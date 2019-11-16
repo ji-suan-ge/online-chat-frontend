@@ -58,6 +58,40 @@ public class UserController {
         return ResultUtil.success();
     }
 
+    @PostMapping("findPasswordCode")
+    public Response sendFindPasswordCaptcha(@RequestBody @Valid SendCaptchaReqBean sendCaptchaReqBean,
+                                HttpSession httpSession) {
+        String email = sendCaptchaReqBean.getEmail();
+
+        User user = userService.getByEmail(email);
+        if (user == null) {
+            return ResultUtil.error(UserResponseCode.INVALID_EMAIL, "邮箱未注册");
+        }
+
+        String code = userService.sendEmailCode(email);
+        httpSession.setAttribute("emailCode", code);
+
+        return ResultUtil.success();
+    }
+
+    @PostMapping("findPassword")
+    public Response findPassword(@RequestBody @Valid FindPasswordReqBean findPasswordReqBean,
+                                HttpSession httpSession) {
+        String email = findPasswordReqBean.getEmail();
+        String password = findPasswordReqBean.getPassword();
+        String captcha = findPasswordReqBean.getCaptcha();
+
+        String code = (String) httpSession.getAttribute("emailCode") ;
+        User user = userService.getByEmail(email);
+
+        if(!code.equals(captcha)) {
+            return ResultUtil.error(UserResponseCode.INVALID_CAPTCHA, "校验错误");
+        }else {
+            userService.editPassword(user.getId(),password);
+            return ResultUtil.success();
+        }
+    }
+
     @PostMapping("resetCode")
     public Response resetCode(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
