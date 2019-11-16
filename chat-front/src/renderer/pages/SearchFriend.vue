@@ -1,6 +1,6 @@
 <template>
-    <el-container>
-        <el-header height="30px">
+    <el-container class="">
+        <el-header height="30px" style="background-color: cornflowerblue">
         </el-header>
         <el-main>
             <h1>查找好友</h1>
@@ -74,7 +74,8 @@
     }
     .el-header {
         text-align: center;
-        border-radius: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
     .el-footer {
         text-align: center;
