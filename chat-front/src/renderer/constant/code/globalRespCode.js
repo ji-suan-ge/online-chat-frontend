@@ -1,5 +1,7 @@
 export default {
   SUCCESS: '0000',
   ERROR: '4000',
-  WRONG: '4501'
+  EMAIL_REPETITION: '4501',
+  INVALID_CAPTCHA: '4502',
+  INVALID_EMAIL: '4503'
 }

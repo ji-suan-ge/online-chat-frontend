@@ -1,5 +1,7 @@
 export default {
   login: '/user/login',
-  captcha: '/user/registerCode',
-  register: '/user/enroll'
+  registerCaptcha: '/user/registerCode',
+  register: '/user/enroll',
+  findPasswordCaptcha: '/user/findPasswordCode',
+  findPassword: '/user/findPassword'
 }
