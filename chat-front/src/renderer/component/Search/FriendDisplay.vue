@@ -14,7 +14,7 @@
 
 <script>
     import friendUrl from '../../constant/url/friendUrl'
-
+    const ipc = require('electron').ipcRenderer
     export default {
       name: 'FriendDisplay',
       data () {
@@ -63,6 +63,7 @@
           this.axios.post(friendUrl.addFriend, {
             friendId: this.id
           })
+          ipc.send('refresh')
         }
       }
     }

@@ -156,6 +156,9 @@ ipc.on('getAcc', (event, data) => {
 ipc.on('getSelfAcc', (event, data) => {
   mainWindow.webContents.send('sendSelfAcc', data)
 })
+ipc.on('refresh', (event) => {
+  mainWindow.webContents.send('refresh_main')
+})
 ipc.on('min', function (e) {
   let curWin = BrowserWindow.getFocusedWindow()
   curWin.minimize()

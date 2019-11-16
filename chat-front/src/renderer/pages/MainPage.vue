@@ -93,6 +93,11 @@ export default {
         this.getFriendList().then(() => {
           this.initFriendMessageList()
         })
+        ipc.on('refresh_main', () => {
+          this.getFriendList().then(() => {
+            this.initFriendMessageList()
+          })
+        })
       },
       watch: {
         online (val) {
