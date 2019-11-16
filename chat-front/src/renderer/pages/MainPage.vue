@@ -1,6 +1,9 @@
 <template>
     <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+            Header
+        </el-header>
+        <MainTopBar></MainTopBar>
         <el-container>
             <el-aside width="260px">
                 <FriendItem v-for="friend in friendList"
