@@ -5,12 +5,15 @@ import cn.edu.hfut.backend.dao.GroupMapper;
 import cn.edu.hfut.backend.dao.MessageMapper;
 import cn.edu.hfut.backend.dto.friend.GetPulledMessageRespBean;
 import cn.edu.hfut.backend.dto.group.GetPulledGroupMessageRespBean;
+import cn.edu.hfut.backend.entity.FriendRequest;
 import cn.edu.hfut.backend.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -80,6 +83,17 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void readAllPrivateMessage(Integer userId, Integer friendId) {
         messageMapper.readAllPrivateMessage(userId, friendId);
+    }
+
+    @Override
+    public void updateFriendRequestState(Integer requestId) {
+
+    }
+
+    @Override
+    public FriendRequest addFriendRequest(Integer userId, Integer friendId, String content, Timestamp timestamp) {
+        friendMapper.addFriendRequest(userId, friendId, content, timestamp);
+        return friendMapper.getRequest(friendMapper.getNewID());
     }
 
 }

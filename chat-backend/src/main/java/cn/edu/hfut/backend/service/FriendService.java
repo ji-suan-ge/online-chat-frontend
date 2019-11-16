@@ -12,5 +12,5 @@ public interface FriendService {
 
     Integer getFriendIdByAccount(String account);
 
-    User findFriend(Integer friendId, String nickname, String account);
+    List<User> findFriend(String keyword);
 }

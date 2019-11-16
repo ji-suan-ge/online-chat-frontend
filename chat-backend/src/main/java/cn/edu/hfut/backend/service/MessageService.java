@@ -2,6 +2,7 @@ package cn.edu.hfut.backend.service;
 
 import cn.edu.hfut.backend.dto.friend.GetPulledMessageRespBean;
 import cn.edu.hfut.backend.dto.group.GetPulledGroupMessageRespBean;
+import cn.edu.hfut.backend.entity.FriendRequest;
 import cn.edu.hfut.backend.entity.Message;
 
 import java.sql.Timestamp;
@@ -22,4 +23,8 @@ public interface MessageService {
     List<GetPulledGroupMessageRespBean.GroupMessage> getIsPullGroupMessage(Integer userId);
 
     void readAllPrivateMessage(Integer userId, Integer friendId);
+
+    void updateFriendRequestState(Integer requestId);
+
+    FriendRequest addFriendRequest(Integer userId, Integer friendId, String content, Timestamp timestamp);
 }
