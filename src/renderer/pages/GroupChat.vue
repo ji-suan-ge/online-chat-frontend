@@ -154,6 +154,7 @@ export default {
       position: absolute;
       top: 65px;
       right: 5px;
+      opacity: 0.5;
     }
     .member-title {
       margin: 0 5px 0;

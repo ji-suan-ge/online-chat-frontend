@@ -48,7 +48,11 @@ export default {
   },
   [SORT_FRIEND_LIST_MUTATION] (state) {
     state.friendList.sort(function (friendA, friendB) {
-      return friendA.lastMessageTime < friendB.lastMessageTime
+      if (friendA.lastMessageTime && friendB.lastMessageTime) {
+        return friendA.lastMessageTime < friendB.lastMessageTime
+      } else {
+        return !friendA.lastMessageTime
+      }
     })
   },
   [FRIEND_MESSAGE_LIST_MUTATION] (state, friendMessageList) {
@@ -57,7 +61,6 @@ export default {
   [UPDATE_LAST_MESSAGE_MUTATION] (state, message) {
     for (const friend of state.friendList) {
       if (friend.id === message.friendId || friend.id === message.userId) {
-        console.log(typeof message.time)
         friend.lastMessageTime = message.time
         break
       }
@@ -74,7 +77,11 @@ export default {
   [INCREASE_NEW_MESSAGE_NUMBER_MUTATION] (state, friendId) {
     for (const friend of state.friendList) {
       if (friend.id === friendId) {
-        friend.newMessageNumber = friend.newMessageNumber + 1
+        if (friend.newMessageNumber === undefined) {
+          friend.newMessageNumber = 1
+        } else {
+          friend.newMessageNumber = friend.newMessageNumber + 1
+        }
         break
       }
     }
@@ -106,7 +113,11 @@ export default {
   },
   [SORT_GROUP_LIST_MUTATION] (state) {
     state.groupList.sort(function (groupA, groupB) {
-      return groupA.lastMessageTime < groupB.lastMessageTime
+      if (groupA.lastMessageTime && groupB.lastMessageTime) {
+        return groupA.lastMessageTime < groupB.lastMessageTime
+      } else {
+        return !groupA.lastMessageTime
+      }
     })
   },
   [GROUP_MESSAGE_LIST_MUTATION] (state, groupMessageList) {
