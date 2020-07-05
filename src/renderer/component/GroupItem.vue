@@ -31,6 +31,13 @@
         },
         groupList () {
           return this.$store.getters.groupList
+        },
+        groupData () {
+          for (const group of this.groupList) {
+            if (group.id === this.group.id) {
+              return group
+            }
+          }
         }
       },
       methods: {
@@ -56,7 +63,7 @@
       created () {
       },
       watch: {
-        group: {
+        groupData: {
           deep: true,
           handler (nv, ov) {
             this.newMessageNumber = nv.newMessageNumber
