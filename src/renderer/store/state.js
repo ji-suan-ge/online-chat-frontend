@@ -40,6 +40,29 @@ const state = local ? JSON.parse(local) : {
       time: '2019-11-14T11:13:51.000+0000',
       state: 2
     }]
+  }],
+  currentGroupChat: -2,
+  groupList: [{
+    id: -1,
+    groupAccount: '000000',
+    name: '群名',
+    introduction: '群介绍',
+    avatar: null,
+    state: 1,
+    lastMessageTime: '2019-11-15T16:19:29.000+0000'
+  }],
+  groupMessageList: [{
+    groupId: -1,
+    messageList: [{
+      id: -3,
+      userId: -1,
+      friendId: null,
+      groupId: -1,
+      type: 1,
+      content: 'hello',
+      time: '2019-11-14T11:13:51.000+0000',
+      state: 2
+    }]
   }]
 }
 export default state

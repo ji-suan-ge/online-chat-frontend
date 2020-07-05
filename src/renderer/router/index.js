@@ -14,9 +14,13 @@ export default new Router({
       name: 'login-page',
       component: require('@/pages/Login').default
     }, {
-      path: '/main',
+      path: '/main-page',
       name: 'main-page',
       component: require('@/pages/MainPage').default
+    }, {
+      path: '/group-chat',
+      name: 'group-chat',
+      component: require('@/pages/GroupChat').default
     }, {
       path: '/register',
       name: 'register-page',

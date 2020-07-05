@@ -4,7 +4,10 @@ import {
   CURRENT_CHAT_MUTATION,
   FRIEND_LIST_MUTATION, FRIEND_MESSAGE_LIST_MUTATION, INCREASE_NEW_MESSAGE_NUMBER_MUTATION,
   ONLINE_MUTATION, SORT_FRIEND_LIST_MUTATION, UPDATE_LAST_MESSAGE_MUTATION,
-  USER_MUTATION
+  USER_MUTATION, CURRENT_GROUP_CHAT_MUTATION, GROUP_LIST_MUTATION,
+  ADD_GROUP_MESSAGE_MUTATION, SORT_GROUP_LIST_MUTATION,
+  GROUP_MESSAGE_LIST_MUTATION, UPDATE_LAST_GROUP_MESSAGE_MUTATION,
+  CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION
 } from './mutations-type'
 import globalConfig from '../config/globalConfig'
 import SocketMessageType from '../constant/SocketMessageType'
@@ -35,6 +38,18 @@ export default {
         commit(UPDATE_LAST_MESSAGE_MUTATION, message)
         commit(SORT_FRIEND_LIST_MUTATION)
       }
+
+      if (socketMessageType === 0) {
+        const currentGroupChat = state.currentChat
+        const message = JSON.parse(socketMessage.data)
+        message.time = new Date(message.time).toJSON()
+        if (message.userId !== currentGroupChat) {
+          commit(INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, message.userId)
+        }
+        commit(ADD_GROUP_MESSAGE_MUTATION, message)
+        commit(UPDATE_LAST_GROUP_MESSAGE_MUTATION, message)
+        commit(SORT_GROUP_LIST_MUTATION)
+      }
     }
   },
   async changeCurrentChatAction ({state, commit}, currentChat) {
@@ -64,5 +79,26 @@ export default {
     const user = state.user
     user.avatar = data.url
     commit(USER_MUTATION, user)
+  },
+
+  async changeCurrentGroupChatAction ({state, commit}, currentGroupChat) {
+    commit(CURRENT_GROUP_CHAT_MUTATION, currentGroupChat)
+    const socketMessage = {
+      socketMessageType: SocketMessageType.MARK_READ_MESSAGE,
+      data: currentGroupChat
+    }
+    state.chatSocket.send(JSON.stringify(socketMessage))
+    commit(CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, {groupId: currentGroupChat, number: 0})
+  },
+  async changeGroupListAction ({state, commit}, groupList) {
+    commit(GROUP_LIST_MUTATION, groupList)
+  },
+  async changeGroupMessageListAction ({state, commit}, groupMessageList) {
+    commit(GROUP_MESSAGE_LIST_MUTATION, groupMessageList)
+    groupMessageList.forEach(groupMessage => {
+      const message = groupMessage.messageList[groupMessage.messageList.length - 1]
+      commit(UPDATE_LAST_GROUP_MESSAGE_MUTATION, message)
+    })
+    commit(SORT_GROUP_LIST_MUTATION)
   }
 }
