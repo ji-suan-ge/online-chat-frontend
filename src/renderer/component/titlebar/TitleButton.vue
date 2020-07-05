@@ -9,11 +9,9 @@
     const {ipcRenderer: ipc} = require('electron')
     const style = {
       min: {
-        backgroundColor: '#5CB87A',
         right: '40px'
       },
       close: {
-        backgroundColor: '#F56C6C',
         right: '15px'
       }
     }
