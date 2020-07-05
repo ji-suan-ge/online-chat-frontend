@@ -63,6 +63,8 @@ const state = local ? JSON.parse(local) : {
       time: '2019-11-14T11:13:51.000+0000',
       state: 2
     }]
-  }]
+  }],
+  groupMemberList: [
+  ]
 }
 export default state

@@ -24,7 +24,6 @@
       props: ['message'],
       computed: {
         myMessage () {
-          console.log(this.message, this.user)
           return this.message.userId === this.user.id
         },
         group () {

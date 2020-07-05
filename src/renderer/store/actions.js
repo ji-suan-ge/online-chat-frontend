@@ -7,7 +7,8 @@ import {
   USER_MUTATION, CURRENT_GROUP_CHAT_MUTATION, GROUP_LIST_MUTATION,
   ADD_GROUP_MESSAGE_MUTATION, SORT_GROUP_LIST_MUTATION,
   GROUP_MESSAGE_LIST_MUTATION, UPDATE_LAST_GROUP_MESSAGE_MUTATION,
-  CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION
+  CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION,
+  ADD_GROUP_MEMBER_LIST_MUTATION
 } from './mutations-type'
 import globalConfig from '../config/globalConfig'
 import SocketMessageType from '../constant/SocketMessageType'
@@ -100,5 +101,9 @@ export default {
       commit(UPDATE_LAST_GROUP_MESSAGE_MUTATION, message)
     })
     commit(SORT_GROUP_LIST_MUTATION)
+  },
+
+  async addGroupMemberListAction ({state, commit}, groupMemberList) {
+    commit(ADD_GROUP_MEMBER_LIST_MUTATION, groupMemberList)
   }
 }

@@ -34,9 +34,18 @@
         }
       },
       methods: {
+        getGroupMemberList () {
+          this.axios.post('/group/getGroupUserList', {groupId: this.currentGroupChat}).then(res => {
+            console.log(res)
+            if (res.data.code === '0000') {
+              this.$store.dispatch('addGroupMemberListAction', res.data.data.groupUserList)
+            }
+          })
+        },
         changeChat () {
           if (this.currentGroupChat !== this.group.id) {
             this.$store.dispatch('changeCurrentGroupChatAction', this.group.id)
+            this.getGroupMemberList()
           }
         },
         showProfile () {

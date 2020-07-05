@@ -18,3 +18,5 @@ export const GROUP_MESSAGE_LIST_MUTATION = 'groupMessageListMutation'
 export const UPDATE_LAST_GROUP_MESSAGE_MUTATION = 'updateLastGroupMessageMutation'
 export const CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION = 'changeNewGroupMessageNumberMutation'
 export const INCREASE_NEW__GROUP_MESSAGE_NUMBER_MUTATION = 'increaseNewGroupMessageNumberMutation'
+
+export const ADD_GROUP_MEMBER_LIST_MUTATION = 'addGroupMemberListMutation'
