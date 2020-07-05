@@ -7,5 +7,6 @@ export default {
   friendMessageList: state => state.friendMessageList,
   groupList: state => state.groupList,
   groupMessageList: state => state.groupMessageList,
-  currentGroupChat: state => state.currentGroupChat
+  currentGroupChat: state => state.currentGroupChat,
+  groupMemberList: state => state.groupMemberList
 }

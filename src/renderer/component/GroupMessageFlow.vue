@@ -57,6 +57,7 @@ export default {
   .el-header {
     margin: 5px;
     font-size: 25px;
+    border-bottom: 1px solid #eee;
   }
   .el-main {
     margin: 0;
