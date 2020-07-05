@@ -52,8 +52,10 @@ export default {
   async changeFriendMessageListAction ({state, commit}, friendMessageList) {
     commit(FRIEND_MESSAGE_LIST_MUTATION, friendMessageList)
     friendMessageList.forEach(friendMessage => {
-      const message = friendMessage.messageList[friendMessage.messageList.length - 1]
-      commit(UPDATE_LAST_MESSAGE_MUTATION, message)
+      if (friendMessage.messageList.length > 0) {
+        const message = friendMessage.messageList[friendMessage.messageList.length - 1]
+        commit(UPDATE_LAST_MESSAGE_MUTATION, message)
+      }
     })
     commit(SORT_FRIEND_LIST_MUTATION)
   },
