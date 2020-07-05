@@ -97,12 +97,13 @@ export default {
   async changeGroupMessageListAction ({state, commit}, groupMessageList) {
     commit(GROUP_MESSAGE_LIST_MUTATION, groupMessageList)
     groupMessageList.forEach(groupMessage => {
-      const message = groupMessage.messageList[groupMessage.messageList.length - 1]
-      commit(UPDATE_LAST_GROUP_MESSAGE_MUTATION, message)
+      if (groupMessage.messageList.length > 0) {
+        const message = groupMessage.messageList[groupMessage.messageList.length - 1]
+        commit(UPDATE_LAST_GROUP_MESSAGE_MUTATION, message)
+      }
     })
     commit(SORT_GROUP_LIST_MUTATION)
   },
-
   async addGroupMemberListAction ({state, commit}, groupMemberList) {
     commit(ADD_GROUP_MEMBER_LIST_MUTATION, groupMemberList)
   }
