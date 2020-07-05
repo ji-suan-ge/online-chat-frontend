@@ -86,6 +86,7 @@
           })
           // this.friendList.push()
           ipc.send('refresh')
+          this.$emit('submit')
         },
         showProfile () {
           console.log('???')

@@ -42,7 +42,8 @@
               :nickname="item.nickname"
               :account="item.account"
               :id="item.id"
-              :friend-list="friendList">
+              :friend-list="friendList"
+              v-on:submit="refreshSearch">
             </FriendDisplay>
           </el-row>
           <el-row v-if="activeIndex==='2'" :gutter="20" class="findList">
@@ -54,7 +55,8 @@
               :group-name="item.name"
               :account="item.groupAccount"
               :id="item.id"
-              :group-list="groupList">
+              :group-list="groupList"
+              v-on:submit="refreshSearch">
             </GroupDisplay>
           </el-row>
           <el-row v-if="notFound" justify="center">
@@ -226,6 +228,7 @@
                     message: '群聊创建成功，请在群聊列表中查看',
                     type: 'success'
                   })
+                  this.$refs['createGroupForm'].resetFields()
                 } else {
                   this.$message({
                     message: '网络请求失败',
@@ -236,6 +239,11 @@
               })
             }
           })
+        },
+        refreshSearch () {
+          this.getFriendList()
+          this.getGroupList()
+          this.getData()
         }
       },
       components: {FriendDisplay, GroupDisplay},

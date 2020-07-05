@@ -19,7 +19,7 @@
               :disabled="myGroup"
               type="primary" 
               size="mini" 
-              @click="addGroup">
+              @click="joinGroup">
               {{myGroup ? "已加入" : "申请加入"}}
             </el-button>
         </div>
@@ -82,6 +82,7 @@
             groupId: this.id
           })
           ipc.send('refresh')
+          this.$emit('submit')
         },
         showProfile () {
           ipc.send('groupInfo')
