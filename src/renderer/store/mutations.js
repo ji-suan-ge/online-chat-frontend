@@ -4,7 +4,10 @@ import {
   CURRENT_CHAT_MUTATION,
   FRIEND_LIST_MUTATION, FRIEND_MESSAGE_LIST_MUTATION, INCREASE_NEW_MESSAGE_NUMBER_MUTATION,
   ONLINE_MUTATION, SORT_FRIEND_LIST_MUTATION, UPDATE_LAST_MESSAGE_MUTATION,
-  USER_MUTATION
+  USER_MUTATION, CURRENT_GROUP_CHAT_MUTATION, GROUP_LIST_MUTATION,
+  ADD_GROUP_MESSAGE_MUTATION, SORT_GROUP_LIST_MUTATION,
+  GROUP_MESSAGE_LIST_MUTATION, UPDATE_LAST_GROUP_MESSAGE_MUTATION,
+  CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION
 } from './mutations-type'
 
 export default {
@@ -71,6 +74,63 @@ export default {
     for (const friend of state.friendList) {
       if (friend.id === friendId) {
         friend.newMessageNumber = friend.newMessageNumber + 1
+        break
+      }
+    }
+  },
+
+  [CURRENT_GROUP_CHAT_MUTATION] (state, currentGroupChat) {
+    state.currentGroupChat = currentGroupChat
+  },
+  [GROUP_LIST_MUTATION] (state, groupList) {
+    state.groupList = groupList
+  },
+  [ADD_GROUP_MESSAGE_MUTATION] (state, message) {
+    let added = false
+    for (const groupMessage of state.groupMessageList) {
+      if (groupMessage.groupId === message.groupId) {
+        groupMessage.messageList.push(message)
+        added = true
+        break
+      }
+    }
+    if (!added) {
+      const groupMessage = {
+        groupId: message.groupId,
+        messageList: []
+      }
+      state.groupMessageList.push(groupMessage)
+      groupMessage.messageList.push(message)
+    }
+  },
+  [SORT_GROUP_LIST_MUTATION] (state) {
+    state.groupList.sort(function (groupA, groupB) {
+      return groupA.lastMessageTime < groupB.lastMessageTime
+    })
+  },
+  [GROUP_MESSAGE_LIST_MUTATION] (state, groupMessageList) {
+    state.groupMessageList = groupMessageList
+  },
+  [UPDATE_LAST_GROUP_MESSAGE_MUTATION] (state, message) {
+    for (const group of state.groupList) {
+      if (group.id === message.groupId) {
+        group.lastMessageTime = message.time
+        break
+      }
+    }
+  },
+  [CHANGE_NEW_GROUP_MESSAGE_NUMBER_MUTATION] (state, {groupId, number}) {
+    for (const group of state.groupList) {
+      if (group.id === groupId) {
+        group.newMessageNumber = number
+        break
+      }
+    }
+  },
+  [INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION] (state, groupId) {
+    for (const group of state.groupList) {
+      if (group.id === groupId) {
+        group.newMessageNumber = group.newMessageNumber + 1
         break
       }
     }

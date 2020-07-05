@@ -8,7 +8,8 @@
                       v-model="textarea"
                       id="inputK"
                       resize="none"
-                      @keydown.enter.native.prevent="sendMessage">
+                      @keydown.enter.native.prevent="sendMessage"
+                      :disabled="currentChat === -1">
             </el-input>
         </el-main>
     </el-container>
@@ -18,7 +19,7 @@
     import SocketMessageType from '../constant/SocketMessageType'
 
 export default {
-      name: 'MessageEdit',
+      name: 'GroupMessageEdit',
       data () {
         return {
           textarea: ''
@@ -35,7 +36,7 @@ export default {
       methods: {
         sendMessage () {
           let message = {
-            'friendId': this.currentChat,
+            'toId': this.currentChat,
             'content': this.textarea
           }
           let socketMessage = {

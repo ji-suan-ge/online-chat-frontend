@@ -1,14 +1,14 @@
 <template>
   <el-row type="flex"
           justify="space-between"
-          :class="[{'activeChat': active}, 'friendItem']"
+          :class="[{'activeChat': active}, 'groupItem']"
           @click.native="changeChat">
       <el-col :span="8">
-          <el-avatar size="medium" :src="user.avatar" class="avatar" @click.native="showProfile"></el-avatar>
+          <el-avatar size="medium" :src="group.avatar" class="avatar" @click.native="showProfile"></el-avatar>
       </el-col>
-      <el-col :span="16" class="nicknameItem">
-          <el-row class="nickname">{{ user.nickname }}</el-row>
-          <el-row class="account">({{ user.account }})</el-row>
+      <el-col :span="16" class="groupnameItem">
+          <el-row class="groupname">{{ group.name }}</el-row>
+          <el-row class="account">({{ group.groupAccount }})</el-row>
       </el-col>
       <el-badge v-if="!!newMessageNumber && newMessageNumber > 0" :value="newMessageNumber">
       </el-badge>
@@ -18,54 +18,48 @@
 <script>
     const ipc = require('electron').ipcRenderer
     export default {
-      name: 'FriendItem',
-      props: ['user', 'active'],
+      name: 'GroupItem',
+      props: ['group', 'active'],
       data () {
         return {
           newMessageNumber: 0
         }
       },
       computed: {
-        currentChat () {
-          return this.$store.getters.currentChat
+        currentGroupChat () {
+          return this.$store.getters.currentGroupChat
         },
-        friendList () {
-          return this.$store.getters.friendList
-        },
-        friend () {
-          for (const friend of this.friendList) {
-            if (friend.id === this.user.id) {
-              return friend
-            }
-          }
+        groupList () {
+          return this.$store.getters.groupList
         }
       },
       methods: {
         changeChat () {
-          if (this.currentChat !== this.user.id) {
-            this.$store.dispatch('changeCurrentChatAction', this.user.id)
+          if (this.currentGroupChat !== this.group.id) {
+            this.$store.dispatch('changeCurrentGroupChatAction', this.group.id)
           }
         },
         showProfile () {
-          ipc.send('friendInfo')
-          ipc.send('getAcc', this.user)
+          ipc.send('groupInfo')
+          ipc.send('getGroup', this.group)
         }
       },
       created () {
       },
       watch: {
-        friend: {
+        group: {
           deep: true,
           handler (nv, ov) {
             this.newMessageNumber = nv.newMessageNumber
           }
         }
       }
+
     }
 </script>
 
 <style scoped>
-  .friendItem {
+  .groupItem {
     height: 80px;
   }
 
@@ -75,11 +69,11 @@
     width: 65px;
   }
 
-  .nicknameItem {
+  .groupnameItem {
     margin: 7px 0;
   }
 
-  .nickname {
+  .groupname {
     color: black;
     font-weight: 700;
     font-size: 20px;

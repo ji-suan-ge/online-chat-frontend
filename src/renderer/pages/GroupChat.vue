@@ -5,92 +5,92 @@
         </el-header>
         <el-container>
             <el-aside width="260px">
-                <FriendItem v-for="friend in friendList"
-                            :key="friend.id"
-                            :user="friend"
-                            :active="currentChat === friend.id"></FriendItem>
-                <p v-if="friendList.length === 0">您还没有好友！</p>
+                <GroupItem v-for="group in groupList"
+                            :key="group.id"
+                            :group="group"
+                            :active="currentGroupChat === group.id">
+                </GroupItem>
+                <p v-if="groupList.length === 0">您还没有群！</p>
             </el-aside>
             <el-main>
-                <MessageFlow></MessageFlow>
-                <MessageEdit></MessageEdit>
+                <GroupMessageFlow></GroupMessageFlow>
+                <GroupMessageEdit></GroupMessageEdit>
             </el-main>
         </el-container>
     </el-container>
 </template>
 
 <script>
-    import friendUrl from '../constant/url/friendUrl'
+    import groupUrl from '../constant/url/groupUrl'
     import globalRespCode from '../constant/code/globalRespCode'
-    import FriendItem from '../component/FriendItem'
-    import MessageFlow from '../component/MessageFlow'
-    import MessageEdit from '../component/MessageEdit'
+    import GroupItem from '../component/GroupItem'
+    import GroupMessageFlow from '../component/GroupMessageFlow'
+    import GroupMessageEdit from '../component/GroupMessageEdit'
     import messageUrl from '../constant/url/messageUrl'
     import MainTopBar from '../component/titlebar/MainTopBar'
 
     const ipc = require('electron').ipcRenderer
 export default {
-      name: 'MainPage',
-      components: {MainTopBar, MessageEdit, MessageFlow, FriendItem},
+      name: 'GroupChat',
+      components: {MainTopBar, GroupMessageEdit, GroupMessageFlow, GroupItem},
       data () {
         return {
         }
       },
       computed: {
-        friendList () {
-          return this.$store.getters.friendList
+        groupList () {
+          return this.$store.getters.groupList
         },
         online () {
           return this.$store.getters.online
         },
-        currentChat () {
-          return this.$store.getters.currentChat
+        currentGroupChat () {
+          return this.$store.getters.currentGroupChat
         },
         user () {
           return this.$store.getters.user
         }
       },
       methods: {
-        async getFriendList () {
-          await this.axios.post(friendUrl.getList).then(res => {
+        async getGroupList () {
+          await this.axios.post(groupUrl.getList, {userId: this.$store.getters.user.id}).then(res => {
             const data = res.data
             if (data.code === globalRespCode.SUCCESS) {
-              this.$store.dispatch('changeFriendListAction', data.data.friendList)
+              this.$store.dispatch('changeGroupListAction', data.data.groupUserList)
             } else {
               this.$message({
                 type: 'error',
-                message: 'get friend list failed!'
+                message: 'get group list failed!'
               })
             }
           }).catch(e => {
             this.$message({
               type: 'error',
-              message: 'get friend list failed!'
+              message: 'get group list failed!'
             })
           })
         },
-        initFriendMessageList () {
-          this.axios.post(messageUrl.getAllFriendMessage).then(res => {
-            const friendMessageList = res.data.data.friendMessageList
-            this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
-            if (this.friendList.length > 0) {
-              this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
+        initGroupMessageList () {
+          this.axios.post(messageUrl.getAllGroupMessage).then(res => {
+            console.log(res)
+            const groupMessageList = res.data.data.groupMessageList
+            this.$store.dispatch('changeGroupMessageListAction', groupMessageList)
+            if (this.groupList.length > 0) {
+              this.$store.dispatch('changeCurrentGroupChatAction', this.groupList[0].id)
             }
           })
         }
       },
       created () {
-        this.getFriendList().then(() => {
-          this.initFriendMessageList()
+        this.getGroupList().then(() => {
+          this.initGroupMessageList()
         })
         ipc.on('refresh_main', () => {
-          this.getFriendList().then(() => {
-            this.initFriendMessageList()
+          this.getGroupList().then(() => {
+            this.initGroupMessageList()
           })
         })
         ipc.on('updateAvatar_main', (event, data) => {
-          console.log('mainPage')
-          console.log(data)
           this.$store.dispatch('avatarAction', data)
         })
       },
