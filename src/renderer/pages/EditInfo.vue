@@ -1,8 +1,19 @@
 <template>
-    <div id="main">
-        <div id="main_frame">
+    <el-row id="main" justify="center" type="flex">
+        <el-col :span="20" id="main_frame">
             <div id="avatar">
-                <el-image fit="fill" :src=userInfo.avatar></el-image>
+                    
+                    <!-- action="https://jsonplaceholder.typicode.com/posts/" -->
+                <el-upload
+                    class="avatar-uploader"
+                    :action="uploadUrl"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <el-image fit="fill" v-if="userInfo.avatar" :src=userInfo.avatar></el-image>
+                    <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar"> -->
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
             </div>
             <el-form :model="userInfo">
                 <div id="info_text">
@@ -38,15 +49,18 @@
                         </el-form-item>
                     </el-row>
                     <el-row type="flex" justify="center" style="height: 50px;">
-                      <el-button type="primary" size="mini" @click="save" round>保存</el-button>
+                      <el-button type="primary" @click="save">保存</el-button>
+                      <el-button @click="goBack">返回</el-button>
                     </el-row>
                 </div>
             </el-form>
-        </div>
-    </div>
+        </el-col>
+    </el-row>
 </template>
 <script>
+    import globalConfig from '../config/globalConfig'
     import userUrl from '../constant/url/userUrl'
+    const ipc = require('electron').ipcRenderer
     export default {
       name: 'SelfInfo',
       data () {
@@ -59,10 +73,40 @@
             birthday: '2019.01.11',
             email: '126@q163.com'
           },
+          uploadUrl: '',
           account: ''
         }
       },
       methods: {
+        handleAvatarSuccess (res, file) {
+          console.log(res)
+          let url = res.data
+          console.log('新头像' + url)
+          this.axios.post(userUrl.editAvatar, {
+            avatar: url
+          }).then(res => {
+            console.log(res)
+            this.userInfo.avatar = url
+            ipc.send('updateAvatar', {url})
+            this.$message({
+              message: '成功修改头像',
+              type: 'success'
+            })
+          })
+        },
+        beforeAvatarUpload (file) {
+          const isJPG = file.type === 'image/jpeg'
+          const isPNG = file.type === 'image/png'
+          const isLt2M = file.size / 1024 / 1024 < 2
+
+          if (!isJPG && !isPNG) {
+            this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!')
+          }
+          if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!')
+          }
+          return (isJPG || isPNG) && isLt2M
+        },
         save: function () {
           this.axios.post(userUrl.editProfile, {
             nickname: this.userInfo.nickname,
@@ -72,14 +116,23 @@
             // eslint-disable-next-line no-unused-expressions
             this.userInfo.gender = this.userInfo.gender === '男' ? 1 : 2
             localStorage.setItem('si_account', JSON.stringify(this.userInfo))
+            console.log(this.userInfo)
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
             this.$router.push('/selfInfo')
           })
+        },
+        goBack: function () {
+          this.$router.push('/selfInfo')
         }
       },
       created: function () {
         this.userInfo = JSON.parse(localStorage.getItem('si_account'))
         this.userInfo.gender = this.userInfo.gender === 1 ? '男' : '女'
-  },
+        this.uploadUrl = globalConfig.host + userUrl.uploadFile
+      },
       mounted: function () {
       }
     }
@@ -88,13 +141,14 @@
 <style scoped>
     #main {
         width: 100%;
-        height: 523px;
+        height: 100%;
+        /* height: 523px; */
         text-align: center;
-        padding: 40px 0 0 0;
+        padding: 40px 0 40px 0;
     }
     #main_frame {
-        margin: 0 auto;
-        width: 350px;
+        /* margin: 0 auto; */
+        /* width: 350px; */
         border: 2px solid deepskyblue;
         border-radius: 5px;
     }
@@ -122,6 +176,29 @@
         height: 100px;
         border: 2px solid deepskyblue;
         border-radius: 50%;
+    }
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
     }
     #info_text > div:nth-child(8) > button {
         height: 35px;

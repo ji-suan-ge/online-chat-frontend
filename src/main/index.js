@@ -79,9 +79,9 @@ let infoWindow
 ipc.on('selfInfo', function (event, data) {
   infoWindow = new BrowserWindow(
     {
-      height: 563,
+      height: 600,
       useContentSize: true,
-      width: 410,
+      width: 400,
       resizable: false,
       movable: true,
       hasShadow: false,
@@ -89,7 +89,7 @@ ipc.on('selfInfo', function (event, data) {
       transparent: true,
       webPreferences: {
         webSecurity: false,
-        devTools: false
+        devTools: true
       }
     }
   )

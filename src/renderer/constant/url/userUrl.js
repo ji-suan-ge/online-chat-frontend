@@ -5,5 +5,6 @@ export default {
   findPasswordCaptcha: '/user/findPasswordCode',
   findPassword: '/user/findPassword',
   editProfile: '/user/editProfile',
-  editAvatar: '/user/editAvatar'
+  editAvatar: '/user/editAvatar',
+  uploadFile: '/uploadFile'
 }
