@@ -10,7 +10,7 @@ const state = local ? JSON.parse(local) : {
     nickname: 'user2',
     gender: 1,
     birthday: null,
-    avatar: 'http://abc.com/img.jpg',
+    avatar: '',
     email: 'mail@abc.com',
     state: 1,
     lastMessageTime: '2019-11-15T16:19:29.000+0000'
@@ -22,7 +22,7 @@ const state = local ? JSON.parse(local) : {
     nickname: 'user2',
     gender: 1,
     birthday: null,
-    avatar: 'http://abc.com/img.jpg',
+    avatar: '',
     email: 'mail@abc.com',
     state: 1,
     lastMessageTime: '2019-11-15T16:19:29.000+0000'

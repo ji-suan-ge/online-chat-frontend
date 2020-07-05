@@ -10,7 +10,7 @@
           <div class="main" :class="{ self: myMessage }">
             <el-avatar v-if="this.user && this.group"
                        size="large"
-                       :src="myMessage ? this.user.avatar : group.avatar"
+                       :src="myMessage ? this.user.avatar : avatar"
                        class="avatar"></el-avatar>
             <div class="text">{{ message.content }}</div>
           </div>
@@ -22,6 +22,11 @@
     export default {
       name: 'GroupMessageItem',
       props: ['message'],
+      data () {
+        return {
+          avatar: ''
+        }
+      },
       computed: {
         myMessage () {
           return this.message.userId === this.user.id
@@ -36,9 +41,14 @@
         user () {
           return this.$store.getters.user
         },
+        groupMemberList () {
+          return this.$store.getters.groupMemberList
+        },
         groupList () {
           return this.$store.getters.groupList
         }
+      },
+      methods: {
       },
       directives: {
         'scroll-bottom' () {
@@ -51,6 +61,15 @@
         time (time) {
           time = new Date(time)
           return time.getHours() + ':' + time.getMinutes()
+        }
+      },
+      watch: {
+        groupMemberList (newValue) {
+          for (let groupMember of newValue) {
+            if (this.message.userId === groupMember.id) {
+              this.avatar = groupMember.avatar
+            }
+          }
         }
       }
     }
