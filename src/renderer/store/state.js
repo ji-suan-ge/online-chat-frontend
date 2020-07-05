@@ -41,9 +41,9 @@ const state = local ? JSON.parse(local) : {
       state: 2
     }]
   }],
-  currentGroupChat: -2,
+  currentGroupChat: -3,
   groupList: [{
-    id: -1,
+    id: -2,
     groupAccount: '000000',
     name: '群名',
     introduction: '群介绍',

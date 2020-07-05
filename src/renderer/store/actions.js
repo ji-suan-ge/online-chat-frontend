@@ -40,11 +40,11 @@ export default {
       }
 
       if (socketMessageType === 0) {
-        const currentGroupChat = state.currentChat
+        const currentGroupChat = state.currentGroupChat
         const message = JSON.parse(socketMessage.data)
         message.time = new Date(message.time).toJSON()
-        if (message.userId !== currentGroupChat) {
-          commit(INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, message.userId)
+        if (message.groupId !== currentGroupChat) {
+          commit(INCREASE_NEW_GROUP_MESSAGE_NUMBER_MUTATION, message.groupId)
         }
         commit(ADD_GROUP_MESSAGE_MUTATION, message)
         commit(UPDATE_LAST_GROUP_MESSAGE_MUTATION, message)

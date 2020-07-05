@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex"
           justify="space-between"
-          :class="[{activeChat: active}, friendItem]"
+          :class="[{'activeChat': active}, 'friendItem']"
           @click.native="changeChat">
       <el-col :span="8">
           <el-avatar size="medium" :src="user.avatar" class="avatar" @click.native="showProfile"></el-avatar>
