@@ -140,6 +140,7 @@
       name: 'SearchFriend',
       data () {
         return {
+          account: '',
           keyword: '',
           all_user: [],
           friendList: [],
@@ -171,6 +172,12 @@
               }).then(res => {
                 this.all_user = res.data.data.friendList
                 console.log(res)
+                for (let i = 0; i < this.all_user.length; i++) {
+                  if (this.all_user[i].account === this.account) {
+                    this.all_user.splice(i, 1)
+                    break
+                  }
+                }
                 this.notFound = (this.all_user.length === 0)
               })
               break
@@ -250,6 +257,7 @@
       created () {
         this.getFriendList()
         this.getGroupList()
+        this.account = localStorage.getItem('account')
       }
     }
 </script>
