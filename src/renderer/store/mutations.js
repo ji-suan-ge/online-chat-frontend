@@ -88,19 +88,18 @@ export default {
   [ADD_GROUP_MESSAGE_MUTATION] (state, message) {
     let added = false
     for (const groupMessage of state.groupMessageList) {
-      if (groupMessage.groupId === message.groupId || groupMessage.groupId === message.userId) {
+      if (groupMessage.groupId === message.groupId) {
         groupMessage.messageList.push(message)
         added = true
         break
       }
     }
     if (!added) {
-      const myId = state.user.id
       const groupMessage = {
-        friendId: message.userId === myId ? message.friendId : message.userId,
+        groupId: message.groupId,
         messageList: []
       }
-      state.groupMessage.push(groupMessage)
+      state.groupMessageList.push(groupMessage)
       groupMessage.messageList.push(message)
     }
   },
@@ -114,7 +113,7 @@ export default {
   },
   [UPDATE_LAST_GROUP_MESSAGE_MUTATION] (state, message) {
     for (const group of state.groupList) {
-      if (group.id === message.friendId || group.id === message.userId) {
+      if (group.id === message.groupId) {
         group.lastMessageTime = message.time
         break
       }

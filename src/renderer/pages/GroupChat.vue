@@ -55,7 +55,6 @@ export default {
         async getGroupList () {
           await this.axios.post(groupUrl.getList, {userId: this.$store.getters.user.id}).then(res => {
             const data = res.data
-            console.log(res)
             if (data.code === globalRespCode.SUCCESS) {
               this.$store.dispatch('changeGroupListAction', data.data.groupUserList)
             } else {
@@ -72,18 +71,19 @@ export default {
           })
         },
         initGroupMessageList () {
-          this.axios.post(messageUrl.getAllFriendMessage).then(res => {
-            const friendMessageList = res.data.data.friendMessageList
-            this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
-            if (this.friendList.length > 0) {
-              this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
+          this.axios.post(messageUrl.getAllGroupMessage).then(res => {
+            console.log(res)
+            const groupMessageList = res.data.data.groupMessageList
+            this.$store.dispatch('changeGroupMessageListAction', groupMessageList)
+            if (this.groupList.length > 0) {
+              this.$store.dispatch('changeCurrentGroupChatAction', this.groupList[0].id)
             }
           })
         }
       },
       created () {
         this.getGroupList().then(() => {
-          // this.initGroupMessageList()
+          this.initGroupMessageList()
         })
         ipc.on('refresh_main', () => {
           this.getGroupList().then(() => {

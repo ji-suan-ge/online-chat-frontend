@@ -8,7 +8,8 @@
                       v-model="textarea"
                       id="inputK"
                       resize="none"
-                      @keydown.enter.native.prevent="sendMessage">
+                      @keydown.enter.native.prevent="sendMessage"
+                      :disabled="currentGroupChat === -3">
             </el-input>
         </el-main>
     </el-container>

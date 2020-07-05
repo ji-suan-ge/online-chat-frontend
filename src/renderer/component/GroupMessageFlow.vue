@@ -2,18 +2,18 @@
   <el-container>
     <el-header v-text="group ? group.name : ''" height="38px"></el-header>
     <el-main id="messageFlow">
-      <MessageItem v-for="message in currentMessageList" :key="message.id" :message="message"></MessageItem>
+      <GroupMessageItem v-for="message in currentMessageList" :key="message.id" :message="message"></GroupMessageItem>
     </el-main>
   </el-container>
 </template>
 
 <script>
-    import MessageItem from './MessageItem'
+    import GroupMessageItem from './GroupMessageItem'
     import GroupMessageEdit from './GroupMessageEdit'
 
 export default {
       name: 'GroupMessageFlow',
-      components: {GroupMessageEdit, MessageItem},
+      components: {GroupMessageEdit, GroupMessageItem},
       data () {
         return {
         }
