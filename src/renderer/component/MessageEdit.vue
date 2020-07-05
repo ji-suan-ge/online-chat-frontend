@@ -40,7 +40,7 @@ export default {
           }
           let socketMessage = {
             socketMessageType: SocketMessageType.PRIVATE_MESSAGE,
-            data: message
+            data: JSON.stringify(message)
           }
           this.chatSocket.send(JSON.stringify(socketMessage))
           this.textarea = ''
