@@ -15,38 +15,37 @@
 </template>
 
 <script>
-    import SocketMessageType from '../constant/SocketMessageType'
 
 export default {
-      name: 'GroupMessageEdit',
-      data () {
-        return {
-          textarea: ''
-        }
-      },
-      computed: {
-        chatSocket () {
-          return this.$store.getters.chatSocket
-        },
-        currentChat () {
-          return this.$store.getters.currentChat
-        }
-      },
-      methods: {
-        sendMessage () {
-          let message = {
-            'toId': this.currentChat,
-            'content': this.textarea
-          }
-          let socketMessage = {
-            socketMessageType: SocketMessageType.PRIVATE_MESSAGE,
-            data: JSON.stringify(message)
-          }
-          this.chatSocket.send(JSON.stringify(socketMessage))
-          this.textarea = ''
-        }
-      }
+  name: 'GroupMessageEdit',
+  data () {
+    return {
+      textarea: ''
     }
+  },
+  computed: {
+    chatSocket () {
+      return this.$store.getters.chatSocket
+    },
+    currentGroupChat () {
+      return this.$store.getters.currentGroupChat
+    }
+  },
+  methods: {
+    sendMessage () {
+      let message = {
+        'toId': this.currentGroupChat,
+        'content': this.textarea
+      }
+      let socketMessage = {
+        socketMessageType: 0,
+        data: JSON.stringify(message)
+      }
+      this.chatSocket.send(JSON.stringify(socketMessage))
+      this.textarea = ''
+    }
+  }
+}
 </script>
 
 <style>
