@@ -27,7 +27,7 @@ function createWindow () {
     frame: false,
     webPreferences: {
       webSecurity: false,
-      devTools: false
+      devTools: true
     }
   })
 
