@@ -112,7 +112,7 @@ ipc.on('searchFriend', function (event, data) {
         transparent: true,
         webPreferences: {
           webSecurity: false,
-          devTools: false
+          devTools: true
         }
       }
     )
