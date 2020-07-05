@@ -12,7 +12,7 @@ import SocketMessageType from '../constant/SocketMessageType'
 export default {
   async loginAction ({state, commit}, {token, user}) {
     commit(USER_MUTATION, user)
-    const ws = new WebSocket(globalConfig.socketHost + '/chatSocket?token=' + token)
+    const ws = new WebSocket(globalConfig.socketHost + '/chatSocket/' + token)
     ws.onopen = () => {
       commit(ONLINE_MUTATION, true)
       commit(CHAT_SOCKET_MUTATION, ws)
