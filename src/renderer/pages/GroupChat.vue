@@ -8,20 +8,29 @@
                 <GroupItem v-for="group in groupList"
                             :key="group.id"
                             :group="group"
+                            :last-message="getLastMessage(group.id)"
                             :active="currentGroupChat === group.id">
                 </GroupItem>
                 <p v-if="groupList.length === 0">您还没有群！</p>
             </el-aside>
             <el-main>
                 <el-container>
-                    <el-button type="primary" :icon="showMember ? 'el-icon-right' : 'el-icon-back'"
-                      size="mini" circle class="showMember" @click="toggleShowMember">
-                    </el-button>
+                  <div class="showMember">
+                    <div :class="[{'el-icon-arrow-right': showMember, 'el-icon-arrow-left': !showMember}, 'showbtn-icon']" @click="toggleShowMember">
+                    </div>
+                  </div>
+                  <!-- <el-button type="primary" :icon="showMember ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"
+                    size="mini" circle class="showMember" @click="toggleShowMember">
+                  </el-button> -->
+                  <el-row>
+                    <el-col>
+                    </el-col>
+                  </el-row>
                   <el-main>
                     <GroupMessageFlow></GroupMessageFlow>
                     <GroupMessageEdit></GroupMessageEdit>
                   </el-main>
-                  <el-aside :width="showMember ? '160px' : '0'">
+                  <el-aside class="member-list" :width="showMember ? '160px' : '0'">
                     <p class="member-title">群成员</p>
                     <GroupMemberItem v-for="groupMember in groupMemberList"
                       :key="groupMember.id"
@@ -49,7 +58,10 @@ export default {
       components: {MainTopBar, GroupMessageEdit, GroupMessageFlow, GroupItem, GroupMemberItem},
       data () {
         return {
-          showMember: true
+          showMember: true,
+          lastMessageOfFriend: {
+            '1': ''
+          }
         }
       },
       computed: {
@@ -103,12 +115,24 @@ export default {
         initGroupMessageList () {
           this.axios.post(messageUrl.getAllGroupMessage).then(res => {
             const groupMessageList = res.data.data.groupMessageList
+            console.log(groupMessageList)
+            groupMessageList.forEach((item, index) => {
+              if (item.messageList.length > 0) {
+                this.lastMessageOfFriend[item.groupId] = item.messageList[item.messageList.length - 1]
+              } else {
+                this.lastMessageOfFriend[item.groupId] = null
+              }
+            })
             this.$store.dispatch('changeGroupMessageListAction', groupMessageList)
             if (this.groupList.length > 0) {
               this.$store.dispatch('changeCurrentGroupChatAction', this.groupList[0].id)
               this.getGroupMemberList()
             }
           })
+        },
+        getLastMessage (groupId) {
+          // console.log(this.lastMessageOfFriend[friendId])
+          return this.lastMessageOfFriend[groupId]
         }
       },
       created () {
@@ -152,9 +176,17 @@ export default {
     }
     .showMember {
       position: absolute;
+      width: 30px;
+      height: 30px;
       top: 65px;
       right: 5px;
       opacity: 0.5;
+    }
+    .showbtn-icon {
+      margin: 7px
+    }
+    .member-list {
+      transition: width 1s;
     }
     .member-title {
       margin: 0 5px 0;

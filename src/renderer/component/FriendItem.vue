@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="16" class="nicknameItem">
           <el-row class="title">
-            <el-col class="info">{{userInfo}}</el-col>
+            <el-col class="name">{{friendName}}</el-col>
           </el-row>
           <el-row class="detail">
             <el-col :span="18" class="message">{{ calculateLastMessage.message }}</el-col>
@@ -46,8 +46,8 @@
             }
           }
         },
-        userInfo () {
-          return this.limitedString(this.user.nickname + '(' + this.user.account + ')', 9)
+        friendName () {
+          return this.limitedString(this.user.nickname, 9)
         },
         calculateLastMessage () {
           let result = {
@@ -71,9 +71,13 @@
               } else {
                 result.time = (month + 1) + '-' + day
               }
+            } else {
+              result.time = year + '-' + (month + 1) + '-' + day
             }
             console.log(this.result)
           }
+          result.message = this.limitedString(result.message, 7)
+          // console.log(result)
           return result
         }
       },
@@ -133,7 +137,7 @@
     overflow: hidden;
   }
 
-  .info {
+  .name {
     color: black;
     font-weight: 700;
     font-size: 20px;

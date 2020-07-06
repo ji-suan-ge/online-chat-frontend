@@ -4,8 +4,8 @@
 <!--  </el-row>-->
   <el-row>
     <div class="message">
-          <p class="time">
-            <span>{{ message.time | time }}</span>
+          <p v-if="message.timeString.length > 0" class="time">
+            <span>{{ message.timeString }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
             <el-avatar v-if="this.user && this.friend"
