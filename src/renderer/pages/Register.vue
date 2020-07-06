@@ -19,7 +19,7 @@
                         <el-form-item prop="captcha" type="float">
                             <el-input v-model="registerForm.captcha" class="captchaInput" placeholder="验证码"></el-input>
                             <el-button type="primary" plain @click="sendCaptcha()"
-                                       :disabled="sendCaptchaCoolDown">获取验证码</el-button>
+                                       :disabled="sendCaptchaCoolDown" class="getCaptcha">获取验证码</el-button>
                         </el-form-item>
                         <el-form-item prop="nickname">
                             <el-input type="text" placeholder="昵称"
@@ -192,7 +192,11 @@
         text-align: center;
     }
     .captchaInput {
-        width: 64%;
+        width: 60%;
+        float: left;
+    }
+    .getCaptcha {
+        float: right;
     }
     .operateButton {
         width: 80px;
