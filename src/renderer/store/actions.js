@@ -86,7 +86,7 @@ export default {
   async changeCurrentGroupChatAction ({state, commit}, currentGroupChat) {
     commit(CURRENT_GROUP_CHAT_MUTATION, currentGroupChat)
     const socketMessage = {
-      socketMessageType: SocketMessageType.MARK_READ_MESSAGE,
+      socketMessageType: SocketMessageType.MARK_GROUP_MESSAGE_READ,
       data: currentGroupChat
     }
     state.chatSocket.send(JSON.stringify(socketMessage))
