@@ -89,7 +89,7 @@ ipc.on('selfInfo', function (event, data) {
       transparent: true,
       webPreferences: {
         webSecurity: false,
-        devTools: true
+        devTools: false
       }
     }
   )
@@ -112,7 +112,7 @@ ipc.on('searchFriend', function (event, data) {
         transparent: true,
         webPreferences: {
           webSecurity: false,
-          devTools: true
+          devTools: false
         }
       }
     )

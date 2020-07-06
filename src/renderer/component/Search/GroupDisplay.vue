@@ -16,11 +16,11 @@
         <br>
         <div class="bt">
             <el-button 
-              :disabled="myGroup"
+              :disabled="myGroup || joined"
               type="primary" 
               size="mini" 
               @click="joinGroup">
-              {{myGroup ? "已加入" : "申请加入"}}
+              {{myGroup || joined ? "已加入" : "申请加入"}}
             </el-button>
         </div>
     </el-col>
@@ -33,7 +33,8 @@
       name: 'GroupDisplay',
       data () {
         return {
-          selfAccount: ''
+          selfAccount: '',
+          joined: false
         }
       },
       props: {
@@ -81,6 +82,7 @@
           this.axios.post(groupUrl.joinGroup, {
             groupId: this.id
           })
+          this.joined = true
           ipc.send('refresh')
           this.$emit('submit')
         },

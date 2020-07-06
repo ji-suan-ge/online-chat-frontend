@@ -1,12 +1,9 @@
 <template>
     <el-container>
         <el-main>
-            <el-header>RegisterSuccess.vue</el-header>
-            <el-row type="flex" justify="center">
-                <el-row>欢迎您，用户{{account}}</el-row>
-                <el-row>
-                    <el-button type="primary" @click="toLogin">登录</el-button>
-                </el-row>
+            <el-row type="flex" justify="center" class="main">
+                <el-row>你好，你的账号是{{account}}</el-row>
+                <el-button type="primary" @click="toLogin">登录</el-button>
             </el-row>
         </el-main>
     </el-container>
@@ -17,7 +14,7 @@
     name: 'RegisterSuccess',
     data () {
       return {
-        account: this.$route.params.account
+        account: this.$route.params.account ? this.$route.params.account : '19765823'
       }
     },
     methods: {
@@ -31,5 +28,8 @@
 </script>
 
 <style scoped>
-
+.main {
+  margin-top: 200px;
+  font-size: 40px;
+}
 </style>
