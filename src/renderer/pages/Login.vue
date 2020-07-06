@@ -21,7 +21,7 @@
                             <el-input v-model="loginForm.password" type="password"
                                       prefix-icon="el-icon-lock" style="width:250px"
                                       placeholder="密码">
-                                <el-button slot="append" icon="el-icon-right"
+                                <el-button slot="append" icon="el-icon-right" class="login-btn"
                                            @click="onSubmit('loginForm')"></el-button>
                             </el-input>
                         </el-form-item>
@@ -141,6 +141,13 @@
     .loginForm {
         width: 50vw;
         text-align: center;
+    }
+    .login-btn {
+        border-radius: 0 4px 4px 0;
+        transition: background-color 0.5s;
+    }
+    .login-btn:hover {
+        background-color: #67C23A;
     }
     #header {
         margin-top: 20px;

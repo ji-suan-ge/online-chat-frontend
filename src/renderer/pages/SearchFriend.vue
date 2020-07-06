@@ -269,7 +269,7 @@
     }
     .page {
       border: #d0d3d9 solid 1px;
-      border-radius: 7.5px;
+      /* border-radius: 7.5px; */
       height: 100%;
     }
     .el-header {
