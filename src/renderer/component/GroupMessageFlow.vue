@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header v-text="group ? group.name : ''" height="38px"></el-header>
+    <el-header v-text="group ? group.name + '(' + group.groupAccount + ')' : ''" height="38px"></el-header>
     <el-main id="messageFlow">
       <GroupMessageItem v-for="message in currentMessageList" :key="message.id" :message="message"></GroupMessageItem>
     </el-main>
@@ -60,6 +60,7 @@ export default {
                     }
                   }
                   lastTime = date
+                  console.log(message.timeString, message.time)
                 }
               }
               return groupMessage.messageList
@@ -92,6 +93,7 @@ export default {
     margin: 5px;
     font-size: 25px;
     border-bottom: 1px solid #eee;
+    font-weight: 700;
   }
   .el-main {
     margin: 0;

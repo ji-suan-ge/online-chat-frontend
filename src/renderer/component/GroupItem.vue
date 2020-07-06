@@ -4,7 +4,7 @@
           :class="[{'activeChat': active}, {'unactiveChat': !active}, 'groupItem']"
           @click.native="changeChat">
       <el-col :span="8">
-          <el-avatar size="medium" :src="group.avatar" class="avatar" @click.native="showProfile"></el-avatar>
+          <el-avatar size="medium" shape="square" :src="group.avatar" class="avatar" @click.native="showProfile"></el-avatar>
       </el-col>
       <el-col :span="16" class="groupnameItem">
           <el-row class="title">
@@ -131,7 +131,7 @@
   }
 
   .activeChat {
-    background-color: #f8f8f8;
+    background-color: #e0e0e0;
   }
 
   .avatar {
@@ -165,7 +165,7 @@
     overflow: hidden;
   }
 
-  .info {
+  .name {
     color: black;
     font-weight: 700;
     font-size: 20px;

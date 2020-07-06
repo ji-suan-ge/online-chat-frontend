@@ -4,7 +4,7 @@
 <!--  </el-row>-->
   <el-row>
     <div class="message">
-          <p class="time">
+          <p v-if="message.timeString.length > 0" class="time">
             <span>{{ message.timeString }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
