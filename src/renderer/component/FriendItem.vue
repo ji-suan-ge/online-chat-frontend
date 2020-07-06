@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="16" class="nicknameItem">
           <el-row class="title">
-            <el-col class="info">{{userInfo}}</el-col>
+            <el-col class="name">{{friendName}}</el-col>
           </el-row>
           <el-row class="detail">
             <el-col :span="18" class="message">{{ calculateLastMessage.message }}</el-col>
@@ -46,7 +46,7 @@
             }
           }
         },
-        userInfo () {
+        friendName () {
           return this.limitedString(this.user.nickname, 9)
         },
         calculateLastMessage () {
@@ -137,7 +137,7 @@
     overflow: hidden;
   }
 
-  .info {
+  .name {
     color: black;
     font-weight: 700;
     font-size: 20px;

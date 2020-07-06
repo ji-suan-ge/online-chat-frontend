@@ -28,6 +28,40 @@ export default {
         currentMessageList () {
           for (const groupMessage of this.groupMessageList) {
             if (groupMessage.groupId === this.getCurrentGroupChat) {
+              if (groupMessage.messageList.length > 0) {
+                let lastTime = null
+                for (let message of groupMessage.messageList) {
+                  let date = new Date(message.time)
+                  let day = date.getDate()
+                  let month = date.getMonth()
+                  let year = date.getFullYear()
+                  let hour = date.getHours()
+                  let minute = date.getMinutes()
+                  if (lastTime) {
+                    if (year === lastTime.getFullYear() && month === lastTime.getMonth() && day === lastTime.getDate()) {
+                      if (hour === lastTime.getHours() && (minute === lastTime.getMinutes() || minute === lastTime.getMinutes() + 1)) {
+                        message['timeString'] = ''// 连续消息
+                      } else {
+                        if (hour < 10) hour = '0' + hour
+                        if (minute < 10) minute = '0' + minute
+                        message['timeString'] = hour + ':' + minute// 当天其他时段的消息
+                      }
+                    } else {
+                      message['timeString'] = year + '-' + (month + 1) + '-' + day// 历史消息
+                    }
+                  } else { // 如果是第一条消息，必定打印时间戳
+                    let now = new Date()
+                    if (year === now.getFullYear() && month === now.getMonth() && day === now.getDate()) {
+                      if (hour < 10) hour = '0' + hour
+                      if (minute < 10) minute = '0' + minute
+                      message['timeString'] = hour + ':' + minute// 当天消息
+                    } else {
+                      message['timeString'] = year + '-' + (month + 1) + '-' + day// 历史消息
+                    }
+                  }
+                  lastTime = date
+                }
+              }
               return groupMessage.messageList
             }
           }

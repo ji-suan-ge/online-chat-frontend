@@ -65,7 +65,7 @@ export default {
                   lastTime = date
                 }
               }
-              console.log(friendMessage)
+              // console.log(friendMessage)
               return friendMessage.messageList
             }
           }
