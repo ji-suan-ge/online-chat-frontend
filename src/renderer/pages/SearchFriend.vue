@@ -37,7 +37,7 @@
             <FriendDisplay
               v-for="(item, index) in all_user"
               :key="index"
-              :userinfo="item"
+              :user-info="item"
               :avatar="item.avatar"
               :nickname="item.nickname"
               :account="item.account"
@@ -173,6 +173,7 @@
                 this.all_user = res.data.data.friendList
                 console.log(res)
                 for (let i = 0; i < this.all_user.length; i++) {
+                  console.log(this.all_user[i].account, this.account)
                   if (this.all_user[i].account === this.account) {
                     this.all_user.splice(i, 1)
                     break
@@ -257,7 +258,7 @@
       created () {
         this.getFriendList()
         this.getGroupList()
-        this.account = localStorage.getItem('account')
+        this.account = JSON.parse(localStorage.getItem('si_account')).account
       }
     }
 </script>

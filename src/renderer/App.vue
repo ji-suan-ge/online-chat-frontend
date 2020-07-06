@@ -28,6 +28,7 @@
         /* border-radius: 10px; */
         background: white;
         height: 100vh;
+        font-family: "Microsoft YaHei";
     }
     ::-webkit-scrollbar {
       /*滚动条整体样式*/
