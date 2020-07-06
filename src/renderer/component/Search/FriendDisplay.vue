@@ -1,5 +1,5 @@
 <template>
-    <el-col :span="6" >
+    <el-col :span="6" v-if="selfAccount !== account" >
         <div class="avatar">
             <img :src="avatar" class="avatar-image" @click="showProfile">
         </div>
@@ -67,6 +67,7 @@
       },
       created: function () {
         this.selfAccount = localStorage.getItem('account')
+        console.log(this.selfAccount)
         // console.log(this.friendList)
       },
       computed: {
