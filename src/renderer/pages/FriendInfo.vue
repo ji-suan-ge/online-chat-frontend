@@ -75,6 +75,7 @@
         }
       },
       created: function () {
+        console.log(localStorage.getItem('isSelf'))
         this.userInfo = JSON.parse(localStorage.getItem('fi_account'))
         console.log(this.userInfo)
       },

@@ -89,7 +89,7 @@
           this.$emit('submit')
         },
         showProfile () {
-          console.log('???')
+          localStorage.setItem('isSelf', false)
           ipc.send('friendInfo')
           ipc.send('getAcc', this.userInfo)
         }

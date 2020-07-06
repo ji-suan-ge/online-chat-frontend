@@ -90,6 +90,7 @@
 
   const ipc = require('electron').ipcRenderer
   ipc.on('sendSelfAcc', (e, data) => {
+    console.log('保存信息', data)
     localStorage.setItem('si_account', JSON.stringify(data))
   })
   export default {
@@ -143,10 +144,10 @@
     },
     created: function () {
       this.userInfo = JSON.parse(localStorage.getItem('si_account'))
+      console.log('用户信息', this.userInfo)
       this.userInfo['age'] = '21'
       this.userInfo['place'] = '安徽 合肥'
-      this.userInfo['cooAge'] = '3年'
-      console.log('头像' + this.userInfo.avatar)
+      // console.log('头像' + this.userInfo.avatar)
     },
     mounted: function () {
     }

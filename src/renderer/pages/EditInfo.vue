@@ -130,6 +130,7 @@
       },
       created: function () {
         this.userInfo = JSON.parse(localStorage.getItem('si_account'))
+        // console.log(this.userInfo)
         this.userInfo.gender = this.userInfo.gender === 1 ? '男' : '女'
         this.uploadUrl = globalConfig.host + userUrl.uploadFile
       },
