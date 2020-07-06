@@ -85,7 +85,7 @@ export default {
                 this.lastMessageOfFriend[item.friendId] = null
               }
             })
-            console.log(this.lastMessageOfFriend)
+            // console.log(this.lastMessageOfFriend)
             this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
             if (this.friendList.length > 0) {
               this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
@@ -93,7 +93,7 @@ export default {
           })
         },
         getLastMessage (friendId) {
-          console.log(this.lastMessageOfFriend[friendId])
+          // console.log(this.lastMessageOfFriend[friendId])
           return this.lastMessageOfFriend[friendId]
         }
       },

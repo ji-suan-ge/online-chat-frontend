@@ -5,7 +5,7 @@
   <el-row>
     <div class="message">
           <p class="time">
-            <span>{{ message.time | time }}</span>
+            <span>{{ message.timeString }}</span>
           </p>
           <div class="main" :class="{ self: myMessage }">
             <el-avatar v-if="this.user && this.friend"

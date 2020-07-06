@@ -47,7 +47,7 @@
           }
         },
         userInfo () {
-          return this.limitedString(this.user.nickname + '(' + this.user.account + ')', 9)
+          return this.limitedString(this.user.nickname, 9)
         },
         calculateLastMessage () {
           let result = {
@@ -71,9 +71,13 @@
               } else {
                 result.time = (month + 1) + '-' + day
               }
+            } else {
+              result.time = year + '-' + (month + 1) + '-' + day
             }
             console.log(this.result)
           }
+          result.message = this.limitedString(result.message, 7)
+          // console.log(result)
           return result
         }
       },
