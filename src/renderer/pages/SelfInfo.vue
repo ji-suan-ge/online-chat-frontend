@@ -154,14 +154,21 @@
 </script>
 
 <style scoped>
+    body {
+      background-color: transparent;
+    }
+
     #main {
-        width: 100%;
+        /* margin: 2px; */
         height: 100%;
+        width: 100%;
         text-align: center;
         padding: 40px 0 40px 0;
         font-family: "Microsoft YaHei";
         border: #d0d3d9 solid 1px;
-        border-radius: 7.5px;
+        /* box-shadow: 1px 1px 2px rgba(0, 0, 0, .12), 0 0 2px rgba(0, 0, 0, .04); */
+        /* border-radius: 7.5px; */
+        /* background-color: deepskyblue; */
     }
 
     #main-frame {
@@ -169,6 +176,7 @@
         /* width: 350px; */
         border: 2px solid deepskyblue;
         border-radius: 5px;
+        background-color: azure;
     }
 
     #avatar {

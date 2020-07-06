@@ -145,12 +145,14 @@
         /* height: 523px; */
         text-align: center;
         padding: 40px 0 40px 0;
+        border: #d0d3d9 solid 1px;
     }
     #main_frame {
         /* margin: 0 auto; */
         /* width: 350px; */
         border: 2px solid deepskyblue;
         border-radius: 5px;
+        background-color: azure;
     }
     #avatar {
         height: 130px;
