@@ -21,7 +21,7 @@
                 <el-input 
                   v-if="activeIndex==='1'" 
                   v-model="keyword" 
-                  placeholder="请输入好友账号/昵称"
+                  placeholder="请输入好友账号/昵称/邮箱"
                 ></el-input>
                 <el-input 
                   v-if="activeIndex==='2'" 
@@ -232,6 +232,7 @@
                 const data = res.data
                 // console.log(data)
                 if (data.code === '0000') {
+                  ipc.send('refresh')
                   this.$message({
                     message: '群聊创建成功，请在群聊列表中查看',
                     type: 'success'

@@ -18,11 +18,11 @@
         <br>
         <div class="bt">
             <el-button 
-              :disabled="myFriend"
+              :disabled="myFriend || added"
               type="primary" 
               size="mini" 
               @click="addFriend">
-              {{myFriend ? "已添加" : "添加"}}
+              {{myFriend || added ? "已添加" : "添加"}}
             </el-button>
         </div>
     </el-col>
@@ -35,7 +35,8 @@
       name: 'FriendDisplay',
       data () {
         return {
-          selfAccount: ''
+          selfAccount: '',
+          added: false
         }
       },
       props: {
@@ -84,6 +85,7 @@
           this.axios.post(friendUrl.addFriend, {
             friendId: this.id
           })
+          this.added = true
           // this.friendList.push()
           ipc.send('refresh')
           this.$emit('submit')
