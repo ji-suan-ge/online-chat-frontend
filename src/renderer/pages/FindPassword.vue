@@ -19,7 +19,7 @@
               <el-input type="text" placeholder="验证码"
                         v-model="findPasswordForm.captcha" class="captchaInput"></el-input>
               <el-button type="primary" @click="sendCaptcha"
-                         :disabled="sendCaptchaCoolDown" plain>获取验证码</el-button>
+                         :disabled="sendCaptchaCoolDown" plain class="getCaptcha">获取验证码</el-button>
             </el-form-item>
             <el-form-item prop="password">
               <el-input type="password" placeholder="新密码"
@@ -186,7 +186,11 @@
     text-align: center;
   }
   .captchaInput {
-    width: 64%;
+    width: 60%;
+    float: left;
+  }
+  .getCaptcha {
+    float: right;
   }
   .operateButton {
     width: 80px;
