@@ -24,7 +24,7 @@
     const ipc = require('electron').ipcRenderer
     export default {
       name: 'GroupItem',
-      props: ['group', 'active', 'lastMessage'],
+      props: ['group', 'active'],
       data () {
         return {
           newMessageNumber: 0
@@ -47,23 +47,34 @@
         groupName () {
           return this.limitedString(this.group.name, 9)
         },
+        groupMessageList () {
+          return this.$store.getters.groupMessageList
+        },
+        currentMessageList () {
+          for (const groupMessage of this.groupMessageList) {
+            if (groupMessage.groupId === this.group.id) {
+              return groupMessage.messageList
+            }
+          }
+        },
         calculateLastMessage () {
           let result = {
             message: '',
             time: ''
           }
-          if (this.lastMessage) {
-            result.message = this.lastMessage.content
-            let date = new Date(this.lastMessage.time)
+          let currentLastMessage = (this.currentMessageList && this.currentMessageList.length > 0) ? this.currentMessageList[this.currentMessageList.length - 1] : null
+          if (currentLastMessage) {
+            result.message = currentLastMessage.content
+            let last = new Date(currentLastMessage.time)
+            let year = last.getFullYear()
+            let month = last.getMonth()
+            let day = last.getDate()
             let now = new Date()
-            let day = date.getDate()
-            let month = date.getMonth()
-            let year = date.getFullYear()
             if (year === now.getFullYear()) {
-              if (day === now.getDate()) {
-                let hour = date.getHours()
+              if (month === now.getMonth() && day === now.getDate()) {
+                let hour = last.getHours()
                 if (hour < 10) hour = '0' + hour
-                let minute = date.getMinutes()
+                let minute = last.getMinutes()
                 if (minute < 10) minute = '0' + minute
                 result.time = hour + ':' + minute
               } else {

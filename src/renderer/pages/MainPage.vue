@@ -8,7 +8,6 @@
                 <FriendItem v-for="friend in friendList"
                             :key="friend.id"
                             :user="friend"
-                            :last-message="getLastMessage(friend.id)"
                             :active="currentChat === friend.id"></FriendItem>
                 <p v-if="friendList.length === 0">您还没有好友！</p>
             </el-aside>
@@ -35,11 +34,11 @@ export default {
       components: {MainTopBar, MessageEdit, MessageFlow, FriendItem},
       data () {
         return {
-          lastMessageOfFriend: {
-            '1': {
-              content: '23333'
-            }
-          }
+          // lastMessageOfFriend: {
+          //   '1': {
+          //     content: '23333'
+          //   }
+          // }
         }
       },
       computed: {
@@ -78,24 +77,24 @@ export default {
         initFriendMessageList () {
           this.axios.post(messageUrl.getAllFriendMessage).then(res => {
             const friendMessageList = res.data.data.friendMessageList
-            friendMessageList.forEach((item, index) => {
-              if (item.messageList.length > 0) {
-                this.lastMessageOfFriend[item.friendId] = item.messageList[item.messageList.length - 1]
-              } else {
-                this.lastMessageOfFriend[item.friendId] = null
-              }
-            })
+            // friendMessageList.forEach((item, index) => {
+            //   if (item.messageList.length > 0) {
+            //     this.lastMessageOfFriend[item.friendId] = item.messageList[item.messageList.length - 1]
+            //   } else {
+            //     this.lastMessageOfFriend[item.friendId] = null
+            //   }
+            // })
             // console.log(this.lastMessageOfFriend)
             this.$store.dispatch('changeFriendMessageListAction', friendMessageList)
             if (this.friendList.length > 0) {
               this.$store.dispatch('changeCurrentChatAction', this.friendList[0].id)
             }
           })
-        },
+        }/*,
         getLastMessage (friendId) {
           // console.log(this.lastMessageOfFriend[friendId])
           return this.lastMessageOfFriend[friendId]
-        }
+        } */
       },
       created () {
         this.getFriendList().then(() => {
