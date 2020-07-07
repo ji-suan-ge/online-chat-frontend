@@ -24,7 +24,7 @@
     const ipc = require('electron').ipcRenderer
     export default {
       name: 'FriendItem',
-      props: ['user', 'active', 'lastMessage'],
+      props: ['user', 'active'],
       data () {
         return {
           newMessageNumber: 0,
@@ -49,23 +49,53 @@
         friendName () {
           return this.limitedString(this.user.nickname, 9)
         },
+        friendMessageList () {
+          return this.$store.getters.friendMessageList
+        },
+        currentMessageList () {
+          for (let friendMessage of this.friendMessageList) {
+            if (friendMessage.friendId === this.user.id) {
+              // console.log(friendMessage.messageList)
+              // console.log('friendFlow', friendMessage.messageList[friendMessage.messageList.length - 1])
+              return friendMessage.messageList
+            }
+          }
+        },
         calculateLastMessage () {
           let result = {
             message: '',
             time: ''
           }
-          if (this.lastMessage) {
-            result.message = this.lastMessage.content
-            let date = new Date(this.lastMessage.time)
+          // let friendMessageList = this.$store.getters.friendMessageList
+          // let currentMessageList = []
+          // for (let friendMessage of friendMessageList) {
+          //   console.log('calculate', friendMessage.friendId, this.currentChat)
+          //   if (friendMessage.friendId === this.getCurrentChat) {
+          //     // console.log(friendMessage.messageList)
+          //     console.log('friendFlow', friendMessage.messageList[friendMessage.messageList.length - 1])
+          //     currentMessageList = friendMessage.messageList
+          //     break
+          //   }
+          // }
+          // let onlineLastMessage = currentMessageList.length > 0 ? currentMessageList[currentMessageList.length - 1] : null
+          // let onlineLastMessage = (this.currentMessageList && this.currentMessageList.length > 0) ? this.currentMessageList[this.currentMessageList.length - 1] : null
+          // console.log(this.lastMessage)
+          // let currentLastMessage = null
+          // if (!onlineLastMessage || this.lastMessage.time > onlineLastMessage.time) currentLastMessage = this.lastMessage
+          // else currentLastMessage = onlineLastMessage
+          let currentLastMessage = (this.currentMessageList && this.currentMessageList.length > 0) ? this.currentMessageList[this.currentMessageList.length - 1] : null
+          if (currentLastMessage) {
+            result.message = currentLastMessage.content
+            let last = new Date(currentLastMessage.time)
+            let year = last.getFullYear()
+            let month = last.getMonth()
+            let day = last.getDate()
             let now = new Date()
-            let day = date.getDate()
-            let month = date.getMonth()
-            let year = date.getFullYear()
             if (year === now.getFullYear()) {
-              if (day === now.getDate()) {
-                let hour = date.getHours()
+              if (month === now.getMonth() && day === now.getDate()) {
+                let hour = last.getHours()
                 if (hour < 10) hour = '0' + hour
-                let minute = date.getMinutes()
+                let minute = last.getMinutes()
                 if (minute < 10) minute = '0' + minute
                 result.time = hour + ':' + minute
               } else {
@@ -74,7 +104,7 @@
             } else {
               result.time = year + '-' + (month + 1) + '-' + day
             }
-            console.log(this.result)
+            // console.log(this.result)
           }
           result.message = this.limitedString(result.message, 7)
           // console.log(result)

@@ -8,7 +8,6 @@
                 <GroupItem v-for="group in groupList"
                             :key="group.id"
                             :group="group"
-                            :last-message="getLastMessage(group.id)"
                             :active="currentGroupChat === group.id">
                 </GroupItem>
                 <p v-if="groupList.length === 0">您还没有群！</p>
@@ -58,10 +57,7 @@ export default {
       components: {MainTopBar, GroupMessageEdit, GroupMessageFlow, GroupItem, GroupMemberItem},
       data () {
         return {
-          showMember: true,
-          lastMessageOfFriend: {
-            '1': ''
-          }
+          showMember: true
         }
       },
       computed: {
@@ -115,24 +111,12 @@ export default {
         initGroupMessageList () {
           this.axios.post(messageUrl.getAllGroupMessage).then(res => {
             const groupMessageList = res.data.data.groupMessageList
-            console.log(groupMessageList)
-            groupMessageList.forEach((item, index) => {
-              if (item.messageList.length > 0) {
-                this.lastMessageOfFriend[item.groupId] = item.messageList[item.messageList.length - 1]
-              } else {
-                this.lastMessageOfFriend[item.groupId] = null
-              }
-            })
             this.$store.dispatch('changeGroupMessageListAction', groupMessageList)
             if (this.groupList.length > 0) {
               this.$store.dispatch('changeCurrentGroupChatAction', this.groupList[0].id)
               this.getGroupMemberList()
             }
           })
-        },
-        getLastMessage (groupId) {
-          // console.log(this.lastMessageOfFriend[friendId])
-          return this.lastMessageOfFriend[groupId]
         }
       },
       created () {
